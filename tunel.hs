@@ -19,4 +19,6 @@ usesT :: Link -> Tunel -> Bool  -- indica si este tunel atraviesa ese link
 usesT link tunel = link `elem` listLinksT
 
 
-delayT :: Tunel -> Float -- la demora que sufre una conexion en este tunel
+--delayT :: Tunel -> Float -- la demora que sufre una conexion en este tunel
+--delayT tunel = listLinksT tunel
+
