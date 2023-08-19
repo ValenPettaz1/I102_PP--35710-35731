@@ -1,4 +1,4 @@
-module Tunel ( Tunel, newT )
+module Tunel ( Tunel, newT, connectsT, usesT, delayT)
    where
 
 import Point
@@ -9,7 +9,7 @@ import City
 data Tunel = Tun [Link] deriving (Eq, Show)
 
 newT :: [Link] -> Tunel
-newT = Tun 
+newT = Tun
 
 getLinksT :: Tunel -> [Link]
 getLinksT (Tun link) = link
@@ -23,7 +23,7 @@ extremeCities city tunel = connectsL city (head extremeLinklist) || connectsL ci
       extremeLinklist = getExtremeLinksT tunel
 
 connectsT :: City -> City -> Tunel -> Bool -- indica si este tunel conceta estas dos ciudades distintas
-connectsT city1 city2 tunel = extremeCities city1 tunel && extremeCities city2 tunel 
+connectsT city1 city2 tunel = extremeCities city1 tunel && extremeCities city2 tunel
 
 usesT :: Link -> Tunel -> Bool  -- indica si este tunel atraviesa ese link
 usesT link tunel = link `elem` getLinksT tunel
@@ -51,13 +51,18 @@ link5_6t = newL city5t city6t quality2t
 tunel1_4t = newT [link1_2t, link2_3t, link3_4t]
 tunel1_6t = newT [link1_2t, link2_3t, link3_4t, link4_5t, link5_6t]
 
-testT = [connectsT city4t city3t tunel1_4t,
-         connectsT city1t city6t tunel1_6t,
-         connectsT city6t city1t tunel1_6t,
+testConnectsT = [connectsT city1t city2t tunel1_4t,
+                connectsT city4t city3t tunel1_4t,
+                connectsT city1t city6t tunel1_6t,
+                connectsT city6t city1t tunel1_6t,
+                True]
 
-        usesT 
-        True]
+testUsesT = [usesT link2_3t tunel1_6t,
+            not (usesT link5_6t tunel1_4t),
+            True]
 
-
+testDelayT = [delayT tunel1_4t == sum [delayL link1_2t, delayL link2_3t, delayL link3_4t],
+             True
+             ]
 
 
