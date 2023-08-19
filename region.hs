@@ -1,10 +1,22 @@
 module Region ( Region, newR, foundR, linkR, tunelR, pathR, linksForR, connectedR, linkedR, delayR, availableCapacityForR, usedCapacityForR )
    where
 
+import City
+import Link
+import Quality
+import Tunel
+
 data Region = Reg [City] [Link] [Tunel]
+
 newR :: Region
-foundR :: Region -> City -> Region -- agrega una nueva ciudad a la región
+newR = Reg
+
+foundR :: Region -> City -> Region -- agrega una nueva ciudad a la región 
+foundR (Reg cities _ _) city = Reg (city:cities) _ 
+
 linkR :: Region -> City -> City -> Quality -> Region -- enlaza dos ciudades de la región con un enlace de la calidad indicada
+linkR (Reg cities links tunels) city1 city2 qlty = Reg cities :links
+
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
 linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
