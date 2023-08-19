@@ -10,7 +10,7 @@ newT :: [Link] -> Tunel
 newT = Tun 
 
 getLinksT :: Tunel -> [Link]
-getLinksT (Tun link) = listCitiesL link
+getLinksT (Tun link) = getCitiesL link
 
 connectsT :: City -> City -> Tunel -> Bool -- inidca si este tunel conceta estas dos ciudades distintas
 connectsT city1 city2 tunel = getLinksT `elem` getLinksT tunel
