@@ -19,10 +19,12 @@ linkR :: Region -> City -> City -> Quality -> Region -- enlaza dos ciudades de l
 linkR (Reg cities links tunels) city1 city2 qlty = Reg cities (newL city1 city2 qlty:links) tunels
 
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
-tunelR (Reg cities links tunels) city1 city2 qlty = Reg cities links (newT):tunels
+tunelR (Reg cities links tunels) targetCities qlty = Reg cities links (newT possibleLinks):tunels where
+   possibleLinks = 
 
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
-connectedR (Reg cities links tunels) city1 city2 = 
+connectedR (Reg _ _ tunels) city1 city2 = connectsT tunel city1 city2 where
+   tunel = head (filter (connectsT city1 city2) tunels)
 
 linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
 delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
