@@ -27,10 +27,6 @@ getLinksR (Reg cities links tunels) = links
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
 tunelR (Reg cities links tunels) targetCities = Reg cities links (newT possibleLinks:tunels) where --OJO: se considera solo el caso más fácil, falta pulir mucho.
    possibleLinks = [link | link <- getLinksR (Reg cities links tunels), foldr (||) False [connectsL city link | city <- targetCities]] 
-      --checkLinks = [connectsL city link | city <- targetCities]
-
---filter (connectsL city1) (getLinksR (Reg cities links tunels)) 
---
 
 {-connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
 connectedR (Reg _ _ tunels) city1 city2 = connectsT tunel city1 city2 where
@@ -64,8 +60,8 @@ tunel1_6 = newT [link1_2, link2_3, link3_4, link4_5, link5_6]
 --regionCities = linkR (newR `foundR` city1 `foundR` city2 `foundR` city3 `foundR` city4) city1 city2 quality1  
 regionCities = newR `foundR` city1 `foundR` city2 `foundR` city3 `foundR` city4
 regionLink1_2 = linkR regionCities city1 city2 quality1 
-regionLink2_3 = linkR regionCities city2 city3 quality2
-regionLink3_4 = linkR regionCities city3 city4 quality1
-regionTunel1_2 = tunelR regionLink2_3 [city1, city2, city3, city4, city5, city6]
+regionLink2_3 = linkR regionLink1_2 city2 city3 quality2
+regionLink3_4 = linkR regionLink2_3 city3 city4 quality1
+regionTunel1_4 = tunelR regionLink3_4 [city1, city2, city3, city4, city5, city6]
 
 
