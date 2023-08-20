@@ -31,8 +31,10 @@ tunelR (Reg cities links tunels) targetCities = Reg cities links (newT possibleL
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
 connectedR (Reg _ _ tunels) city1 city2 = foldr (||) False [connectsT city1 city2 tunel | tunel <- tunels]
 
-{-
 linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
+linkedR (Reg _ links _) city1 city2 = foldr (||) False [connectsL city1 link | link <- links]
+
+{-
 delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
 availableCapacityForR :: Region -> City -> City -> Int -- indica la capacidad disponible entre dos ciudades-}
 
