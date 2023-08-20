@@ -1,4 +1,4 @@
-module Region ( Region, newR, foundR, linkR, tunelR)--, connectedR, linkedR, delayR, availableCapacityForR )
+module Region ( Region, newR, foundR, linkR, tunelR, connectedR)--, linkedR --, delayR, availableCapacityForR )
    where
 
 import Point
@@ -28,14 +28,14 @@ tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciu
 tunelR (Reg cities links tunels) targetCities = Reg cities links (newT possibleLinks:tunels) where --OJO: se considera solo el caso más fácil, falta pulir mucho.
    possibleLinks = [link | link <- getLinksR (Reg cities links tunels), foldr (||) False [connectsL city link | city <- targetCities]] 
 
-{-connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
-connectedR (Reg _ _ tunels) city1 city2 = connectsT tunel city1 city2 where
-   tunel = head (filter (connectsT city1 city2) tunels)
-
-linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
-linkedR (Reg _ links _) city1 city2 = foldr (||) False [connectsL city1 link | link <- links]
+connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
+connectedR (Reg _ _ tunels) city1 city2 = foldr (||) False [connectsT city1 city2 tunel | tunel <- tunels]
 
 {-
+linkedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan enlazadas
+linkedR (Reg _ links _) city1 city2 = 
+
+
 delayR :: Region -> City -> City -> Float -- dadas dos ciudades conectadas, indica la demora
 availableCapacityForR :: Region -> City -> City -> Int -- indica la capacidad disponible entre dos ciudades-}
 
