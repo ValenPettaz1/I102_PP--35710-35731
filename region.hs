@@ -113,11 +113,6 @@ regionTunel1_4y1_2x3 = tunelR regionTunel1_4y1_2x2 [city1, city2] --OJO: capacid
 
 
 
-
-
-
-
-
 --Control de excepciones (ejemplo para entender)
 testF :: Show a => a -> Bool
 testF action = unsafePerformIO $ do
