@@ -31,25 +31,21 @@ linkR (Reg cities links tunels) city1 city2 qlty | city1 == city2 = error "Las c
                                                  | distanceC city1 city2 == 0 = error "Las ciudades deben estar a una distancia mayor a 0"
                                                  | city1 `notElem` cities = error "La ciudad 1 no está en la región"
                                                  | city2 `notElem` cities = error "La ciudad 2 no está en la región"
+                                                 | linksL city1 city2 link = error "Las ciudades ya están enlazadas" --Repensarlo
                                                  | otherwise = Reg cities (newL city1 city2 qlty:links) tunels                  
 
 getLinksR :: Region -> [Link]
 getLinksR (Reg _ links _) = links
 
-countElemList :: Eq a => a -> [a] -> Int
-countElemList target [] = 0
-countElemList target (x:xs) = if target == x then 1 + countElemList target xs else countElemList target xs
+countTarget :: Eq a => a -> [a] -> Int
+countTarget target [] = 0
+countTarget target (x:xs) = if target == x then 1 + countTarget target xs else countTarget target xs
 
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
-tunelR (Reg cities links tunels) targetCities = Reg cities links (newT possibleLinks:tunels) where --OJO: se considera solo el caso más fácil, falta pulir mucho.
-   possibleLinks = [link | link <- getLinksR (Reg cities links tunels), countElemList True [connectsL city link | city <- targetCities] >= 2]
-
-
---tunelN es una funcion que recibe una region, una lista de ciudades y devuelve una region con los tuneles creados
-{-tunelN :: Region -> [[City]] -> Region
-tunelN region [] = region
-tunelN region (city:[]) = region
-tunelN region (city1:city2:cities) = tunelN (tunelR region [city1, city2]) (city2:cities)-}
+tunelR (Reg cities links tunels) targetCities | length targetCities - 1 >= length links  = error "No hay links suficientes"
+                                              | otherwise = Reg cities links (newT possibleLinks:tunels) 
+where --OJO: se considera solo el caso más fácil, falta pulir mucho.
+   possibleLinks = [link | link <- getLinksR (Reg cities links tunels), countTarget True [connectsL city link | city <- targetCities] >= 2]
 
 
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
@@ -67,7 +63,7 @@ delayR (Reg cities links tunels) city1 city2 | connectedR (Reg cities links tune
 --OJO que pasa si las ciudades No estan conectadas
 
 countTunels :: Region -> Link -> Int
-countTunels (Reg _ _ tunels) targetLink = countElemList True [usesT targetLink tunel| tunel <- tunels]
+countTunels (Reg _ _ tunels) targetLink = countTarget True [usesT targetLink tunel| tunel <- tunels]
 
 availableCapacityForR :: Region -> City -> City -> Int -- indica la capacidad disponible entre dos ciudades
 availableCapacityForR region city1 city2 = capacityL targetLink - countTunels region targetLink where
