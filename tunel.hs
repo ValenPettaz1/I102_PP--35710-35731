@@ -18,7 +18,7 @@ getExtremeLinksT :: Tunel -> [Link]
 getExtremeLinksT tunel = [head linklist, last linklist] where
       linklist = getLinksT tunel
 
-extremeCities :: City -> Tunel -> Bool --OJO: si tengo un tunel con los links [AB, BC, CD, DE] B y D contarían como ciudades extremos.
+extremeCities :: City -> Tunel -> Bool
 extremeCities city tunel = connectsL city (head extremeLinklist) || connectsL city (last extremeLinklist) where
       extremeLinklist = getExtremeLinksT tunel
 
