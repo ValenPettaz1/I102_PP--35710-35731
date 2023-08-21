@@ -6,6 +6,8 @@ import City
 import Link
 import Quality
 import Tunel
+import Control.Exception ( SomeException, evaluate, tryJust ) --Estos dos últimos Hackages se usan en el manejo de excepciones
+import System.IO.Unsafe ( unsafePerformIO )
 
 data Region = Reg [City] [Link] [Tunel] deriving (Show)
 
@@ -68,3 +70,21 @@ regionLink3_4 = linkR regionLink2_3 city3 city4 quality1
 regionTunel1_4 = tunelR regionLink3_4 [city1, city2, city3, city4, city5, city6]
 
 
+--Control de excepciones (ejemplo para entender)
+testF :: Show a => a -> Bool
+testF action = unsafePerformIO $ do
+    result <- tryJust isException (evaluate action)
+    return $ case result of
+        Left _ -> True
+        Right _ -> False
+    where
+        isException :: SomeException -> Maybe ()
+        isException _ = Just ()
+
+result :: Int -> Int
+result x | x > 5 = 4
+         | otherwise = error "hey"
+
+-- ahora pueden evaluar (Tira verdadero si salta un error, falso de lo contrario)
+t = [ testF (result 3 ),
+      testF (result 8 ) ]
