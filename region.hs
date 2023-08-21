@@ -31,7 +31,6 @@ linkR (Reg cities links tunels) city1 city2 qlty | city1 == city2 = error "Las c
                                                  | distanceC city1 city2 == 0 = error "Las ciudades deben estar a una distancia mayor a 0"
                                                  | city1 `notElem` cities = error "La ciudad 1 no está en la región"
                                                  | city2 `notElem` cities = error "La ciudad 2 no está en la región"
-                                                 | linksL city1 city2 link = error "Las ciudades ya están enlazadas" --Repensarlo
                                                  | otherwise = Reg cities (newL city1 city2 qlty:links) tunels                  
 
 getLinksR :: Region -> [Link]
@@ -44,8 +43,8 @@ countTarget target (x:xs) = if target == x then 1 + countTarget target xs else c
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
 tunelR (Reg cities links tunels) targetCities | length targetCities - 1 >= length links  = error "No hay links suficientes"
                                               | otherwise = Reg cities links (newT possibleLinks:tunels) 
-where --OJO: se considera solo el caso más fácil, falta pulir mucho.
-   possibleLinks = [link | link <- getLinksR (Reg cities links tunels), countTarget True [connectsL city link | city <- targetCities] >= 2]
+                                              where --OJO: se considera solo el caso más fácil, falta pulir mucho.
+                                                 possibleLinks = [link | link <- getLinksR (Reg cities links tunels), countTarget True [connectsL city link | city <- targetCities] >= 2]
 
 
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
