@@ -19,7 +19,8 @@ foundR (Reg cities links tunels) city = Reg (city:cities) links tunels
 
 addCitiesR :: Region -> [City] -> Region
 addCitiesR region [] = region
-addCitiesR region (city:cities) = addCitiesR (foundR region city) cities
+addCitiesR region cities = foldl foundR region cities --Sugerida
+--addCitiesR region (city:cities) = addCitiesR (foundR region city) cities (Esta era la original)
 
 getCitiesR :: Region -> [City]
 getCitiesR (Reg cities _ _) = cities
@@ -41,6 +42,7 @@ countElemList target (x:xs) = if target == x then 1 + countElemList target xs el
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
 tunelR (Reg cities links tunels) targetCities = Reg cities links (newT possibleLinks:tunels) where --OJO: se considera solo el caso más fácil, falta pulir mucho.
    possibleLinks = [link | link <- getLinksR (Reg cities links tunels), countElemList True [connectsL city link | city <- targetCities] >= 2] 
+
 
 --tunelN es una funcion que recibe una region, una lista de ciudades y devuelve una region con los tuneles creados
 {-tunelN :: Region -> [[City]] -> Region
@@ -70,6 +72,8 @@ availableCapacityForR :: Region -> City -> City -> Int -- indica la capacidad di
 availableCapacityForR region city1 city2 = capacityL targetLink - countTunels region targetLink where
    targetLink = head [link | link <- getLinksR region, linksL city1 city2 link]
 
+
+
 city1 = newC "San Nicolas" (newP 100 250)
 city2 = newC "Sarmiento" (newP (-150) 250)
 city3 = newC "Comodoro" (newP 100 200)
@@ -91,22 +95,23 @@ tunel2_5 = newT [link2_3, link3_4, link4_5]
 tunel1_4 = newT [link1_2, link2_3, link3_4]
 tunel1_6 = newT [link1_2, link2_3, link3_4, link4_5, link5_6]
 
+
+
 --OJO ver un modo más eficiente de crear una región. Capaz usando map.
---regionCities = linkR (newR `foundR` city1 `foundR` city2 `foundR` city3 `foundR` city4) city1 city2 quality1  
-regionCities = newR `foundR` city1 `foundR` city2 `foundR` city3 `foundR` city4
-regionLink1_2 = linkR regionCities city1 city2 quality1 
-regionLink2_3 = linkR regionLink1_2 city2 city3 quality2
-regionLink3_4 = linkR regionLink2_3 city3 city4 quality1
-regionTunel1_4 = tunelR regionLink3_4 [city1, city2, city3, city4, city5, city6]
-
-region1 = newR `foundR` city1 `foundR` city2 `foundR` city3 `foundR` city4 
-regionlink = linkR region1 city1 city2 quality1
-
-regiontunel = tunelR regionlink [city1, city2, city3, city4]
-
 regionVoid = newR
 
-{-}
+regionCities1_6 = addCitiesR regionVoid [city1, city2, city3, city4, city5, city6]
+
+regionLink1_2 = linkR regionCities1_6 city1 city2 quality1
+regionLink2_3 = linkR regionLink1_2 city2 city3 quality2
+regionLink3_4 = linkR regionLink2_3 city3 city4 quality1
+
+regionTunel1_4 = tunelR regionLink3_4 [city1, city2, city3, city4, city5, city6]
+regionTunel1_4y1_2 = tunelR regionTunel1_4 [city1, city2] 
+regionTunel1_4y1_2x2 = tunelR regionTunel1_4y1_2 [city1, city2]
+regionTunel1_4y1_2x3 = tunelR regionTunel1_4y1_2x2 [city1, city2] --OJO: capacidades negativas
+
+
 --Control de excepciones (ejemplo para entender)
 testF :: Show a => a -> Bool
 testF action = unsafePerformIO $ do
@@ -125,5 +130,3 @@ result x | x > 5 = 4
 -- ahora pueden evaluar (Tira verdadero si salta un error, falso de lo contrario)
 t = [ testF (result 3 ),
       testF (result 8 ) ]
-
--}
