@@ -42,10 +42,11 @@ countTarget target [] = 0
 countTarget target (x:xs) = if target == x then 1 + countTarget target xs else countTarget target xs
 
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
-tunelR (Reg cities links tunels) targetCities | length targetCities - 1 >= length links  = error "No hay links suficientes"
+tunelR (Reg cities links tunels) targetCities | (length targetCities - 1) < length links = error "Conflicto de varios links posibles para un mismo tunel"
+                                              | (length targetCities - 1) > length links = error "Links insuficientes para crear el tunel"
                                               | otherwise = Reg cities links (newT possibleLinks:tunels) 
-                                              where --OJO: se considera solo el caso más fácil, falta pulir mucho.
-                                                 possibleLinks = [link | link <- getLinksR (Reg cities links tunels), countTarget True [connectsL city link | city <- targetCities] >= 2]
+   where 
+   possibleLinks = [link | link <- getLinksR (Reg cities links tunels), countTarget True [connectsL city link | city <- targetCities] == 2] --OJO antes estaba un >= 2 no debería causar problemas el cambio pero por las dudas.
 
 
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
