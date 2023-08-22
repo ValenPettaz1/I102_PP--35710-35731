@@ -18,12 +18,16 @@ getExtremeLinksT :: Tunel -> [Link]
 getExtremeLinksT tunel = [head linklist, last linklist] where
       linklist = getLinksT tunel
 
+notExtremeLinks :: Tunel -> [Link]
+notExtremeLinks tunel = tail (init linklist) where
+      linklist = getLinksT tunel
+
 extremeCities :: City -> Tunel -> Bool
 extremeCities city tunel = connectsL city (head extremeLinklist) || connectsL city (last extremeLinklist) where
       extremeLinklist = getExtremeLinksT tunel
 
 connectsT :: City -> City -> Tunel -> Bool -- indica si este tunel conceta estas dos ciudades distintas
-connectsT city1 city2 tunel = extremeCities city1 tunel && extremeCities city2 tunel
+connectsT city1 city2 tunel = extremeCities city1 tunel && extremeCities city2 tunel --OJO son solo 2 ciudades extremos
 
 usesT :: Link -> Tunel -> Bool  -- indica si este tunel atraviesa ese link
 usesT link tunel = link `elem` getLinksT tunel
