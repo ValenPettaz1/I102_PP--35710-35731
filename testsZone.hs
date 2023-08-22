@@ -1,3 +1,5 @@
+module TestsZone where
+
 import Point
 import Link
 import City
@@ -11,7 +13,9 @@ addCitiesR :: Region -> [City] -> Region
 addCitiesR region [] = region
 addCitiesR region cities = foldl foundR region cities 
 
-
+addLinksR :: Region -> [(City, City)] -> [Quality] -> Region
+addLinksR region [] [] = region
+addLink
 
 point1 = newP 100 250
 point2 = newP (-150) 250
