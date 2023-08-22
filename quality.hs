@@ -15,18 +15,3 @@ capacityQ (Qua _ capacity _) = capacity
 
 delayQ :: Quality -> Float  -- la demora por unidad de distancia que sucede en las conexiones de este canal
 delayQ (Qua _ _ delay) = delay
-
-
-quality1 = newQ "Baja" 3 0.1
-quality2 = newQ "Media" 7 0.05
-quality3 = newQ "Alta" 10 0.01
-
-testQ = [capacityQ quality1 == 3,
-        delayQ quality1 == 0.1, 
-        True] 
-
-invQuality1 = newQ "Baja" (-3) 0.1
-invQuality2 = newQ "" 3 0.1
-invQuality3 = newQ "Media" 3 (-0.1)
-invQuality4 = newQ "" (-3) (-0.1)
-
