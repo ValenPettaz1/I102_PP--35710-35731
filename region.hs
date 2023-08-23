@@ -25,8 +25,8 @@ linkR (Reg cities links tunels) city1 city2 qlty | city1 == city2 = error "Las c
                                                  | distanceC city1 city2 == 0 = error "Las ciudades deben estar a una distancia mayor a 0"
                                                  | city1 `notElem` cities = error "La ciudad 1 no está en la región"
                                                  | city2 `notElem` cities = error "La ciudad 2 no está en la región"
-                                                 | linksL city1 city2 (head links) = error "Ya existe un link entre estas ciudades" 
-                                                 | otherwise = Reg cities (newL city1 city2 qlty:links) tunels                  
+                                                 | linkedR (Reg cities links tunels) city1 city2 = error "Las ciudades ya están enlazadas"
+                                                 | otherwise = Reg cities (newL city1 city2 qlty:links) tunels                                                               
 
 getLinksR :: Region -> [Link]
 getLinksR (Reg _ links _) = links
