@@ -17,6 +17,10 @@ addLinksR :: Region -> [(City, City)] -> [Quality] -> Region
 addLinksR region [] [] = region
 addLinksR region (par:cities) (qlty:qlties) = addLinksR (linkR region (fst par) (snd par) qlty) cities qlties
 
+addTunelsR :: Region -> [[City]] -> Region
+addTunelsR region []  = region
+addTunelsR region (list:cities) = addTunelsR (tunelR region list) cities
+
 --Prueba de puntos:
 point1 = newP 100 250
 point2 = newP (-150) 250
