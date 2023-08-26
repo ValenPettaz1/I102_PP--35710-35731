@@ -24,7 +24,7 @@ getCitiesR (Reg cities _ _) = cities
 linkR :: Region -> City -> City -> Quality -> Region -- enlaza dos ciudades de la región con un enlace de la calidad indicada
 linkR (Reg cities links tunels) city1 city2 qlty 
    | city1 == city2 = error "Las ciudades deben ser distintas"
-   | distanceC city1 city2 == 0 = error "Las ciudades deben estar a una distancia mayor a 0"
+   | distanceC city1 city2 == 0 = error "Las ciudades deben pertenecer a la región y estar a una distancia mayor a 0"
    | city1 `notElem` cities = error "La ciudad 1 no está en la región"
    | city2 `notElem` cities = error "La ciudad 2 no está en la región"
    | linkedR (Reg cities links tunels) city1 city2 = error "Las ciudades ya están enlazadas"
@@ -39,13 +39,12 @@ countTarget target (x:xs) = if target == x then 1 + countTarget target xs else c
 
 tunelR :: Region -> [ City ] -> Region -- genera una comunicación entre dos ciudades distintas de la región
 tunelR (Reg cities links tunels) targetCities 
-   | (length targetCities - 1) < length links  = error "Conflicto de varios links posibles"
-   | (length targetCities - 1) > length links  = error "Conflicto de links insuficientes"
+   | (length targetCities - 1) > length possibleLinks  = error "Conflicto de links insuficientes"
    | targetCities == [] = error "No hay ciudades para enlazar"
    | fullLink (Reg cities links tunels) targetCities = error "No hay capacidad disponible"
    | otherwise = Reg cities links (newT possibleLinks:tunels) 
    where 
-      possibleLinks = [link | link <- getLinksR (Reg cities links tunels), countTarget True [connectsL city link | city <- targetCities] >= 2] --OJO >= 2 de antes funcionaba
+      possibleLinks = [link | link <- getLinksR (Reg cities links tunels), countTarget True [connectsL city link | city <- targetCities] >= 2] 
 
 connectedR :: Region -> City -> City -> Bool -- indica si estas dos ciudades estan conectadas por un tunel
 connectedR (Reg _ _ tunels) city1 city2 = foldr (||) False [connectsT city1 city2 tunel | tunel <- tunels]
@@ -73,4 +72,4 @@ availableCapacityForR region city1 city2 = capacityL targetLink - countTunels re
 fullLink :: Region -> [City] -> Bool
 fullLink region (city:cities) 
    | length (city:cities) == 1 = False
-   | otherwise = availableCapacityForR region city (head cities) <= 0 && fullLink region cities
+   | otherwise = availableCapacityForR region city (head cities) <= 0 || fullLink region cities
