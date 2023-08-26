@@ -48,9 +48,8 @@ city3 = newC "Buenos Aires" (newP 0 0)
 city4 = newC "La Pampa" (newP 100 0)
 city5 = newC "Antartida" (newP 0 (-1000))
 city6 = newC "Jujuy" (newP 1000 1000)
+city6' = newC "Fake Jujuy" (newP 1000 1000)
 city7 = newC "Atlantis" (newP 100 1000)
-
-
 
 
 testC = [distanceC city1 city2 == 250.0,
@@ -125,15 +124,18 @@ cities1to6 = [city1, city2, city3, city4, city5, city6]
 regionWith6Cities = addCitiesR region1 cities1to6
 regionWith5Links = addLinksR regionWith6Cities [(city1, city2), (city2, city3), (city3, city4), (city4, city5), (city5, city6)] [quality1, quality2, quality1, quality3, quality0]
 simpleRegion = tunelR regionWith5Links [city1, city2, city3, city4, city5, city6]
+
+
+--Caso complejo: Se añaden más túneles a la región simple. No genera excepciones
 complexRegion = addTunelsR simpleRegion [[city1, city2, city3], [city3, city4, city5]]
 
-testConnectedR1 = [connectedR simpleRegion city1 city6,
+testConnectedR = [connectedR simpleRegion city1 city6,
                   connectedR simpleRegion city6 city1,
                   not (connectedR simpleRegion city1 city5),
                   not (connectedR simpleRegion city1 city2),
                   True]
 
-testLinkedR1 = [linkedR simpleRegion city1 city2,
+testLinkedR = [linkedR simpleRegion city1 city2,
                 linkedR simpleRegion city2 city1,
                 not (linkedR simpleRegion city1 city5),
                 not (linkedR simpleRegion city1 city6),
@@ -141,31 +143,34 @@ testLinkedR1 = [linkedR simpleRegion city1 city2,
 
 invalidDelay = testF (delayR simpleRegion city1 city4) -- Pedir el delay de un link que no existe.
 
-testDelayR1 = [(delayR simpleRegion city1 city6 - sum (map delayL [link1_2, link2_3, link3_4, link4_5, link5_6])) < 0.01, --No funciona precisamente "==" con floats
-                not invalidDelay,
+testDelayR = [(delayR simpleRegion city1 city6 - sum (map delayL [link1_2, link2_3, link3_4, link4_5, link5_6])) < 0.01, --No funciona precisamente "==" con floats
+                invalidDelay,
                 True]
 
-testAvailableCapacityR1 = [availableCapacityForR simpleRegion city1 city2 == 2,
+testAvailableCapacityR = [availableCapacityForR simpleRegion city1 city2 == 2,
                           availableCapacityForR simpleRegion city2 city3 == 6,
                           True]
 
 --Casos de excepciones:
-duplicatedCity = addCitiesR simpleRegion [city1, city2] -- Agregar una ciudad que ya existe en la region
+duplicatedCity = addCitiesR complexRegion [city1, city2] -- Agregar una ciudad que ya existe en la region
 
-notExistenteCity = addLinksR simpleRegion [(city6, city7)] [quality1] -- Hacer un link con una ciudad que no pertenece a la región.
+sameLocationCity = addCitiesR complexRegion [city6'] -- Agregar una ciudad con la misma ubicación que otra ya existente.
 
-duplicatedLink = addLinksR simpleRegion [(city1, city2), (city2, city3)] [quality1, quality2] -- Agregar un link ya existente en la región, aunque sus calidades sean distintas.
+notExistenteCity = addLinksR complexRegion [(city6, city7)] [quality1] -- Hacer un link con una ciudad que no pertenece a la región.
 
-selfLink = addLinksR simpleRegion [(city1, city1)] [quality1] -- Enlazar una ciudad con sí misma.
+duplicatedLink = addLinksR complexRegion [(city1, city2), (city2, city3)] [quality1, quality2] -- Agregar un link ya existente en la región, aunque sus calidades sean distintas.
 
-notConnectedCities = addTunelsR simpleRegion [[city1, city4, city5]] -- Crear un túnel con ciudades que no están conectadas.
+selfLink = addLinksR complexRegion [(city1, city1)] [quality1] -- Enlazar una ciudad con sí misma.
 
-emptyCityList = tunelR simpleRegion [] -- Agregar un tunel con una lista vacía de ciudades.
+notConnectedCities = addTunelsR complexRegion [[city1, city4, city5]] -- Crear un túnel con ciudades que no están conectadas.
 
-fullCapacity = addTunelsR simpleRegion [cities1to6, cities1to6, cities1to6]  -- Agregar un link que excede la capacidad disponible.
+emptyCityList = tunelR complexRegion [] -- Agregar un tunel con una lista vacía de ciudades.
+
+fullCapacity = addTunelsR complexRegion [cities1to6, cities1to6, cities1to6]  -- Agregar un link que excede la capacidad disponible.
 
 
 testErrorsR = map testF [duplicatedCity,
+                        sameLocationCity,
                         notExistenteCity,
                         duplicatedLink,
                         selfLink,

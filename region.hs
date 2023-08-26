@@ -14,9 +14,12 @@ newR = Reg [] [] []
 
 foundR :: Region -> City -> Region -- agrega una nueva ciudad a la región 
 foundR (Reg cities links tunels) city 
-   | city `notElem` cities = Reg (city:cities) links tunels
    | city `elem` cities = error "La ciudad ya está en la región"
-   | otherwise = error "Acción de agregar ciudad inválida"
+   | equalLocation = error "La posición indicada corresponde a otra ciudad ya existente en la región"
+   | city `notElem` cities = Reg (city:cities) links tunels
+   where
+      equalLocation = foldr (||) False [distanceC city cityR == 0 | cityR <- getCitiesR (Reg cities links tunels)]
+   
 
 getCitiesR :: Region -> [City]
 getCitiesR (Reg cities _ _) = cities
@@ -24,7 +27,6 @@ getCitiesR (Reg cities _ _) = cities
 linkR :: Region -> City -> City -> Quality -> Region -- enlaza dos ciudades de la región con un enlace de la calidad indicada
 linkR (Reg cities links tunels) city1 city2 qlty 
    | city1 == city2 = error "Las ciudades deben ser distintas"
-   | distanceC city1 city2 == 0 = error "Las ciudades deben pertenecer a la región y estar a una distancia mayor a 0"
    | city1 `notElem` cities = error "La ciudad 1 no está en la región"
    | city2 `notElem` cities = error "La ciudad 2 no está en la región"
    | linkedR (Reg cities links tunels) city1 city2 = error "Las ciudades ya están enlazadas"
