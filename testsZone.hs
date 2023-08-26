@@ -19,7 +19,7 @@ addLinksR region (par:cities) (qlty:qlties) = addLinksR (linkR region (fst par) 
 
 addTunelsR :: Region -> [[City]] -> Region
 addTunelsR region []  = region
-addTunelsR region (list:cities) = addTunelsR (tunelR region list) cities
+addTunelsR region (cities:listCities) = addTunelsR (tunelR region cities) listCities
 
 --Prueba de puntos:
 point1 = newP 100 250
@@ -95,20 +95,17 @@ testDelayT = [delayT tunel1_4 == sum [delayL link1_2, delayL link2_3, delayL lin
              ]
 
 --Prueba de region:
-regionVoid = newR
-regionTest = newR
 
-regionCities1_6 = addCitiesR regionVoid [city1, city2, city3, city4, city5, city6]
-regionCities1_4 = addCitiesR regionTest [city1, city2, city3, city4]
+--Escenario 1: Se crea una región vacía y se agregan ciudades, links y túneles. Funcionamiento normal.
+region1 = newR
+citiesR1 = addCitiesR region1 [city1, city2, city3, city4, city5, city6]
+linksR1 = addLinksR citiesR1 [(city1, city2), (city2, city3), (city3, city4), (city4, city5), (city5, city6)] [quality1, quality2, quality1, quality3, quality2]
+--tunelR1 = addTunelsR linksR1 [[city1, city2], [city3, city4], [city5, city6]] 
+tunelR1 = tunelR linksR1 [city1, city2, city3, city4, city5, city6]
 
-regionLink1_2 = linkR regionCities1_6 city1 city2 quality1
-regionLink2_3 = linkR regionLink1_2 city2 city3 quality2
-regionLink3_4 = linkR regionLink2_3 city3 city4 quality1
+testR1 = []
 
-regionTunel1_4 = tunelR regionLink3_4 [city1, city2, city3, city4, city5, city6]
-regionTunel1_4y1_2 = tunelR regionTunel1_4 [city1, city2]
-regionTunel1_4y1_2x2 = tunelR regionTunel1_4y1_2 [city1, city2]
-regionTunel1_4y1_2x3 = tunelR regionTunel1_4y1_2x2 [city1, city2]
+
 
 --Control de excepciones (ejemplo para entender)
 testF :: Show a => a -> Bool
@@ -128,3 +125,4 @@ result x | x > 5 = 4
 -- ahora pueden evaluar (Tira verdadero si salta un error, falso de lo contrario)
 t = [ testF (result 3 ),
       testF (result 8 ) ]
+

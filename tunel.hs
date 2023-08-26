@@ -16,11 +16,12 @@ getLinksT (Tun link) = link
 
 linksUsedByCity :: City -> Tunel -> [Link]
 linksUsedByCity city tunel = [link | link <- linklist, connectsL city link] where
-      linklist = getLinksT tunel
+    linklist = getLinksT tunel
 
 extremeCities :: City -> Tunel -> Bool
-extremeCities city tunel | length (linksUsedByCity city tunel) == 1 = True
-                         | otherwise = False
+extremeCities city tunel 
+    | length (linksUsedByCity city tunel) == 1 = True
+    | otherwise = False
 
 connectsT :: City -> City -> Tunel -> Bool -- indica si este tunel conceta estas dos ciudades distintas
 connectsT city1 city2 tunel = extremeCities city1 tunel && extremeCities city2 tunel 
