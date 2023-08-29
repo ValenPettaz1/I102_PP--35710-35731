@@ -86,7 +86,7 @@ public class GarageTest {
  
     Car car2 = new Car( "DEF456" );
     try {
-      garage.parkCar( new Car( "ABC123") );
+      garage.parkCar( car2 );
     } catch ( Exception e ) {
       assertEquals( "No space available" , e.getMessage() );
     }
