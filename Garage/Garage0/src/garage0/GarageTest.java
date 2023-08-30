@@ -121,5 +121,23 @@ public class GarageTest {
 
     assertEquals( 1, garage.getNumCars() );
   }
+  @Test public void testManyCarsFeesOnMembers() {
+    Garage garage = new Garage( 3 );
+
+    Car car = new Car( "ABC123" );
+    Car car2 = new Car( "DEF456" );
+    garage.associate( car );
+    garage.parkCar( car );
+    garage.parkCar( car2 );
+    assertEquals( 15, garage.totalFees() );
+  }
+  @Test public void testOneMemberCarFee() {
+    Garage garage = new Garage( 3 );
+
+    Car car = new Car( "ABC123" );
+    garage.associate( car );
+    garage.parkCar( car );
+    assertEquals( 5, garage.totalFees() );
+  }
 
 }

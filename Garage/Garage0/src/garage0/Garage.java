@@ -7,6 +7,7 @@ public class Garage {
 
   public int capacity;
   public List<Car> cars = new ArrayList<>();
+  public List<Car> asociatedCars = new ArrayList<>();
   private int fees = 0;
 
   public Garage( int size ) {
@@ -45,6 +46,11 @@ public class Garage {
   }
 
   public int getFee( Car car ) {
+      for (Car asociatedCar : asociatedCars) {
+          if (asociatedCar.getPlateNumber().equals(car.getPlateNumber())) {
+              return 5;
+          }
+      }
     return 10;
   }
 
@@ -52,4 +58,7 @@ public class Garage {
     return fees;
   }
 
+  public void associate(Car car) {
+    asociatedCars.add(car);
+  }
 }
