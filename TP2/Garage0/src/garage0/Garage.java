@@ -1,64 +1,70 @@
 package garage0;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Garage {
 
-  public int capacity;
-  public List<Car> cars = new ArrayList<>();
-  public List<Car> asociatedCars = new ArrayList<>();
-  private int fees = 0;
+    public int capacity;
+    public List<Car> cars = new ArrayList<>();
+    public Set<Car> associatedCars = new HashSet<>();
+    private int fees = 0;
 
-  public Garage( int size ) {
-    this.capacity = size;
-  }
-
-  public boolean isEmpty() { return cars.isEmpty(); }
-
-  public int getNumCars() { return cars.size(); }
-
-  public Garage parkCar( Car car ) {
-    if (cars.size() == capacity) { 
-      throw new RuntimeException( "No space available" ); 
+    public Garage(int size) {
+        this.capacity = size;
     }
 
-    for (int i = 0; i < cars.size(); i++) {
-      if (cars.get( i ).getPlateNumber().equals( car.getPlateNumber() )) {
-        throw new RuntimeException( "Twin Cars!" ); 
-      }
+    public boolean isEmpty() {
+        return cars.isEmpty();
     }
 
-    fees += getFee( car );
-    cars.add( car );
-    return this;
-  }
+    public int getNumCars() {
+        return cars.size();
+    }
 
-  public Garage unparkCar( Car car ) {
+    public Garage parkCar(Car car) {
+        if (cars.size() == capacity) {
+            throw new RuntimeException("No space available");
+        }
 
-    for (int i = 0; i < cars.size(); i++) {
-      if (cars.get( i ).getPlateNumber().equals( car.getPlateNumber() )) {
-        cars.remove( i );
+
+        if (cars.contains(car)) {
+            throw new RuntimeException("Twin Cars!");
+        }
+
+
+        fees += getFee(car);
+        cars.add(car);
         return this;
-      }
     }
-    throw new RuntimeException( "Missing car!" );
-  }
 
-  public int getFee( Car car ) {
-      for (Car asociatedCar : asociatedCars) {
-          if (asociatedCar.getPlateNumber().equals(car.getPlateNumber())) {
-              return 5;
-          }
-      }
-    return 10;
-  }
+    public Garage unparkCar(Car car) {
 
-  public int totalFees() {
-    return fees;
-  }
 
-  public void associate(Car car) {
-    asociatedCars.add(car);
-  }
+        if (cars.contains(car)) {
+            cars.remove(car);
+            return this;
+        }
+
+        throw new RuntimeException("Missing car!");
+    }
+
+    public int getFee(Car car) {
+        if (associatedCars.contains(car)) {
+            return 5;
+        } else {
+            return 10;
+        }
+    }
+
+    public int totalFees() {
+        return fees;
+    }
+
+    public Garage associate(Car car) {
+        associatedCars.add(car);
+        return this;
+    }
 }
