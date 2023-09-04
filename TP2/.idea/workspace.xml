@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a0b32128-a825-4edd-bba5-0c93443358d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/queue/Consigna.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/queue/Queue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/queue/QueueTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Consigna.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Queue.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QueueTest.java" beforeDir="false" />
+    <list default="true" id="6772269a-4b81-4f82-91ce-7f06cafb4dfc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Queue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/QueueTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/TP2.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queue/Consigna.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queue/Queue.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queue/QueueTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,44 +20,47 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
-}</component>
-  <component name="ProjectId" id="2UvuaOI81TlAD0aRPfdeE3DLEI4" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2UvyOoUSmE3r0delDppy5Rmg8QQ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
+    "onboarding.tips.debug.path": "/Users/valenpettazi/Desktop/UDeSA/1° (2023)/2° Semestre/Paradigmas/I102_PP--35710-35731/TP2/src/Main.java",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="a0b32128-a825-4edd-bba5-0c93443358d7" name="Changes" comment="" />
-      <created>1693832438566</created>
+      <changelist id="6772269a-4b81-4f82-91ce-7f06cafb4dfc" name="Changes" comment="" />
+      <created>1693834320222</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1693832438566</updated>
-      <workItem from="1693832440077" duration="59000" />
-      <workItem from="1693833448387" duration="134000" />
+      <updated>1693834320222</updated>
+      <workItem from="1693834320979" duration="136000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>
