@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queue {
-    public List<Object> queue = new ArrayList<>();
+    private List<Object> queue = new ArrayList<>();
 
     public boolean isEmpty() {
         return queue.isEmpty();
@@ -16,7 +16,7 @@ public class Queue {
     public Object take() {
 
         if (queue.isEmpty()) {
-            throw new RuntimeException("Queue is empty");
+            throw new Error("Queue is empty");
         }
         return queue.remove(0);
 

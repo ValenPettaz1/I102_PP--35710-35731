@@ -22,13 +22,8 @@
   <component name="LineStatusTrackerManager">
     <file path="$PROJECT_DIR$/src/Queue.java">
       <ranges>
-        <range start1="0" end1="0" start2="0" end2="3" changelist="6772269a-4b81-4f82-91ce-7f06cafb4dfc" />
-        <range start1="1" end1="1" start2="4" end2="5" changelist="6772269a-4b81-4f82-91ce-7f06cafb4dfc" />
-        <range start1="2" end1="6" start2="6" end2="9" changelist="6772269a-4b81-4f82-91ce-7f06cafb4dfc" />
-        <range start1="7" end1="11" start2="10" end2="14" changelist="c859f86c-9264-41a2-99c0-ef5513e34442" />
-        <range start1="12" end1="16" start2="15" end2="23" changelist="6772269a-4b81-4f82-91ce-7f06cafb4dfc" />
-        <range start1="17" end1="21" start2="24" end2="28" changelist="6772269a-4b81-4f82-91ce-7f06cafb4dfc" />
-        <range start1="22" end1="27" start2="29" end2="32" changelist="6772269a-4b81-4f82-91ce-7f06cafb4dfc" />
+        <range start1="4" end1="5" start2="4" end2="5" changelist="6772269a-4b81-4f82-91ce-7f06cafb4dfc" />
+        <range start1="18" end1="19" start2="18" end2="19" changelist="c859f86c-9264-41a2-99c0-ef5513e34442" />
       </ranges>
     </file>
   </component>
@@ -135,22 +130,11 @@
       <option name="presentableId" value="Default" />
       <updated>1693834320222</updated>
       <workItem from="1693834320979" duration="136000" />
-      <workItem from="1694008320427" duration="5759000" />
+      <workItem from="1694008320427" duration="6565000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/QueueTest.java</url>
-          <line>6</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
