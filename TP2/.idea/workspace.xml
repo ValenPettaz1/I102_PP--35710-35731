@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6772269a-4b81-4f82-91ce-7f06cafb4dfc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/box.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/emptyBox.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/filledBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Queue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Queue.java" afterDir="false" />
     </list>
@@ -16,14 +19,25 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="LineStatusTrackerManager">
     <file path="$PROJECT_DIR$/src/Queue.java">
       <ranges>
-        <range start1="4" end1="5" start2="4" end2="5" changelist="6772269a-4b81-4f82-91ce-7f06cafb4dfc" />
-        <range start1="18" end1="19" start2="18" end2="19" changelist="c859f86c-9264-41a2-99c0-ef5513e34442" />
+        <range start1="4" end1="5" start2="4" end2="7" changelist="6772269a-4b81-4f82-91ce-7f06cafb4dfc" />
+        <range start1="7" end1="8" start2="9" end2="10" changelist="c859f86c-9264-41a2-99c0-ef5513e34442" />
+        <range start1="11" end1="12" start2="13" end2="16" changelist="6772269a-4b81-4f82-91ce-7f06cafb4dfc" />
+        <range start1="16" end1="21" start2="20" end2="21" changelist="c859f86c-9264-41a2-99c0-ef5513e34442" />
+        <range start1="25" end1="26" start2="25" end2="26" changelist="6772269a-4b81-4f82-91ce-7f06cafb4dfc" />
+        <range start1="30" end1="31" start2="30" end2="31" changelist="c859f86c-9264-41a2-99c0-ef5513e34442" />
       </ranges>
     </file>
   </component>
@@ -46,7 +60,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Test-Polimorfismo",
     "last_opened_file_path": "/Users/valenpettazi/Desktop/UDeSA/1° (2023)/2° Semestre/Paradigmas/I102_PP--35710-35731/TP2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -131,6 +145,7 @@
       <updated>1693834320222</updated>
       <workItem from="1693834320979" duration="136000" />
       <workItem from="1694008320427" duration="6565000" />
+      <workItem from="1694465262710" duration="2900000" />
     </task>
     <servers />
   </component>

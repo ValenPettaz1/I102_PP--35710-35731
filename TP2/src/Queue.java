@@ -2,32 +2,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queue {
-    private List<Object> queue = new ArrayList<>();
+
+    private final Box nothing = new emptyBox();
+    private List<Box> queue = new ArrayList<>(List.of(nothing));
 
     public boolean isEmpty() {
-        return queue.isEmpty();
+        return queue.size() == 1;
     }
 
     public Queue add(Object cargo) {
-        queue.add(cargo);
+        queue.remove(size());
+        queue.add(new filledBox(cargo));
+        queue.add(nothing);
         return this;
     }
 
     public Object take() {
-
-        if (queue.isEmpty()) {
-            throw new Error("Queue is empty");
-        }
-        return queue.remove(0);
+        return queue.remove(0).openBox();
 
     }
 
     public Object head() {
-        return queue.get(0);
+        return queue.get(0).openBox();
     }
 
 
     public int size() {
-        return queue.size();
+        return (queue.size()-1);
     }
 }
