@@ -11,11 +11,10 @@ public class Queue {
     }
 
     public Queue add(Object cargo) {
-        queue.remove(size());
-        queue.add(new filledBox(cargo));
-        queue.add(nothing);
+        addFilledBoxsFirst(cargo);
         return this;
     }
+
 
     public Object take() {
         return queue.remove(0).openBox();
@@ -26,8 +25,14 @@ public class Queue {
         return queue.get(0).openBox();
     }
 
-
     public int size() {
         return (queue.size()-1);
     }
+
+    private void addFilledBoxsFirst(Object cargo) {
+        queue.remove(size());
+        queue.add(new filledBox(cargo));
+        queue.add(nothing);
+    }
+
 }
