@@ -1,14 +1,15 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Queue {
 
 	private static Box emptyBox = new EmptyBox();
 	
-	private List<Box> queue = new ArrayList<>(List.of(emptyBox));
+	private List<Box> queue = new ArrayList<Box>( Arrays.asList(emptyBox));
 
 	public boolean isEmpty() {
-		return queue.size() == 1;
+		return size() == 0;
 	}
 
 	public Queue add(Object cargo) {
@@ -30,9 +31,9 @@ public class Queue {
 	}
 
 	private void addFilledBoxsAsFirst(Object cargo) {
-		queue.remove(size());
+		Box b = queue.remove(size());
 		queue.add(new FilledBox(cargo));
-		queue.add(emptyBox);
+		queue.add(b);
 	}
 
 }
