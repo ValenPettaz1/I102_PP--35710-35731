@@ -1,5 +1,5 @@
-public class emptyBox extends Box {
-    public emptyBox() {
+public class EmptyBox extends Box {
+    public EmptyBox() {
     }
     @Override
     public Object openBox() {

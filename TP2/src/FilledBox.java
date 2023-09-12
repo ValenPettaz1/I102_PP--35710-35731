@@ -1,8 +1,8 @@
-public class filledBox extends Box {
+public class FilledBox extends Box {
 
     private final Object cargo;
 
-    public filledBox(Object cargo) {
+    public FilledBox(Object cargo) {
         this.cargo = cargo;
     }
 

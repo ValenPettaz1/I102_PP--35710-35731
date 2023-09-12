@@ -3,36 +3,36 @@ import java.util.List;
 
 public class Queue {
 
-    private final Box nothing = new emptyBox();
-    private List<Box> queue = new ArrayList<>(List.of(nothing));
+	private static Box emptyBox = new EmptyBox();
+	
+	private List<Box> queue = new ArrayList<>(List.of(emptyBox));
 
-    public boolean isEmpty() {
-        return queue.size() == 1;
-    }
+	public boolean isEmpty() {
+		return queue.size() == 1;
+	}
 
-    public Queue add(Object cargo) {
-        addFilledBoxsFirst(cargo);
-        return this;
-    }
+	public Queue add(Object cargo) {
+		addFilledBoxsAsFirst(cargo);
+		return this;
+	}
 
+	public Object take() {
+		return queue.remove(0).openBox();
 
-    public Object take() {
-        return queue.remove(0).openBox();
+	}
 
-    }
+	public Object head() {
+		return queue.get(0).openBox();
+	}
 
-    public Object head() {
-        return queue.get(0).openBox();
-    }
+	public int size() {
+		return (queue.size() - 1);
+	}
 
-    public int size() {
-        return (queue.size()-1);
-    }
-
-    private void addFilledBoxsFirst(Object cargo) {
-        queue.remove(size());
-        queue.add(new filledBox(cargo));
-        queue.add(nothing);
-    }
+	private void addFilledBoxsAsFirst(Object cargo) {
+		queue.remove(size());
+		queue.add(new FilledBox(cargo));
+		queue.add(emptyBox);
+	}
 
 }
