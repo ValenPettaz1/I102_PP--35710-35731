@@ -1,3 +1,5 @@
+package queue;
+
 public class EmptyBox extends Box {
 
     public EmptyBox() {
@@ -7,6 +9,6 @@ public class EmptyBox extends Box {
         throw new Error(queueIsEmpty);
     }
 
-    public static final String queueIsEmpty = "Queue is empty";
+    public static String queueIsEmpty = "Queue is empty";
 
 }

@@ -1,6 +1,8 @@
+package queue;
+
 public class FilledBox extends Box {
 
-    private final Object cargo;
+    private Object cargo;
 
     public FilledBox(Object cargo) {
         this.cargo = cargo;

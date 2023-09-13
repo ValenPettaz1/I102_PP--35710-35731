@@ -1,3 +1,5 @@
+package queue;
+
 public abstract class Box {
 
     static Box filledBox(Object cargo) {
