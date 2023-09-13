@@ -1,33 +1,31 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Queue {
-    private List<Object> queue = new ArrayList<>();
 
-    public boolean isEmpty() {
-        return queue.isEmpty();
-    }
+	private static Box emptyBox = new EmptyBox();
 
-    public Queue add(Object cargo) {
-        queue.add(cargo);
-        return this;
-    }
+	private List<Box> queue = new ArrayList<Box>(Arrays.asList(emptyBox));
 
-    public Object take() {
+	public boolean isEmpty() {
+		return size() == 0;
+	}
 
-        if (queue.isEmpty()) {
-            throw new Error("Queue is empty");
-        }
-        return queue.remove(0);
+	public Queue add(Object cargo) {
+		queue.add(size(), new FilledBox(cargo));
+		return this;
+	}
 
-    }
+	public Object take() {
+		return queue.remove(0).openBox();
+	}
 
-    public Object head() {
-        return queue.get(0);
-    }
+	public Object head() {
+		return queue.get(0).openBox();
+	}
 
-
-    public int size() {
-        return queue.size();
-    }
+	public int size() {
+		return (queue.size() - 1);
+	}
 }
