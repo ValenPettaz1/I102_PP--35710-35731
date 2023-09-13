@@ -5,21 +5,20 @@ import java.util.List;
 public class Queue {
 
 	private static Box emptyBox = new EmptyBox();
-	
-	private List<Box> queue = new ArrayList<Box>( Arrays.asList(emptyBox));
+
+	private List<Box> queue = new ArrayList<Box>(Arrays.asList(emptyBox));
 
 	public boolean isEmpty() {
 		return size() == 0;
 	}
 
 	public Queue add(Object cargo) {
-		addFilledBoxsAsFirst(cargo);
+		queue.add(size(), new FilledBox(cargo));
 		return this;
 	}
 
 	public Object take() {
 		return queue.remove(0).openBox();
-
 	}
 
 	public Object head() {
@@ -29,11 +28,4 @@ public class Queue {
 	public int size() {
 		return (queue.size() - 1);
 	}
-
-	private void addFilledBoxsAsFirst(Object cargo) {
-		Box b = queue.remove(size());
-		queue.add(new FilledBox(cargo));
-		queue.add(b);
-	}
-
 }
