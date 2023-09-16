@@ -60,7 +60,7 @@ public class QueueTest {
 
     @Test
     public void test09SizeRepresentsObjectInTheQueue() {
-        assertEquals(2, new Queue().add("First").add(secondAddedObject).size());
+        assertEquals(2, new Queue().add(firstAddedObject).add(secondAddedObject).size());
     }
 
     @Test
