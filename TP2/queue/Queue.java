@@ -6,28 +6,26 @@ import java.util.List;
 
 public class Queue {
 
-	private static Box emptyBox = new EmptyBox();
+    private List<Box> queue = new ArrayList<>(Arrays.asList(new EmptyBox()));
 
-	private List<Box> queue = new ArrayList<Box>(Arrays.asList(emptyBox));
+    public boolean isEmpty() {
+        return size() == 0;
+    }
 
-	public boolean isEmpty() {
-		return size() == 0;
-	}
+    public Queue add(Object cargo) {
+        queue.add(size(), new FilledBox(cargo));
+        return this;
+    }
 
-	public Queue add(Object cargo) {
-		queue.add(size(), new FilledBox(cargo));
-		return this;
-	}
+    public Object take() {
+        return queue.remove(0).openBox();
+    }
 
-	public Object take() {
-		return queue.remove(0).openBox();
-	}
+    public Object head() {
+        return queue.get(0).openBox();
+    }
 
-	public Object head() {
-		return queue.get(0).openBox();
-	}
-
-	public int size() {
-		return (queue.size() - 1);
-	}
+    public int size() {
+        return (queue.size() - 1);
+    }
 }
