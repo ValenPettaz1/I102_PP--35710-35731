@@ -1,7 +1,11 @@
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
+package queue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.api.Test;
 
 public class QueueTest {
 
@@ -17,7 +21,7 @@ public class QueueTest {
 
     @Test
     public void test03AddedElementsIsAtHead() {
-        assertEquals("Something", queueWithSomething().head());
+        assertEquals(something, queueWithSomething().head());
     }
 
     @Test
@@ -29,16 +33,12 @@ public class QueueTest {
 
     @Test
     public void test05TakeReturnsLastAddedObject() {
-        assertEquals("Something", queueWithSomething().take());
+        assertEquals(something, queueWithSomething().take());
     }
 
     @Test
     public void test06QueueBehavesFIFO() {
-        Queue queue = new Queue();
-
-        queue.add(firstAddedObject);
-        queue.add(secondAddedObject);
-
+        Queue queue = queueWithOrderedObjects();
         assertEquals(queue.take(), firstAddedObject);
         assertEquals(queue.take(), secondAddedObject);
         assertTrue(queue.isEmpty());
@@ -46,11 +46,7 @@ public class QueueTest {
 
     @Test
     public void test07HeadReturnsFirstAddedObject() {
-        Queue queue = new Queue();
-
-        queue.add(firstAddedObject);
-        queue.add(secondAddedObject);
-
+        Queue queue = queueWithOrderedObjects();
         assertEquals(queue.head(), firstAddedObject);
     }
 
@@ -64,7 +60,7 @@ public class QueueTest {
 
     @Test
     public void test09SizeRepresentsObjectInTheQueue() {
-        assertEquals(2, new Queue().add("First").add(secondAddedObject).size());
+        assertEquals(2, new Queue().add(firstAddedObject).add(secondAddedObject).size());
     }
 
     @Test
@@ -85,14 +81,21 @@ public class QueueTest {
         assertThrowsQueueIsEmpty(() -> new Queue().head());
     }
 
+    public static String something = "Something";
+    public static String firstAddedObject = "First";
+    public static String secondAddedObject = "Second";
     private Queue queueWithSomething() {
-        return new Queue().add("Something");
+        return new Queue().add(something);
     }
-
+    private Queue queueWithOrderedObjects() {
+        Queue queue = new Queue();
+        queue.add(firstAddedObject);
+        queue.add(secondAddedObject);
+        return queue;
+    }
     private void assertThrowsQueueIsEmpty(Executable executable) {
         assertEquals(EmptyBox.queueIsEmpty, assertThrows(Error.class, executable).getMessage());
     }
 
-    public static String firstAddedObject = "First";
-    public static String secondAddedObject = "Second";
+
 }
