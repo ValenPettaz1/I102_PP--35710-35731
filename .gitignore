@@ -22,7 +22,7 @@ cabal.project.local~
 .HTF/
 .ghc.environment.*
 *Icon
-*.idea
-*.DStore
-*Icon?
-*Icon
+.idea/
+.DS_Store/
+Icon?
+Icon
