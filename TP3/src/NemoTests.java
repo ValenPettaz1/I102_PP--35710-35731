@@ -54,7 +54,7 @@ public class NemoTests {
     @Test public void test09NemoCannotDropCapsuleInDepth(){
         nemo.operate("d");
         nemo.operate("d");
-        assertThrowsLike(() -> nemo.operate("m"), ));
+        assertThrowsLike(() -> nemo.operate("m"), "No se puede liberar la cápsula");
     }
 
     public void assertPosition(Nemo nemo, int x, int y, int z, int direction) {
