@@ -4,12 +4,14 @@ public class Nemo {
     private int y;
     private int z;
     private int direction;
+    private boolean capsule;
 
     public Nemo(int x, int y) {
         this.x = x;
         this.y = y;
         this.z = 0;
         this.direction = 0;
+        this.capsule = true;
     }
 
     public int getX() {return x;}
@@ -17,8 +19,12 @@ public class Nemo {
     public int getZ() {return z;}
     public int getDirection() {return direction;}
 
-    public Nemo operate(String operation) {
+    public boolean hasCapsule() {
+        return capsule;
+    }
 
+    public Nemo operate(String operation) {
+        
         if (operation == "u") {
             if (z != 0) {
                 z += 1;
@@ -50,9 +56,16 @@ public class Nemo {
             }
         }
 
-        if (operation == "m" && z < -1){
-            throw new RuntimeException("No se puede liberar la cápsula");
+        if (operation == "m") {
+            if (!this.capsule) {
+                throw new RuntimeException("La capsula ya fue lanzada");
+            }
+            if (z < -1){
+                throw new RuntimeException("No se puede liberar la cápsula debajo del primer nivel");
+            }
+            capsule = false;
         }
+
         return this;
     }
 }
