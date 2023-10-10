@@ -3,28 +3,28 @@ public class Nemo {
     private int x;
     private int y;
     private int z;
-    private int direction;
+    private Cardinal direction;
     private boolean capsule;
 
     public Nemo(int x, int y) {
         this.x = x;
         this.y = y;
         this.z = 0;
-        this.direction = 0;
+        this.direction = new North();
         this.capsule = true;
     }
 
     public int getX() {return x;}
     public int getY() {return y;}
     public int getZ() {return z;}
-    public int getDirection() {return direction;}
+    public Cardinal getDirection() {return direction;}
 
     public boolean hasCapsule() {
         return capsule;
     }
 
     public Nemo operate(String operation) {
-        
+
         if (operation == "u") {
             if (z != 0) {
                 z += 1;
@@ -34,11 +34,11 @@ public class Nemo {
             z -= 1;
         }
         if (operation == "r") {
-            direction = (direction - 90) % 360;
+            direction.turnRight();
         }
 
         if (operation == "l") {
-            direction = (direction + 90) % 360;
+            direction.turnLeft();
         }
 
         if (operation == "f"){
