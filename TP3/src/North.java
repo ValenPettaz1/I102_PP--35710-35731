@@ -1,13 +1,8 @@
 public class North extends Cardinal{
-    public North() {}
 
     @Override
-    public Cardinal turnRight() {
-        return new East();
-    }
+    public Cardinal turnRight() {return Nemo.east;}
 
     @Override
-    public Cardinal turnLeft() {
-        return new West();
-    }
+    public Cardinal turnLeft() {return Nemo.west;}
 }
