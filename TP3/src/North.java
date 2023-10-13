@@ -1,13 +1,5 @@
 public class North extends Cardinal{
 
-    public North() {
-        super("North");
-    }
-
-    public String getDirection() {
-        return super.getDirection();
-    }
-
     @Override
     public Cardinal getRight() {return new East();}
 
