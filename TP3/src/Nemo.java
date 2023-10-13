@@ -1,21 +1,12 @@
-import java.lang.reflect.Array;
 
 public class Nemo {
-    public static North north = new North();
-    public static East east = new East();
-    public static South south = new South();
-    public static West west = new West();
 
-    private int x;
-    private int y;
-    private int z;
+    private Point position;
     private Cardinal direction;
 
-    public Nemo(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.z = 0;
-        this.direction = north;
+    public Nemo(int xCoord, int yCoord, Cardinal direction) {
+        this.position = new Point(xCoord, yCoord, 0);
+        this.direction = direction;
     }
 
     public void operate(){}
@@ -31,7 +22,7 @@ public class Nemo {
             char operation = operations.charAt(i);
 
             if (operation == 'u') {
-                if (z != 0) {
+                if (position.getZ() != 0) {
                     z += 1;
                 }
             } else if (operation == 'd') {
@@ -59,8 +50,6 @@ public class Nemo {
         return this;
     }
 
-    public int getX() {return x;}
-    public int getY() {return y;}
-    public int getZ() {return z;}
+    public Point getPosition() {return position;}
     public Cardinal getDirection() {return direction;}
 }

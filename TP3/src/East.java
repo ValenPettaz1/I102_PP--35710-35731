@@ -1,12 +1,23 @@
 public class East extends Cardinal{
 
-    @Override
-    public Cardinal turnRight() {
-        return Nemo.south;
+    public East() {super("East");}
+
+    public String getDirection() {
+        return super.getDirection();
     }
 
     @Override
-    public Cardinal turnLeft() {
-        return Nemo.north;
+    public Cardinal getRight() {
+        return new South();
+    }
+
+    @Override
+    public Cardinal getLeft() {
+        return new North();
+    }
+
+    @Override
+    public Point getFront() {
+        return new Point(1, 0, 0);
     }
 }
