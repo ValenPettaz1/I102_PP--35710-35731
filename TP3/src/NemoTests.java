@@ -15,74 +15,73 @@ public class NemoTests {
     }
 
     @Test public void testNemoDoesNotMoveWithVoidOperations() {
-        nemo.operate("");
+        nemo.operate();
         assertPosition( nemo, 1, 2, 0, Nemo.north);
     }
 
     @Test public void testNemoDescends() {
-        nemo.operate("d");
+        nemo.operate('d');
         assertPosition(nemo, 1, 2, -1, Nemo.north);
     }
 
     @Test public void testNemoAscends() {
-        nemo.operate("d");
-        nemo.operate("u");
+        nemo.operate('d');
+        nemo.operate('u');
         assertPosition(nemo, 1, 2, 0, Nemo.north);
     }
 
     @Test public void testNemoCannotFly() {
-        nemo.operate("u");
+        nemo.operate('u');
         assertPosition(nemo, 1, 2, 0, Nemo.north);
     }
 
     @Test public void testNemoTurnLeft(){
-        nemo.operate("l");
+        nemo.operate('l');
         assertPosition(nemo, 1, 2, 0, Nemo.west);
     }
 
     @Test public void testNemoTurnRight(){
-        nemo.operate("r");
+        nemo.operate('r');
         assertPosition(nemo, 1, 2, 0, Nemo.east);
     }
 
     @Test public void testNemoMoveForward(){
-        nemo.operate("f");
-        assertPosition(nemo, 2, 2, 0, Nemo.north);
-    }
-
-    @Test public void testNemoHasCapsuleWhenCreated(){
-        assertTrue(nemo.hasCapsule());
-    }
-
-    @Test public void testNemoDropsCapsuleInSurface(){
-        nemo.operate("m");
-        assertFalse(nemo.hasCapsule());
-        assertPosition(nemo, 1, 2, 0, Nemo.north);
-    }
-
-    @Test public void testNemoDropsCapsuleInFirstLevel(){
-        nemo.operate("d");
-        nemo.operate("m");
-        assertFalse(nemo.hasCapsule());
-        assertPosition(nemo, 1, 2, -1, Nemo.north);
-    }
-
-    @Test public void testNemoCannotDropCapsuleInDepth(){
-        nemo.operate("d");
-        nemo.operate("d");
-        assertThrowsLike(() -> nemo.operate("m"), "No se puede liberar la cápsula debajo del primer nivel");
-    }
-
-    @Test public void testNemoCannotDropCapsuleTwice(){
-        nemo.operate("m");
-        assertFalse(nemo.hasCapsule());
-        assertThrowsLike(() -> nemo.operate("m"), "La capsula ya fue lanzada");
+        nemo.operate('f');
+        assertPosition(nemo, 1, 3, 0, Nemo.north);
     }
 
     @Test public void testNemoAcceptsMultipleOperationsByString(){
         nemo.operate("ddrffl");
-        assertPosition(nemo, 1, 3, -2, Nemo.west);
+        assertPosition(nemo, 3, 2, -2, Nemo.north);
     }
+
+    @Test public void testNemoDropsCapsuleInSurface(){
+        nemo.operate('m');
+        assertPosition(nemo, 1, 2, 0, Nemo.north);
+    }
+
+    @Test public void testNemoDropsCapsuleInFirstLevel(){
+        nemo.operate('d');
+        nemo.operate('m');
+        assertPosition(nemo, 1, 2, -1, Nemo.north);
+    }
+
+    @Test public void testNemoCannotDropCapsuleInDepth(){
+        nemo.operate('d');
+        nemo.operate('d');
+        assertThrowsLike(() -> nemo.operate("m"), "No se puede liberar la cápsula debajo del primer nivel");
+    }
+
+    @Test public void testNemoCanDropCapsuleManyTimes(){
+        nemo.operate("mmmmm");
+        assertPosition(nemo, 1, 2, 0, Nemo.north);
+    }
+
+    @Test public void testNemoCannotDropCapsuleInDepthsByString(){
+        assertThrowsLike(() -> nemo.operate("dddmr"), "No se puede liberar la cápsula debajo del primer nivel");
+    }
+
+
 
     public void assertPosition(Nemo nemo, int x, int y, int z, Cardinal direction) {
         assertEquals(x, nemo.getX());
