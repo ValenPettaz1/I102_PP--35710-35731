@@ -1,13 +1,16 @@
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Arrays;
+
 
 public class Nemo {
 
     private Point position;
     private Cardinal direction;
-    private List<Depth> inmersion = new ArrayList<>(Arrays.asList(new Surface()));
+    private List<Depth> depth = new ArrayList<>(Arrays.asList(new Surface()));
+
 
     public Nemo(int xCoord, int yCoord, Cardinal direction) {
         this.position = new Point(xCoord, yCoord, 0);
@@ -34,18 +37,20 @@ public class Nemo {
             char operation = operations.charAt(i);
 
             if (operation == 'u') {
-                if (position.getZ() != 0) {
-                    position = position.add(new Point(0, 0, 1));
-                }
+                position = depth.get(0).ascendMe(this);
+
+
+
             } else if (operation == 'd') {
-                position = position.add(new Point(0, 0, -1));
+                position = depth.get(depth.size()-1).descendMe(this);
+
             }
 
             else if (operation == 'r') {
-                direction = direction.getRight();
+                direction = direction.turnRight();
             }
             else if (operation == 'l') {
-                direction = direction.getLeft();
+                direction = direction.turnLeft();
             }
 
             else if (operation == 'f') {
@@ -66,6 +71,10 @@ public class Nemo {
         }
         return this;
     }
+
+    public void add(Depth level) { depth.add(depth.size()-1, level);}
+    public void remove() { depth.remove(0);}
+
 
     public Point getPosition() {return position;}
     public Cardinal getDirection() {return direction;}

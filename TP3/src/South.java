@@ -1,10 +1,10 @@
 public class South extends Cardinal{
 
     @Override
-    public Cardinal getRight() {return new West();}
+    public Cardinal turnRight() {return new West();}
 
     @Override
-    public Cardinal getLeft() {return new East();}
+    public Cardinal turnLeft() {return new East();}
 
     @Override
     public Point getFront() {

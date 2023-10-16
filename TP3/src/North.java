@@ -1,10 +1,10 @@
 public class North extends Cardinal{
 
     @Override
-    public Cardinal getRight() {return new East();}
+    public Cardinal turnRight() {return new East();}
 
     @Override
-    public Cardinal getLeft() {return new West();}
+    public Cardinal turnLeft() {return new West();}
 
     @Override
     public Point getFront() {

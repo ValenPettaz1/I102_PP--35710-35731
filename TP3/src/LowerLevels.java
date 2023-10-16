@@ -1,13 +1,15 @@
-public class Surface extends Depth{
+public class LowerLevels extends Depth{
 
     @Override
     public Point ascendMe(Nemo nemo) {
-        return nemo.getPosition();
+        nemo.remove();
+        return nemo.getPosition().add(new Point(0, 0, 1));
+
     }
 
     @Override
     public Point descendMe(Nemo nemo) {
-        nemo.add(new FirstLevel());
+        nemo.add(new LowerLevels());
         return nemo.getPosition().add(new Point(0, 0, -1));
     }
 
@@ -15,6 +17,4 @@ public class Surface extends Depth{
     public Object dropCapsule(){
         return null;
     }
-
-
 }

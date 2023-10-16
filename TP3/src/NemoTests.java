@@ -29,16 +29,17 @@ public class NemoTests {
         assertPosition(nemo, 1, 2, -1, North);
     }
 
+    @Test public void testNemoCannotFly() {
+        nemo.operate('u');
+        assertPosition(nemo, 1, 2, 0, North);
+    }
+
     @Test public void testNemoAscends() {
         nemo.operate('d');
         nemo.operate('u');
         assertPosition(nemo, 1, 2, 0, North);
     }
 
-    @Test public void testNemoCannotFly() {
-        nemo.operate('u');
-        assertPosition(nemo, 1, 2, 0, North);
-    }
 
     @Test public void testNemoTurnLeft(){
         nemo.operate('l');

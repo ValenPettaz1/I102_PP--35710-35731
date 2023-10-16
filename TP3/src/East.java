@@ -1,12 +1,12 @@
 public class East extends Cardinal{
 
     @Override
-    public Cardinal getRight() {
+    public Cardinal turnRight() {
         return new South();
     }
 
     @Override
-    public Cardinal getLeft() {
+    public Cardinal turnLeft() {
         return new North();
     }
 
