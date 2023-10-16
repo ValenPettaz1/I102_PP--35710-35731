@@ -86,8 +86,6 @@ public class NemoTests {
         assertThrowsLike(() -> nemo.operate("dddmr"), "No se puede liberar la cápsula debajo del primer nivel");
     }
 
-
-
     public void assertPosition(Nemo nemo, int x, int y, int z, Cardinal direction) {
         assertEquals(x, nemo.getPosition().getX());
         assertEquals(y, nemo.getPosition().getY());
