@@ -14,7 +14,7 @@ public class LowerLevels extends Depth{
     }
 
     @Override
-    public Object dropCapsule(){
-        return null;
+    public void dropCapsule(){
+      throw new RuntimeException("No se puede liberar la cápsula debajo del primer nivel");
     }
 }

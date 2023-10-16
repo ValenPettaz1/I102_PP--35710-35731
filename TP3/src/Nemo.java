@@ -39,10 +39,8 @@ public class Nemo {
             if (operation == 'u') {
                 position = depth.get(0).ascendMe(this);
 
-
-
             } else if (operation == 'd') {
-                position = depth.get(depth.size()-1).descendMe(this);
+                position = depth.get(0).descendMe(this);
 
             }
 
@@ -64,15 +62,13 @@ public class Nemo {
                     position = position.add(new Point(1, 0, 0));
                 }
             } else if (operation == 'm') {
-                if (position.getZ() < -1) {
-                    throw new RuntimeException("No se puede liberar la cápsula debajo del primer nivel");
-                }
+                depth.get(0).dropCapsule();
             }
         }
         return this;
     }
 
-    public void add(Depth level) { depth.add(depth.size()-1, level);}
+    public void add(Depth level) { depth.add(0,level);}
     public void remove() { depth.remove(0);}
 
 

@@ -14,8 +14,7 @@ public class FirstLevel extends Depth{
 
 
     @Override
-    public Object dropCapsule(){
-        return null;
+    public void dropCapsule(){
     }
 
 
