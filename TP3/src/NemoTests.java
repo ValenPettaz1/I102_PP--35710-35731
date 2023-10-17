@@ -40,7 +40,6 @@ public class NemoTests {
         assertPosition(nemo, 1, 2, 0, North);
     }
 
-
     @Test public void testNemoTurnLeft(){
         nemo.operate('l');
         assertPosition(nemo, 1, 2, 0, West);

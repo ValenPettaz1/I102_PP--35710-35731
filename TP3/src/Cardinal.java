@@ -1,7 +1,7 @@
 public abstract class Cardinal {
 
-    public abstract Cardinal turnRight();
-    public abstract Cardinal turnLeft();
+    public abstract Cardinal getRight();
+    public abstract Cardinal getLeft();
     public abstract Point getFront();
 
     public boolean equals( Object obj ) {

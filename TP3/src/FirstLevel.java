@@ -2,13 +2,13 @@ public class FirstLevel extends Depth{
 
     @Override
     public Point ascendMe(Nemo nemo) {
-        nemo.remove();
+        nemo.removeDepthLevel();
         return nemo.getPosition().add(Point.Up);
     }
 
     @Override
     public Point descendMe(Nemo nemo) {
-        nemo.add(new LowerLevel());
+        nemo.addDepthLevel(new LowerLevel());
         return nemo.getPosition().add(Point.Down);
     }
 
