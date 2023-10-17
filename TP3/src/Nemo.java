@@ -9,7 +9,7 @@ public class Nemo {
 
     private Point position;
     private Cardinal direction;
-    private List<Depth> depth = new ArrayList<>(Arrays.asList(new Surface()));
+    private List<Depth> depthLevels = new ArrayList<>(Arrays.asList(new Surface()));
 
 
     public Nemo(int xCoord, int yCoord, Cardinal direction) {
@@ -37,10 +37,10 @@ public class Nemo {
             char operation = operations.charAt(i);
 
             if (operation == 'u') {
-                position = depth.get(0).ascendMe(this);
+                position = depthLevels.get(0).ascendMe(this);
 
             } else if (operation == 'd') {
-                position = depth.get(0).descendMe(this);
+                position = depthLevels.get(0).descendMe(this);
 
             }
 
@@ -62,15 +62,14 @@ public class Nemo {
                     position = position.add(new Point(1, 0, 0));
                 }
             } else if (operation == 'm') {
-                depth.get(0).dropCapsule();
+                depthLevels.get(0).dropCapsule();
             }
         }
         return this;
     }
 
-    public void add(Depth level) { depth.add(0,level);}
-    public void remove() { depth.remove(0);}
-
+    public void add(Depth level) { depthLevels.add(0,level);}
+    public void remove() { depthLevels.remove(0);}
 
     public Point getPosition() {return position;}
     public Cardinal getDirection() {return direction;}

@@ -8,12 +8,9 @@ public class Surface extends Depth{
     @Override
     public Point descendMe(Nemo nemo) {
         nemo.add(new FirstLevel());
-        return nemo.getPosition().add(new Point(0, 0, -1));
+        return nemo.getPosition().add(Point.Down);
     }
 
     @Override
-    public void dropCapsule(){
-    }
-
-
+    public void dropCapsule(){}
 }

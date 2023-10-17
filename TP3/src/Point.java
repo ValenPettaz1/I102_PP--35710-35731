@@ -1,4 +1,6 @@
 public class Point {
+    public static Point Up = new Point(0, 0, 1);
+    public static Point Down = new Point(0, 0, -1);
 
     private int x;
     private int y;

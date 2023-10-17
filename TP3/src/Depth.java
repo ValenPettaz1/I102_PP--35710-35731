@@ -5,6 +5,4 @@ public abstract class Depth {
     public abstract Point descendMe(Nemo nemo);
 
     public abstract void dropCapsule();
-
 }
-

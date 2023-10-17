@@ -1,4 +1,4 @@
-public class FirstLevel extends Depth{
+public class LowerLevel extends Depth {
 
     @Override
     public Point ascendMe(Nemo nemo) {
@@ -13,5 +13,7 @@ public class FirstLevel extends Depth{
     }
 
     @Override
-    public void dropCapsule(){}
+    public void dropCapsule() {
+        throw new RuntimeException("No se puede liberar la cápsula debajo del primer nivel");
+    }
 }
