@@ -1,17 +1,15 @@
-public class FirstLevel extends Depth{
+public class FirstLevel extends DepthManager {
 
     @Override
-    public Point ascendMe(Nemo nemo) {
+    public void ascendMe(Nemo nemo) {
         nemo.removeDepthLevel();
-        return nemo.getPosition().add(Point.Up);
     }
 
     @Override
-    public Point descendMe(Nemo nemo) {
+    public void descendMe(Nemo nemo) {
         nemo.addDepthLevel(new LowerLevel());
-        return nemo.getPosition().add(Point.Down);
     }
 
     @Override
-    public void dropCapsule(){}
+    public void capsuleHasBeenReleased(){}
 }

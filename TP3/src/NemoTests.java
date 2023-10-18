@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.*; //OJO con el asterisco.
 
 public class NemoTests {
 
-    private static North North = new North();
-    private static South South = new South();
-    private static East East = new East();
-    private static West West = new West();
+    private North North = new North();
+    private South South = new South();
+    private East East = new East();
+    private West West = new West();
 
     @BeforeEach public void setUp(){
         nemo = new Nemo(1,2, new North());
@@ -17,6 +17,11 @@ public class NemoTests {
 
     @Test public void testNemoStartingPosition() {
         assertPosition(nemo, 1,2,0, new North());
+    }
+
+    @Test public void testNemoCanStartInAnyDirection(){
+        nemo = new Nemo(3,4,South);
+        assertPosition(nemo,3,4,0,South);
     }
 
     @Test public void testNemoDoesNotMoveWithVoidOperations() {
@@ -74,7 +79,7 @@ public class NemoTests {
     @Test public void testNemoCannotDropCapsuleInDepth(){
         nemo.operate('d');
         nemo.operate('d');
-        assertThrowsLike(() -> nemo.operate("m"), "No se puede liberar la cápsula debajo del primer nivel");
+        assertThrowsLike(() -> nemo.operate("m"), DepthManager.NemoHasBeenDestoyed);
     }
 
     @Test public void testNemoCanDropCapsuleManyTimes(){
@@ -83,13 +88,13 @@ public class NemoTests {
     }
 
     @Test public void testNemoCannotDropCapsuleInDepthsByString(){
-        assertThrowsLike(() -> nemo.operate("dddmr"), "No se puede liberar la cápsula debajo del primer nivel");
+        assertThrowsLike(() -> nemo.operate("dddmr"), DepthManager.NemoHasBeenDestoyed);
     }
 
     public void assertPosition(Nemo nemo, int x, int y, int z, Cardinal direction) {
         assertEquals(x, nemo.getPosition().getX());
         assertEquals(y, nemo.getPosition().getY());
-        assertEquals(z, nemo.getPosition().getZ());
+        assertEquals(z, nemo.getDepth());
         assertEquals(direction, nemo.getDirection());
     }
 

@@ -1,16 +1,13 @@
-public class Surface extends Depth{
+public class Surface extends DepthManager {
 
     @Override
-    public Point ascendMe(Nemo nemo) {
-        return nemo.getPosition();
-    }
+    public void ascendMe(Nemo nemo) {}
 
     @Override
-    public Point descendMe(Nemo nemo) {
+    public void descendMe(Nemo nemo) {
         nemo.addDepthLevel(new FirstLevel());
-        return nemo.getPosition().add(Point.Down);
     }
 
     @Override
-    public void dropCapsule(){}
+    public void capsuleHasBeenReleased(){}
 }

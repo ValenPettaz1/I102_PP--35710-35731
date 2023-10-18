@@ -1,33 +1,81 @@
-public class Command {
-    private char command;
-    public Command (char command) {
-        this.command = command;
-    }
-    public Nemo operateMe(Nemo nemo) {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-        if (command == 'u') {
-            return nemo.ascend();
-        }
-        else if (command == 'd') {
-            return nemo.descend();
-        }
+public abstract class Command {
 
-        else if (command == 'r') {
-            return nemo.turnRight();
-        }
-        else if (command == 'l') {
-            return nemo.turnLeft();
-        }
+    public abstract boolean applies(Character commandKey);
+    public abstract void executeCommand(Nemo nemo);
+}
 
-        else if (command == 'f') {
-            return nemo.moveFront();
-        }
-        else if (command == 'm') {
-            return nemo.dropCapsule();
-        }
+class Ascend extends Command{
+    private char key = 'u';
 
-        return nemo;
+    public boolean applies(Character commandKey) {
+        return commandKey.equals(key);
     }
 
+    public void executeCommand(Nemo nemo) {
+        nemo.ascend();
+    }
+}
 
+class Descend extends Command{
+    private char key = 'd';
+
+    public boolean applies(Character commandKey) {
+        return commandKey.equals(key);
+    }
+
+    public void executeCommand(Nemo nemo) {
+        nemo.descend();
+    }
+}
+
+class TurnLeft extends Command{
+    private char key = 'l';
+
+    public boolean applies(Character commandKey) {
+        return commandKey.equals(key);
+    }
+
+    public void executeCommand(Nemo nemo) {
+        nemo.turnLeft();
+    }
+}
+
+class TurnRight extends Command{
+    private char key = 'r';
+
+    public boolean applies(Character commandKey) {
+        return commandKey.equals(key);
+    }
+
+    public void executeCommand(Nemo nemo) {
+        nemo.turnRight();
+    }
+}
+
+class MoveForward extends Command{
+    private char key = 'f';
+
+    public boolean applies(Character commandKey) {
+        return commandKey.equals(key);
+    }
+
+    public void executeCommand(Nemo nemo) {
+        nemo.moveFront();
+    }
+}
+
+class DropCapsule extends Command{
+    private char key = 'm';
+
+    public boolean applies(Character commandKey) {
+        return commandKey.equals(key);
+    }
+
+    public void executeCommand(Nemo nemo) {
+        nemo.dropCapsule();
+    }
 }

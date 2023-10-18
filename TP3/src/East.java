@@ -12,6 +12,6 @@ public class East extends Cardinal{
 
     @Override
     public Point getFront() {
-        return new Point(1, 0, 0);
+        return new Point(1, 0);
     }
 }

@@ -1,19 +1,17 @@
-public class LowerLevel extends Depth {
+public class LowerLevel extends DepthManager {
 
     @Override
-    public Point ascendMe(Nemo nemo) {
+    public void ascendMe(Nemo nemo) {
         nemo.removeDepthLevel();
-        return nemo.getPosition().add(Point.Up);
     }
 
     @Override
-    public Point descendMe(Nemo nemo) {
+    public void descendMe(Nemo nemo) {
         nemo.addDepthLevel(new LowerLevel());
-        return nemo.getPosition().add(Point.Down);
     }
 
     @Override
-    public void dropCapsule() {
-        throw new RuntimeException("No se puede liberar la cápsula debajo del primer nivel");
+    public void capsuleHasBeenReleased() {
+        throw new RuntimeException(NemoHasBeenDestoyed);
     }
 }

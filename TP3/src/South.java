@@ -8,6 +8,6 @@ public class South extends Cardinal{
 
     @Override
     public Point getFront() {
-        return new Point(0, -1,0);
+        return new Point(0, -1);
     }
 }
