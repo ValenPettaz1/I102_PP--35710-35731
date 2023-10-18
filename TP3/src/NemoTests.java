@@ -25,7 +25,7 @@ public class NemoTests {
     }
 
     @Test public void testNemoDoesNotMoveWithVoidOperations() {
-        nemo.operate();
+        nemo.operate("");
         assertPosition( nemo, 1, 2, 0, North);
     }
 
@@ -55,6 +55,8 @@ public class NemoTests {
         assertPosition(nemo, 1, 2, 0, East);
     }
 
+
+
     @Test public void testNemoMoveForward(){
         nemo.operate('f');
         assertPosition(nemo, 1, 3, 0, North);
@@ -63,6 +65,12 @@ public class NemoTests {
     @Test public void testNemoAcceptsMultipleOperationsByString(){
         nemo.operate("ddrffl");
         assertPosition(nemo, 3, 2, -2, North);
+
+    }
+
+    @Test public void testTurnRightFourTimesReturnTheSamePosition(){
+        nemo.operate("rrrr");
+        assertPosition(nemo,1,2,0,North);
     }
 
     @Test public void testNemoDropsCapsuleInSurface(){

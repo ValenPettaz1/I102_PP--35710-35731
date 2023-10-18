@@ -1,19 +1,14 @@
-import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CommandHandler {
-    private Consumer<Nemo>[] handlers = new Consumer[128];
+    private List<Command> validCommands = new ArrayList<>(Arrays.asList(new Ascend(), new Descend(), new TurnLeft(), new TurnRight(), new MoveForward(), new DropCapsule()));
 
-    public CommandHandler() {
-        handlers['u'] = Nemo::ascend;
-        handlers['d'] = Nemo::descend;
-        handlers['l'] = Nemo::turnLeft;
-        handlers['r'] = Nemo::turnRight;
-        handlers['f'] = Nemo::moveFront;
-        handlers['m'] = Nemo::dropCapsule;
-    }
-
-    public Nemo operateMe(char command, Nemo nemo) {
-        handlers[command].accept(nemo);
-        return nemo;
+    public CommandHandler(char c, Nemo nemo) {
+        validCommands.stream()
+                .filter(command -> command.applies(c))
+                .findFirst()
+                .ifPresent(command -> command.executeCommand(nemo));
     }
 }

@@ -9,8 +9,6 @@ public class Nemo {
     private Point position;
     private Cardinal direction;
     private int depth;
-    private CommandHandler commandHandler = new CommandHandler();
-    public List<Command> validCommands = new ArrayList<>(Arrays.asList(new Ascend(), new Descend(), new TurnLeft(), new TurnRight(), new MoveForward(), new DropCapsule()));
     private List<DepthManager> depthLevels = new ArrayList<>(Arrays.asList(new Surface()));
 
     public Nemo(int xCoord, int yCoord, Cardinal direction) {
@@ -18,9 +16,6 @@ public class Nemo {
         this.direction = direction;
         this.depth = -1 * (depthLevels.size() - 1);
     }
-
-    public void operate(){}
-
     public void operate(Character character) {
         this.operate(character.toString());
     }
@@ -28,11 +23,7 @@ public class Nemo {
     public void operate(String commands) {
         commands.chars()
                 .mapToObj(c -> (char) c)
-                .forEach(c -> validCommands.stream()
-                        .filter(command -> command.applies(c))
-                        .findFirst()
-                        .ifPresent(command -> command.executeCommand(this)));
-                /*.forEach(c -> commandHandler.operateMe(c,this));*/
+                .forEach(c -> new CommandHandler(c, this));
     }
 
     public Nemo ascend() {
