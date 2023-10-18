@@ -69,6 +69,7 @@ public class NemoTests {
     }
 
     @Test public void testTurnRightFourTimesReturnTheSamePosition(){
+        assertPosition(nemo,1,2,0,North);
         nemo.operate("rrrr");
         assertPosition(nemo,1,2,0,North);
     }
