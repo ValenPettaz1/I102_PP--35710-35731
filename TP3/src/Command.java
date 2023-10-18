@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public abstract class Command {
 
     public abstract boolean applies(Character commandKey);
@@ -64,7 +60,7 @@ class MoveForward extends Command{
     }
 
     public void executeCommand(Nemo nemo) {
-        nemo.moveFront();
+        nemo.moveForward();
     }
 }
 
