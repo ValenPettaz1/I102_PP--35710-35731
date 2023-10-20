@@ -12,6 +12,5 @@ public class FirstLevel extends DepthManager {
         nemo.addDepthLevel(new LowerLevel());
     }
 
-    @Override
-    public void capsuleHasBeenReleased(){}
+
 }

@@ -10,8 +10,6 @@ public class Nemo {
     private Coordinates position;
     private Cardinal direction;
     private List<DepthManager> depthLevels;
-    private List<Command> validCommands = new ArrayList<>(Arrays.asList(new Ascend(), new Descend(), new TurnLeft(), new TurnRight(), new MoveForward(), new DropCapsule()));
-
 
     public Nemo(int xCoord, int yCoord, Cardinal direction) {
         this.position = new Coordinates(xCoord, yCoord);
@@ -19,62 +17,51 @@ public class Nemo {
         this.depthLevels = new ArrayList<>(Arrays.asList(new Surface()));
     }
 
-
-    public void operate(Character character) {
-        this.operate(character.toString());
-    }
-    public void operate(String commands) {
-        commands.chars()
-                .mapToObj(c -> (char) c)
-                .forEach(c -> validCommands.stream()
-                        .filter(cmd -> cmd.applies(c))
-                        .findFirst()
-                        .get()
-                        .executeMe(this));
+    public void operate(Object commands) {
+        Command.commandFor(commands, this);
     }
 
-
-    public Nemo ascend() {
+    public void ascend() {
         depthLevels.get(0).ascendMe(this);
-        return this;
     }
 
-    public Nemo descend() {
+    public void descend() {
         depthLevels.get(0).descendMe(this);
-        return this;
     }
 
-    public Nemo turnRight() {
+    public void turnRight() {
         direction = direction.getRight();
-        return this;
     }
 
-    public Nemo turnLeft() {
+    public void turnLeft() {
         direction = direction.getLeft();
-        return this;
     }
 
-    public Nemo moveForward() {
+    public void moveForward() {
         position = position.add(direction.getFront());
-        return this;
     }
 
-    public Nemo dropCapsule() {
+    public void dropCapsule() {
         depthLevels.get(0).capsuleHasBeenReleased();
-        return this;
     }
 
-    public Nemo addDepthLevel(DepthManager level) {
+    public void addDepthLevel(DepthManager level) {
         depthLevels.add(0, level);
-        return this;
     }
 
-    public Nemo removeDepthLevel() {
+    public void removeDepthLevel() {
         depthLevels.remove(0);
-        return this;
     }
 
-    public Coordinates getPosition() {return position;}
-    public Cardinal getDirection() {return direction;}
-    public int getDepth() {return (depthLevels.size() - 1) * (-1);}
+    public Coordinates getPosition() {
+        return position;
+    }
+
+    public Cardinal getDirection() {
+        return direction;
+    }
+
+    public int getDepth() {
+        return (depthLevels.size() - 1) * (-1);
+    }
 }

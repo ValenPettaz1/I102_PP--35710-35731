@@ -6,5 +6,6 @@ public abstract class DepthManager {
 
     public abstract void descendMe(Nemo nemo);
 
-    public abstract void capsuleHasBeenReleased();
+    public void capsuleHasBeenReleased() {
+    }
 }
