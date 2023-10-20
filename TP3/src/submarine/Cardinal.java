@@ -1,8 +1,9 @@
-public abstract class Cardinal {
+package submarine;
 
+public abstract class Cardinal {
     public abstract Cardinal getRight();
     public abstract Cardinal getLeft();
-    public abstract Point getFront();
+    public abstract Coordinates getFront();
 
     public boolean equals( Object obj ) {
         return this == obj ||

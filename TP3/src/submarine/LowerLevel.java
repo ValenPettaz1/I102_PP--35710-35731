@@ -1,3 +1,5 @@
+package submarine;
+
 public class LowerLevel extends DepthManager {
 
     @Override
@@ -12,6 +14,6 @@ public class LowerLevel extends DepthManager {
 
     @Override
     public void capsuleHasBeenReleased() {
-        throw new RuntimeException(NemoHasBeenDestoyed);
+        throw new RuntimeException(Nemo.NemoHasBeenDestoyed);
     }
 }

@@ -1,37 +1,37 @@
+package submarine;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Nemo {
+    public static String NemoHasBeenDestoyed = "El submarino fue destruido, probablemente por exceso de chocolate";
 
-    private Point position;
+    private Coordinates position;
     private Cardinal direction;
     private List<DepthManager> depthLevels;
     private List<Command> validCommands = new ArrayList<>(Arrays.asList(new Ascend(), new Descend(), new TurnLeft(), new TurnRight(), new MoveForward(), new DropCapsule()));
 
+
     public Nemo(int xCoord, int yCoord, Cardinal direction) {
-        this.position = new Point(xCoord, yCoord);
+        this.position = new Coordinates(xCoord, yCoord);
         this.direction = direction;
         this.depthLevels = new ArrayList<>(Arrays.asList(new Surface()));
     }
 
+
     public void operate(Character character) {
         this.operate(character.toString());
     }
-
     public void operate(String commands) {
-        commands.toLowerCase().chars()
+        commands.chars()
                 .mapToObj(c -> (char) c)
-                .forEach(c -> {
-                    Command command = validCommands.stream()
-                            .filter(cmd -> cmd.applies(c))
-                            .findFirst()
-                            .get(); // Utilizar get() directamente ya que estás seguro de que siempre hay un valor presente
-
-                    command.executeCommand(this);
-                });
+                .forEach(c -> validCommands.stream()
+                        .filter(cmd -> cmd.applies(c))
+                        .findFirst()
+                        .get()
+                        .executeMe(this));
     }
-
 
 
     public Nemo ascend() {
@@ -74,15 +74,7 @@ public class Nemo {
         return this;
     }
 
-    public Point getPosition() {
-        return position;
-    }
-
-    public Cardinal getDirection() {
-        return direction;
-    }
-
-    public int getDepth() {
-        return (depthLevels.size() - 1) * (-1);
-    }
+    public Coordinates getPosition() {return position;}
+    public Cardinal getDirection() {return direction;}
+    public int getDepth() {return (depthLevels.size() - 1) * (-1);}
 }

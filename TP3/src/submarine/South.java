@@ -1,3 +1,5 @@
+package submarine;
+
 public class South extends Cardinal{
 
     @Override
@@ -7,7 +9,7 @@ public class South extends Cardinal{
     public Cardinal getLeft() {return new East();}
 
     @Override
-    public Point getFront() {
-        return new Point(0, -1);
+    public Coordinates getFront() {
+        return new Coordinates(0, -1);
     }
 }

@@ -1,3 +1,5 @@
+package submarine;
+
 public class FirstLevel extends DepthManager {
 
     @Override
