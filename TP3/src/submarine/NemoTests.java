@@ -15,37 +15,37 @@ public class NemoTests {
     }
 
     @Test
-    public void testNemoStartingPosition() {
+    public void test01NemoStartingPosition() {
         assertPositionAndDirection(nemo, 1, 2, 0, north());
     }
 
     @Test
-    public void testNemoCanStartInAnyDirection() {
+    public void test02NemoCanStartInAnyDirection() {
         nemo = new Nemo(3, 4, south());
         assertPositionAndDirection(nemo, 3, 4, 0, south());
     }
 
     @Test
-    public void testNemoDoesNotMoveWithVoidStrings() {
+    public void test03NemoDoesNotMoveWithVoidStrings() {
         nemo.operate("");
         assertPositionAndDirection(nemo, 1, 2, 0, north());
     }
 
     @Test
-    public void testNemoDescends() {
+    public void test04NemoDescends() {
         nemo.operate('d');
         assertPositionAndDirection(nemo, 1, 2, -1, north());
     }
 
     @Test
-    public void testNemoAscends() {
+    public void test05NemoAscends() {
         nemo.operate('d');
         nemo.operate('u');
         assertPositionAndDirection(nemo, 1, 2, 0, north());
     }
 
     @Test
-    public void testNemoCannotFly() {
+    public void test06NemoCannotFly() {
         nemo.operate('u');
         assertDepth(nemo, 0);
     }
@@ -53,13 +53,13 @@ public class NemoTests {
 
 
     @Test
-    public void testNemoTurnLeft() {
+    public void test07NemoTurnLeft() {
         nemo.operate('l');
         assertPositionAndDirection(nemo, 1, 2, 0, west());
     }
 
     @Test
-    public void testNemoTurnRight() {
+    public void test08NemoTurnRight() {
         nemo.operate('r');
         assertPositionAndDirection(nemo, 1, 2, 0, east());
     }
@@ -67,105 +67,106 @@ public class NemoTests {
 
 
     @Test
-    public void testNemoMoveForward() {
+    public void test09NemoMoveForward() {
         nemo.operate('f');
         assertPositionAndDirection(nemo, 1, 3, 0, north());
     }
 
     @Test
-    public void testNemoAcceptsMultipleOperationsByString() {
+    public void test10NemoAcceptsMultipleOperationsByString() {
         nemo.operate("ddrffl");
         assertPositionAndDirection(nemo, 3, 2, -2, north());
     }
 
-    @Test
-    public void testSquareRightMovementReturnToInitialPosition(){
-        nemo.operate("rfrfrfrf");
-        assertPositionAndDirection(nemo, 1, 2, 0, north());
-    }
 
     @Test
-    public void testRightLeftAndForwardOfNorth() {
+    public void test11RightLeftAndForwardOfNorth() {
         assertCardinals(east(), west(), new Coordinates(0, 1));
     }
 
     @Test
-    public void testRightLeftAndForwardOfSouth() {
+    public void test12RightLeftAndForwardOfSouth() {
         nemo = new Nemo(0,0, south());
         assertCardinals(west(), east(), new Coordinates(0, -1));
     }
 
     @Test
-    public void testRightLeftAndForwardOfEast() {
+    public void test13RightLeftAndForwardOfEast() {
         nemo = new Nemo(0,0, east());
         assertCardinals(south(), north(), new Coordinates(1, 0));
     }
 
     @Test
-    public void testRightLeftAndForwardOfWest() {
+    public void test14RightLeftAndForwardOfWest() {
         nemo = new Nemo(0,0,west());
         assertCardinals(north(), south(), new Coordinates(-1, 0));
     }
 
     @Test
-    public void testTurnRightFourTimesReturnTheSamePosition() {
+    public void test15TurnRightFourTimesReturnTheSamePosition() {
         assertPositionAndDirection(nemo, 1, 2, 0, north());
         nemo.operate("rrrr");
         assertPositionAndDirection(nemo, 1, 2, 0, north());
     }
 
     @Test
-    public void testTurnLeftFourTimesReturnTheSamePosition() {
+    public void test16TurnLeftFourTimesReturnTheSamePosition() {
         assertPositionAndDirection(nemo, 1, 2, 0, north());
         nemo.operate("llll");
         assertPositionAndDirection(nemo, 1, 2, 0, north());
     }
 
     @Test
-    public void testSquareLeftMovementReturnToInitialPosition(){
+    public void test17SquareRightMovementReturnToInitialPosition(){
+        nemo.operate("rfrfrfrf");
+        assertPositionAndDirection(nemo, 1, 2, 0, north());
+    }
+
+    @Test
+    public void test18SquareLeftMovementReturnToInitialPosition(){
         nemo.operate("lflflflf");
         assertPositionAndDirection(nemo, 1, 2, 0, north());
     }
 
     @Test
-    public void testNemoOnlyIgnoreUpCommandsWhenAreInTheSurface() {
+    public void test19NemoOnlyIgnoreUpCommandsWhenAreInTheSurface() {
         nemo.operate("uuudduuuududdu");
         assertDepth(nemo, -1);
     }
 
     @Test
-    public void testNemoDropsCapsuleInSurface() {
+    public void test20NemoDropsCapsuleInSurface() {
         nemo.operate('m');
         assertPositionAndDirection(nemo, 1, 2, 0, north());
     }
 
     @Test
-    public void testNemoDropsCapsuleInFirstLevel() {
+    public void test21NemoDropsCapsuleInFirstLevel() {
         nemo.operate('d');
         nemo.operate('m');
         assertPositionAndDirection(nemo, 1, 2, -1, north());
     }
 
     @Test
-    public void testNemoExplodesIfDropCapsuleInDepth() {
+    public void test22NemoExplodesIfDropCapsuleInDepth() {
         nemo.operate('d');
         nemo.operate('d');
         assertNemoHasBeenDestroyed(() -> nemo.operate('m'));
     }
 
     @Test
-    public void testNemoCanDropCapsuleManyTimes() {
+    public void test23NemoCanDropCapsuleManyTimes() {
         nemo.operate("mmmmm");
         assertPositionAndDirection(nemo, 1, 2, 0, north());
     }
 
     @Test
-    public void testNemoExplodesIfDropCapsuleInDepthsByString() {
+    public void test24NemoExplodesIfDropCapsuleInDepthsByString() {
         assertNemoHasBeenDestroyed(() -> nemo.operate("dddm"));
     }
 
     @Test
-    public void testNemoDescendsLowerThanFirstLevelThenAscendsAndDropCapsule() {
+    public void test25NemoDescendsLowerThanFirstLevelThenAscendsAndDropCapsule() {
         nemo.operate("dddduuuum");
         assertPositionAndDirection(nemo, 1,2,0, north());
     }
