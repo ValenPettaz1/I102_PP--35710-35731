@@ -1,6 +1,8 @@
 package linea;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
@@ -21,14 +23,30 @@ Debe respetarse el protocolo definido para Linea, el constructor y los mensajes 
  */
 
 public class GameTest {
-    @Test
-    public void testCreateNewGame(){
-        Linea game = new Linea( 6, 7, 'C' );
-        assertEquals( 6, game.base() );
-        assertEquals( 7, game.height() );
-        assertEquals( 'C', game.variant() );
 
+    @Test
+    public void testNewBoardHasCorrectDimensions() {
+        Linea game = new Linea( 7, 6, 'A');
+        assertEquals( 7, game.getBase() );
+        assertEquals( 6, game.getHeight() );
     }
 
+    @Test
+    public void testNewBoardIsEmpty() {
+        Linea game = new Linea(4, 3, 'A');
+        assertEquals("| - - - - |\n" +
+                             "| - - - - |\n" +
+                             "| - - - - |\n" +
+                             "| 0 1 2 3 |\n", game.show());
+    }
 
+    @Test
+    public void testRedWinsGame(){
+        Linea game = new Linea(4, 3, 'A');
+        game.playRedAt(0);
+        game.playRedAt(1);
+        game.playRedAt(2);
+        game.playRedAt(3);
+        assertTrue(game.finished());
+    }
 }
