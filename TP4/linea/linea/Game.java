@@ -8,7 +8,7 @@ public class Game {
         System.out.println( game.show() );
 
         while ( !game.finished() ) {
-            game.playRedkAt( prompt( "Negras? " ) );
+            game.playRedAt( prompt( "Negras? " ) );
             System.out.println( game.show() );
 
             if ( !game.finished() ) {
