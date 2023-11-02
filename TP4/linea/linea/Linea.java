@@ -24,23 +24,17 @@ public class Linea {
     }
 
     public void playRedAt(int columnIndex) {
-        if (isOnBounds(columnIndex) && columnHasSpace(columnIndex)) {
-            board.get(columnIndex).add('X');
-            lastChipPlayed = 'X';
-            lastColorPlayed = "Rojas";
-        } else {
-            throw new RuntimeException("No se puede jugar en esta columna");
-        }
+        Chip redChip = new Red();
+        redChip.playAt(this, columnIndex);
+        lastChipPlayed = redChip.getChip();
+        lastColorPlayed = redChip.getColor();
     }
 
     public void playBlueAt(int columnIndex) {
-        if (isOnBounds(columnIndex) && columnHasSpace(columnIndex)) {
-            board.get(columnIndex).add('O');
-            lastChipPlayed = 'O';
-            lastColorPlayed = "Azules";
-        } else {
-            throw new RuntimeException("No se puede jugar en esta columna");
-        }
+        Chip blueChip = new Blue();
+        blueChip.playAt(this, columnIndex);
+        lastChipPlayed = blueChip.getChip();
+        lastColorPlayed = blueChip.getColor();
     }
 
     public boolean finished() { //OJO: por ahora C solo chequea diagonales
@@ -100,18 +94,18 @@ public class Linea {
         return boardString + columnNumbers;
     }
 
-    private Character askForPoint(int columnIndex, int rowIndex) {
+    public Character askForPoint(int columnIndex, int rowIndex) {
         if (isOnBounds(columnIndex) && rowIndex >= 0 && rowIndex < board.get(columnIndex).size()) {
             return board.get(columnIndex).get(rowIndex);
         }
         return '-';
     }
 
-    private boolean columnHasSpace(int columnIndex) {
+    public boolean columnHasSpace(int columnIndex) {
         return columnIndex >= 0 && board.get(columnIndex).size() < getHeight();
     }
 
-    private boolean isOnBounds(int columnIndex) {
+    public boolean isOnBounds(int columnIndex) {
         return columnIndex >= 0 && columnIndex < getBase();
     }
 
@@ -119,4 +113,5 @@ public class Linea {
     public int getHeight() {return height;}
     public char getLastChipPlayed(){return lastChipPlayed;}
     public static String getLastColorPlayed() {return lastColorPlayed;}
+    public ArrayList<ArrayList<Character>> getBoard() {return board;}
 }
