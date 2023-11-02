@@ -49,4 +49,6 @@ public class GameTest {
         game.playRedAt(3);
         assertTrue(game.finished());
     }
+
+
 }

@@ -8,14 +8,15 @@ public class Game {
         System.out.println( game.show() );
 
         while ( !game.finished() ) {
-            game.playRedAt( prompt( "Rojas? " ) );
+            game.playRedAt( prompt( "Rojas (X)? " ) );
             System.out.println( game.show() );
 
             if ( !game.finished() ) {
-                game.playBlueAt( prompt( "Azules? " ) );
+                game.playBlueAt( prompt( "Azules (O)? " ) );
                 System.out.println( game.show() );
             }
         }
+        System.out.println("< Ganaron las " + Linea.getLastColorPlayed() + " >");
     }
 
     private static int prompt( String message ) {
