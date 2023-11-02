@@ -20,8 +20,7 @@ public class Linea {
         this.base = base;
         this.height = height;
         this.mode = mode;
-        Supplier<ArrayList<Character>> listSupplier = ArrayList::new;
-        this.board = Stream.generate(listSupplier)
+        this.board = Stream.generate(ArrayList<Character>::new)
                 .limit(base)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
@@ -49,20 +48,25 @@ public class Linea {
     public boolean finished() {
         char chip = getLastChipPlayed();
         if (mode == 'A' || mode == 'C'){
-            for (int i = 0; i < getHeight(); i++) {
+            /*for (int i = 0; i < getHeight(); i++) {
                 for (int j = 0; j < getBase(); j++) {
-                    if (askForPoint(i,j) == chip){
-                        if (askForPoint(i,j+1)== chip){
-                            if (askForPoint(i,j+2) == chip){
-                                if (askForPoint(i,j+3) == chip){
-                                    return true;
-                                }
-                            }
-                        }
+                    if (askForPoint(i,j) == chip &&
+                        askForPoint(i,j+1)== chip &&
+                        askForPoint(i,j+2) == chip &&
+                        askForPoint(i,j+3) == chip) {
+
+                        return true;
                     }
                 }
-            }
+            }*/
+            return IntStream.rangeClosed(0, getHeight() - 4)
+                    .anyMatch(i -> IntStream.rangeClosed(0, getBase() - 1)
+                            .anyMatch(j -> askForPoint(j, i) == chip &&
+                                    askForPoint(j + 1, i) == chip &&
+                                    askForPoint(j + 2, i) == chip &&
+                                    askForPoint(j + 3, i) == chip));
         }
+
         if (mode == 'B' || mode == 'C'){
             for (int i = 0; i < getBase(); i++) {
                 for (int j = 0; j < getHeight(); j++) {
