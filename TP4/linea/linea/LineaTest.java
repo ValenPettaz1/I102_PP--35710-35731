@@ -1,6 +1,5 @@
 package linea;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +21,7 @@ Se ofrece una pequeña interfaz de línea de comandos para correr por consola:
 Debe respetarse el protocolo definido para Linea, el constructor y los mensajes playBlueAt, playRedAt, finished y show.
  */
 
-public class GameTest {
+public class LineaTest {
 
     @Test
     public void testNewBoardHasCorrectDimensions() {
@@ -32,7 +31,7 @@ public class GameTest {
     }
 
     @Test
-    public void testNewBoardIsEmpty() {
+    public void testNewBoardIsEmpty() { //VER! Estamos chequeando contra el tablero
         Linea game = new Linea(4, 3, 'A');
         assertEquals("| - - - - |\n" +
                              "| - - - - |\n" +
@@ -41,12 +40,18 @@ public class GameTest {
     }
 
     @Test
-    public void testRedWinsGame(){
-        Linea game = new Linea(4, 3, 'A');
-        game.playRedAt(0);
-        game.playRedAt(1);
-        game.playRedAt(2);
-        game.playRedAt(3);
-        assertTrue(game.finished());
+    public void testRedAlwaysPlayFirst(){
+        Linea game = new Linea (4, 3, 'A');
+        assertTrue(game.isRedTurn());
+        assertFalse(game.isBlueTurn());
     }
+
+    @Test
+    public void testAfterRedIsBlueTurn(){
+        Linea game = new Linea (4, 3, 'A');
+        game.playRedAt(0);
+        assertTrue(game.isBlueTurn());
+        assertFalse(game.isRedTurn());
+    }
+    
 }

@@ -11,6 +11,8 @@ public class Linea {
     private char mode;
     private char lastChipPlayed;
     private static String lastColorPlayed;
+    private String turn;
+
 
     private ArrayList<ArrayList<Character>> board;
 
@@ -109,9 +111,28 @@ public class Linea {
         return columnIndex >= 0 && columnIndex < getBase();
     }
 
+    public void setTurn(String turn) {
+        this.turn = turn;
+    }
+
+    public boolean isRedTurn() {
+        return getTurn()== "red" ;
+    }
+
+    public boolean isBlueTurn() {
+        return getTurn()== "blue";
+    }
+
+    public String getTurn() {
+        return turn;
+    }
+
     public int getBase() {return base;}
     public int getHeight() {return height;}
     public char getLastChipPlayed(){return lastChipPlayed;}
     public static String getLastColorPlayed() {return lastColorPlayed;}
     public ArrayList<ArrayList<Character>> getBoard() {return board;}
+
+
+
 }
