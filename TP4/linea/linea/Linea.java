@@ -1,8 +1,11 @@
 package linea;
 
 import java.util.ArrayList;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 
 public class Linea {
     private int base;
@@ -11,15 +14,16 @@ public class Linea {
     private char lastChipPlayed;
     private static String lastColorPlayed;
 
-    private ArrayList<ArrayList<Character>> board = new ArrayList<>();
+    private ArrayList<ArrayList<Character>> board;
 
     public Linea(int base, int height, char mode) {
-        for (int i = 0; i < base; i++) {
-            board.add(new ArrayList<>());
-        }
         this.base = base;
         this.height = height;
         this.mode = mode;
+        Supplier<ArrayList<Character>> listSupplier = ArrayList::new;
+        this.board = Stream.generate(listSupplier)
+                .limit(base)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void playRedAt(int columnIndex) {
