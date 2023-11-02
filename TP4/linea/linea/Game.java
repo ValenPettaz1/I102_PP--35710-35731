@@ -24,13 +24,19 @@ public class Game {
         return Integer.parseInt(System.console().readLine());
     }
 
-    private static char charPrompt() {
+    private static Object charPrompt() {
         System.out.print("Modo A, B o C? ");
         char modeSelected =  System.console().readLine().charAt(0);
         if (modeSelected != 'A' && modeSelected != 'B' && modeSelected != 'C') {
             System.out.println("Modo invalido, se usara el modo C");
-            return 'C';
+            return new ModeC();
         }
-        return modeSelected;
+        if (modeSelected == 'A') {
+            return new ModeA();
+        }
+        if (modeSelected == 'B') {
+            return new ModeB();
+        }
+        return new ModeC();
     }
 }
