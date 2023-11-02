@@ -1,11 +1,9 @@
 package linea;
 
 import java.util.ArrayList;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 
 public class Linea {
     private int base;
@@ -53,7 +51,7 @@ public class Linea {
                             .anyMatch(j -> askForPoint(i, j) == chip &&
                                     askForPoint(i, j + 1) == chip &&
                                     askForPoint(i, j + 2) == chip &&
-                                    askForPoint(i, j + 3) == chip));*/
+                                    askForPoint(i, j + 3) == chip));
         }
 
         if (mode == 'B'){
@@ -86,19 +84,20 @@ public class Linea {
     }
 
     public String show() {
-        return IntStream.rangeClosed(1, getHeight())
+        String boardString = IntStream.rangeClosed(1, getHeight())
                 .mapToObj(i -> getHeight() - i)
                 .map(rowIndex -> "| " +
-                        IntStream.range(0, getBase())
-                                .mapToObj(columnIndex -> askForPoint(columnIndex, rowIndex) + " ")
-                                .collect(Collectors.joining()) +
-                        "|\n")
-                .collect(Collectors.joining()) +
-                "| " +
+                    IntStream.range(0, getBase())
+                            .mapToObj(columnIndex -> askForPoint(columnIndex, rowIndex) + " ")
+                            .collect(Collectors.joining()) + "|\n")
+                .collect(Collectors.joining());
+
+        String columnNumbers = "| " +
                 IntStream.rangeClosed(0, getBase() - 1)
                         .mapToObj(String::valueOf)
-                        .collect(Collectors.joining(" ")) +
-                " |\n";
+                        .collect(Collectors.joining(" ")) + " |\n";
+
+        return boardString + columnNumbers;
     }
 
     private Character askForPoint(int columnIndex, int rowIndex) {
@@ -109,19 +108,15 @@ public class Linea {
     }
 
     private boolean columnHasSpace(int columnIndex) {
-        return (columnIndex >= 0 && board.get(columnIndex).size() < getHeight());
+        return columnIndex >= 0 && board.get(columnIndex).size() < getHeight();
     }
 
     private boolean isOnBounds(int columnIndex) {
-        return (columnIndex < getBase() && columnIndex >= 0);
+        return columnIndex >= 0 && columnIndex < getBase();
     }
 
-    public int getBase() {
-        return base;
-    }
-    public int getHeight() {
-        return height;
-    }
+    public int getBase() {return base;}
+    public int getHeight() {return height;}
     public char getLastChipPlayed(){return lastChipPlayed;}
     public static String getLastColorPlayed() {return lastColorPlayed;}
 }
