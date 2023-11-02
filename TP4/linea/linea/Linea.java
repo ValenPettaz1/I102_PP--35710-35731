@@ -45,70 +45,42 @@ public class Linea {
         }
     }
 
-    public boolean finished() {
+    public boolean finished() { //OJO: por ahora C solo chequea diagonales
         char chip = getLastChipPlayed();
-        if (mode == 'A' || mode == 'C'){
-            /*for (int i = 0; i < getHeight(); i++) {
-                for (int j = 0; j < getBase(); j++) {
-                    if (askForPoint(i,j) == chip &&
-                        askForPoint(i,j+1)== chip &&
-                        askForPoint(i,j+2) == chip &&
-                        askForPoint(i,j+3) == chip) {
-
-                        return true;
-                    }
-                }
-            }*/
-            return IntStream.rangeClosed(0, getHeight() - 4)
-                    .anyMatch(i -> IntStream.rangeClosed(0, getBase() - 1)
-                            .anyMatch(j -> askForPoint(j, i) == chip &&
-                                    askForPoint(j + 1, i) == chip &&
-                                    askForPoint(j + 2, i) == chip &&
-                                    askForPoint(j + 3, i) == chip));
+        if (mode == 'A'){
+            return IntStream.rangeClosed(0, getHeight() - 1)
+                    .anyMatch(i -> IntStream.rangeClosed(0, getBase() - 4)
+                            .anyMatch(j -> askForPoint(i, j) == chip &&
+                                    askForPoint(i, j + 1) == chip &&
+                                    askForPoint(i, j + 2) == chip &&
+                                    askForPoint(i, j + 3) == chip));*/
         }
 
-        if (mode == 'B' || mode == 'C'){
-            for (int i = 0; i < getBase(); i++) {
-                for (int j = 0; j < getHeight(); j++) {
-                    if (askForPoint(i,j) == chip){
-                        if (askForPoint(i+1,j)== chip){
-                            if (askForPoint(i+2,j) == chip){
-                                if (askForPoint(i + 3,j) == chip){
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        if (mode == 'B'){
+            return IntStream.rangeClosed(0, getBase() - 4)
+                    .anyMatch(i -> IntStream.rangeClosed(0, getHeight() - 1)
+                            .anyMatch(j -> askForPoint(i, j) == chip &&
+                                    askForPoint(i + 1, j) == chip &&
+                                    askForPoint(i + 2, j) == chip &&
+                                    askForPoint(i + 3, j) == chip));
         }
+
         if (mode == 'C'){
-            for (int i = -getHeight()+1; i <= getBase()-3; i++){
-                for (int j = 0; j <= getHeight()-3; j++) {
-                    if (askForPoint(i, j) == chip) {
-                        if (askForPoint(i + 1, j + 1) == chip) {
-                            if (askForPoint(i + 2, j + 2) == chip) {
-                                if (askForPoint(i + 3, j + 3) == chip) {
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            for (int i = getBase() + getHeight() -1; i >= 3 ; i--){
-                for (int j = 0; j <= getHeight()-3; j++) {
-                    if (askForPoint(i, j) == chip) {
-                        if (askForPoint(i -1, j + 1) == chip) {
-                            if (askForPoint(i - 2, j + 2) == chip) {
-                                if (askForPoint(i - 3, j + 3) == chip) {
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            boolean rightDiagonal = IntStream.rangeClosed(-getHeight() + 1, getBase() - 3)
+                    .anyMatch(i -> IntStream.rangeClosed(0, getHeight() - 3)
+                            .anyMatch(j -> askForPoint(i, j) == chip &&
+                                    askForPoint(i + 1, j + 1) == chip &&
+                                    askForPoint(i + 2, j + 2) == chip &&
+                                    askForPoint(i + 3, j + 3) == chip));
+
+            boolean leftDiagonal = IntStream.rangeClosed(getBase() + getHeight() - 1, 3)
+                            .anyMatch(i -> IntStream.rangeClosed(0, getHeight() - 3)
+                                    .anyMatch(j -> askForPoint(i, j) == chip &&
+                                            askForPoint(i - 1, j + 1) == chip &&
+                                            askForPoint(i - 2, j + 2) == chip &&
+                                            askForPoint(i - 3, j + 3) == chip));
+
+            return rightDiagonal || leftDiagonal;
         }
         return false;
     }
