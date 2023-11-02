@@ -2,6 +2,8 @@ package linea;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Linea {
     private int base;
@@ -49,30 +51,29 @@ public class Linea {
     }
 
     public String show() {
-        StringBuilder result = new StringBuilder();
-
-        for (int i = getHeight() - 1; i >= 0; i--) {
-            result.append("| ");
-            for (int j = 0; isOnBounds(j); j++) {
-                if (board.get(j).size() > i) {
-                    result.append(board.get(j).get(i)).append(" ");
-                } else {
-                    result.append("- ");
-                }
-            }
-            result.append("|\n");
-        }
-        result.append("| ");
-        for (int i = 0; isOnBounds(i); i++) {
-            result.append(i).append(" ");
-        }
-        result.append("|\n");
-
-        return result.toString();
+        return IntStream.rangeClosed(1, getHeight())
+                .mapToObj(i -> getHeight() - i)
+                .map(rowIndex -> "| " +
+                        IntStream.range(0, getBase())
+                                .mapToObj(columnIndex -> askForPoint(rowIndex, columnIndex) + " ")
+                                .collect(Collectors.joining()) +
+                        "|\n")
+                .collect(Collectors.joining()) +
+                "| " +
+                IntStream.rangeClosed(0, getBase() - 1)
+                        .mapToObj(String::valueOf)
+                        .collect(Collectors.joining(" ")) +
+                " |\n";
     }
 
-    private String askForThisPoint(int rowIndex, int columnIndex){
-        return"A";
+
+
+
+    private Character askForPoint(int rowIndex, int columnIndex) {
+        if (isOnBounds(columnIndex) && rowIndex < board.get(columnIndex).size()) {
+            return board.get(columnIndex).get(rowIndex);
+        }
+        return '-';
     }
 
     private boolean columnHasSpace(int columnIndex) {
