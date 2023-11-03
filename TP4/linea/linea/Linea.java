@@ -40,43 +40,7 @@ public class Linea {
     }
 
     public boolean finished() { //OJO: por ahora C solo chequea diagonales
-        char chip = getLastChipPlayed();
-        if (mode == 'A'){
-            return IntStream.rangeClosed(0, getHeight() - 1)
-                    .anyMatch(i -> IntStream.rangeClosed(0, getBase() - 4)
-                            .anyMatch(j -> askForPoint(i, j) == chip &&
-                                    askForPoint(i, j + 1) == chip &&
-                                    askForPoint(i, j + 2) == chip &&
-                                    askForPoint(i, j + 3) == chip));
-        }
-
-        if (mode == 'B'){
-            return IntStream.rangeClosed(0, getBase() - 4)
-                    .anyMatch(i -> IntStream.rangeClosed(0, getHeight() - 1)
-                            .anyMatch(j -> askForPoint(i, j) == chip &&
-                                    askForPoint(i + 1, j) == chip &&
-                                    askForPoint(i + 2, j) == chip &&
-                                    askForPoint(i + 3, j) == chip));
-        }
-
-        if (mode == 'C'){
-            boolean rightDiagonal = IntStream.rangeClosed(-getHeight() + 1, getBase() - 3)
-                    .anyMatch(i -> IntStream.rangeClosed(0, getHeight() - 3)
-                            .anyMatch(j -> askForPoint(i, j) == chip &&
-                                    askForPoint(i + 1, j + 1) == chip &&
-                                    askForPoint(i + 2, j + 2) == chip &&
-                                    askForPoint(i + 3, j + 3) == chip));
-
-            boolean leftDiagonal = IntStream.rangeClosed(getBase() + getHeight() - 1, 3)
-                            .anyMatch(i -> IntStream.rangeClosed(0, getHeight() - 3)
-                                    .anyMatch(j -> askForPoint(i, j) == chip &&
-                                            askForPoint(i - 1, j + 1) == chip &&
-                                            askForPoint(i - 2, j + 2) == chip &&
-                                            askForPoint(i - 3, j + 3) == chip));
-
-            return rightDiagonal || leftDiagonal;
-        }
-        return false;
+        return GameMode.charForMode(mode, this);
     }
 
     public String show() {
@@ -132,7 +96,6 @@ public class Linea {
     public char getLastChipPlayed(){return lastChipPlayed;}
     public static String getLastColorPlayed() {return lastColorPlayed;}
     public ArrayList<ArrayList<Character>> getBoard() {return board;}
-
 
 
 }
