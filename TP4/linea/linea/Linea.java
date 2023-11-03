@@ -8,19 +8,19 @@ import java.util.stream.Stream;
 public class Linea {
     private int base;
     private int height;
-    private char charMode;
     private Mode mode;
     private char lastChipPlayed;
+    private int countPlayed = 0;
     private static String lastColorPlayed;
     private String turn;
 
+    public static String MatchResult = "< Ganaron las " + getLastColorPlayed() + " >";
 
     private ArrayList<ArrayList<Character>> board;
 
     public Linea(int base, int height, char charMode) {
         this.base = base;
         this.height = height;
-        this.charMode = charMode;
         this.board = Stream.generate(ArrayList<Character>::new)
                 .limit(base)
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -30,6 +30,7 @@ public class Linea {
     public void playRedAt(int columnIndex) {
         Chip redChip = new Red();
         redChip.playAt(this, columnIndex);
+        countPlayed++;
         lastChipPlayed = redChip.getChip();
         lastColorPlayed = redChip.getColor();
     }
@@ -37,11 +38,16 @@ public class Linea {
     public void playBlueAt(int columnIndex) {
         Chip blueChip = new Blue();
         blueChip.playAt(this, columnIndex);
+        countPlayed++;
         lastChipPlayed = blueChip.getChip();
         lastColorPlayed = blueChip.getColor();
     }
 
     public boolean finished() {
+        if (countPlayed == base * height) {
+            MatchResult = "< Empate >";
+            return true;
+        }
         return mode.checkFinish(this);
     }
 

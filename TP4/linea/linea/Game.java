@@ -16,7 +16,7 @@ public class Game {
                 System.out.println(game.show());
             }
         }
-        System.out.println("< Ganaron las " + Linea.getLastColorPlayed() + " >");
+        System.out.println(Linea.MatchResult);
     }
 
     private static int intPrompt(String message) {
