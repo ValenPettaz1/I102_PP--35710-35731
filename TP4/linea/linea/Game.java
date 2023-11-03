@@ -25,7 +25,7 @@ public class Game {
     }
 
     private static char charPrompt() {
-        System.out.print("Modo A, B o C? ");
+        System.out.print("Modo A, B o C? (de elegir mal por predeterminado C) ");
         return System.console().readLine().charAt(0);
     }
 }

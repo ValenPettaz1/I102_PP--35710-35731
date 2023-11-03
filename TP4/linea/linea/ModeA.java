@@ -2,7 +2,7 @@ package linea;
 
 import java.util.stream.IntStream;
 
-public class ModeA extends GameMode{
+public class ModeA extends Mode {
     private char mode;
     public ModeA(){
         this.mode = 'A';

@@ -2,7 +2,7 @@ package linea;
 
 import java.util.stream.IntStream;
 
-public class ModeC extends GameMode{
+public class ModeC extends Mode {
     private char mode;
     public ModeC(){
         this.mode = 'C';
@@ -10,7 +10,7 @@ public class ModeC extends GameMode{
 
     @Override
     public boolean applies(char mode) {
-        return false;
+        return true;
     }
 
     @Override
@@ -34,10 +34,9 @@ public class ModeC extends GameMode{
     }
 
     private boolean verticalCheck(Linea game){
-        return new ModeA().checkFinish(game);
+        return validModes.get(0).checkFinish(game);
     }
-
     private boolean horizontalCheck(Linea game){
-        return new ModeB().checkFinish(game);
+        return validModes.get(0).checkFinish(game);
     }
 }

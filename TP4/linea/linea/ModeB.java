@@ -2,7 +2,7 @@ package linea;
 
 import java.util.stream.IntStream;
 
-public class ModeB extends GameMode{
+public class ModeB extends Mode {
     private char mode;
     public ModeB(){
         this.mode = 'B';
@@ -10,7 +10,7 @@ public class ModeB extends GameMode{
 
     @Override
     public boolean applies(char mode) {
-        return false;
+        return this.mode == mode;
     }
 
     @Override

@@ -8,7 +8,8 @@ import java.util.stream.Stream;
 public class Linea {
     private int base;
     private int height;
-    private char mode;
+    private char charMode;
+    private Mode mode;
     private char lastChipPlayed;
     private static String lastColorPlayed;
     private String turn;
@@ -16,13 +17,14 @@ public class Linea {
 
     private ArrayList<ArrayList<Character>> board;
 
-    public Linea(int base, int height, char mode) {
+    public Linea(int base, int height, char charMode) {
         this.base = base;
         this.height = height;
-        this.mode = mode;
+        this.charMode = charMode;
         this.board = Stream.generate(ArrayList<Character>::new)
                 .limit(base)
                 .collect(Collectors.toCollection(ArrayList::new));
+        this.mode = Mode.charForMode(charMode);
     }
 
     public void playRedAt(int columnIndex) {
@@ -39,8 +41,8 @@ public class Linea {
         lastColorPlayed = blueChip.getColor();
     }
 
-    public boolean finished() { //OJO: por ahora C solo chequea diagonales
-        return GameMode.charForMode(mode, this);
+    public boolean finished() {
+        return mode.checkFinish(this);
     }
 
     public String show() {
