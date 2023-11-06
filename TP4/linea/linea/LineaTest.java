@@ -36,7 +36,7 @@ public class LineaTest {
         assertEquals("| - - - - |\n" +
                              "| - - - - |\n" +
                              "| - - - - |\n" +
-                             "| 0 1 2 3 |\n", game.show());
+                             "| 1 2 3 4 |\n", game.show());
     }
 
     @Test
@@ -49,9 +49,78 @@ public class LineaTest {
     @Test
     public void testAfterRedIsBlueTurn(){
         Linea game = new Linea (4, 3, 'A');
-        game.playRedAt(0);
+        game.playRedAt(1);
         assertTrue(game.isBlueTurn());
         assertFalse(game.isRedTurn());
     }
+
+    @Test
+    public void testRedCannotPlayTwice(){
+        Linea game = new Linea (4,3, 'A');
+        game.playRedAt(1);
+        assertThrows(RuntimeException.class, () -> game.playRedAt(0));
+    }
+
+    @Test
+    public void testBlueCannotPlayTwice(){
+        Linea game = new Linea (4,3, 'A');
+        game.playRedAt(1);
+        game.playBlueAt(1);
+        assertThrows(RuntimeException.class, () -> game.playBlueAt(0));
+    }
+
+    @Test
+    public void testChipFallsToBottom(){
+        Linea game = new Linea (4,3, 'A');
+        game.playRedAt(1);
+        assertEquals('X', game.askForPoint(0,0));
+    }
+
+    @Test
+    public void testCannotPlayInFullColumn(){
+        Linea game = new Linea (4,3, 'A');
+        game.playRedAt(1);
+        game.playBlueAt(1);
+        game.playRedAt(1);
+        game.playBlueAt(1);
+        game.playRedAt(1);
+        assertThrows(RuntimeException.class, () -> game.playBlueAt(1));
+    }
+
+    @Test
+    public void testCannotPlayInColumnOutOfBounds(){
+        Linea game = new Linea (4,3, 'A');
+        assertThrows(RuntimeException.class, () -> game.playBlueAt(5));
+    }
+
+    @Test
+    public void testRedWinInModeA(){
+        Linea game = new Linea (4,3, 'A');
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(1);
+        assertTrue(game.finished());
+        assertEquals("< Rojas >", game.getMatchResult());
+    }
+
+    @Test
+    public void testBlueWinInModeA(){
+        Linea game = new Linea (4,3, 'A');
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playBlueAt(3);
+        assertTrue(game.finished());
+        assertEquals("< Azules >", game.getMatchResult());
+    }
+
+
     
 }

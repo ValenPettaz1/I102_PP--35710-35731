@@ -29,7 +29,7 @@ public class Linea {
 
     public void playRedAt(int columnIndex) {
         Chip redChip = new Red();
-        redChip.playAt(this, columnIndex);
+        redChip.playAt(this, columnIndex - 1);
         countPlayed++;
         lastChipPlayed = redChip.getChip();
         lastColorPlayed = redChip.getColor();
@@ -37,7 +37,7 @@ public class Linea {
 
     public void playBlueAt(int columnIndex) {
         Chip blueChip = new Blue();
-        blueChip.playAt(this, columnIndex);
+        blueChip.playAt(this, columnIndex - 1);
         countPlayed++;
         lastChipPlayed = blueChip.getChip();
         lastColorPlayed = blueChip.getColor();
@@ -61,7 +61,7 @@ public class Linea {
                 .collect(Collectors.joining());
 
         String columnNumbers = "| " +
-                IntStream.rangeClosed(0, getBase() - 1)
+                IntStream.rangeClosed(1, getBase())
                         .mapToObj(String::valueOf)
                         .collect(Collectors.joining(" ")) + " |\n";
 
@@ -92,7 +92,7 @@ public class Linea {
     }
 
     public boolean isBlueTurn() {
-        return getTurn()== "blue";
+        return getTurn() == "blue";
     }
 
     public String getTurn() {
