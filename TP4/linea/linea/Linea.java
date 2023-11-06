@@ -88,7 +88,7 @@ public class Linea {
     }
 
     public boolean isRedTurn() {
-        return getTurn()== "red" ;
+        return getTurn() == "red" ;
     }
 
     public boolean isBlueTurn() {
