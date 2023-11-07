@@ -10,7 +10,7 @@ public class Linea {
     private int base;
     private int height;
     private Mode mode;
-    private String turn;
+    private GameState turn;
     private int countPlayed = 0;
     private char lastChipPlayed;
     private String lastColorPlayed;
@@ -23,16 +23,16 @@ public class Linea {
                 .limit(base)
                 .collect(Collectors.toCollection(ArrayList::new));
         this.mode = Mode.charForMode(charMode);
+        this.turn = new RedPlays('X', "Red");
     }
 
     public void playRedAt(int columnIndex) {
-        new GameState(this).setTurn("red");
-        new Chip('X', "Rojas").playAt(this, columnIndex - 1);
+        getTurn().playAt(this, columnIndex - 1);
     }
 
     public void playBlueAt(int columnIndex) {
-        new Chip('O', "Azules").playAt(this, columnIndex - 1);
-        setTurn("red");
+        getTurn().playAt(this, columnIndex - 1);
+
     }
 
     public boolean finished() {
@@ -76,7 +76,7 @@ public class Linea {
         return columnIndex >= 0 && columnIndex < getBase();
     }
 
-    public void setTurn(String turn) {
+    public void setTurn(GameState turn) {
         this.turn = turn;
     }
     public void setCountPlayed(int countPlayed) {this.countPlayed = countPlayed;}
@@ -91,7 +91,7 @@ public class Linea {
 
     public int getBase() {return base;}
     public int getHeight() {return height;}
-    public String getTurn() {
+    public GameState getTurn() {
         return turn;
     }
     public int getCountPlayed() {return countPlayed;}
