@@ -30,11 +30,7 @@ public class Linea {
     }
 
     public void playBlueAt(int columnIndex) {
-
         getTurn().playAsBlue(this, columnIndex - 1);
-
-
-
     }
 
     public boolean finished() {
@@ -42,7 +38,7 @@ public class Linea {
             setLastColorPlayed("Empate");
             return true;
         }
-        return mode.checkFinish(this);
+        return mode.checkWinner(this);
     }
 
     public String show() {
@@ -60,14 +56,19 @@ public class Linea {
                         .collect(Collectors.joining(" ")) + " |\n";
 
 
+        String winner = finished() ? "Ganador: " + getMatchResult() : "";
         return boardString + columnNumbers;
     }
 
     public Character askForPoint(int columnIndex, int rowIndex) {
-        if (isOnBounds(columnIndex) && rowIndex >= 0 && rowIndex < board.get(columnIndex).size()) {
+        if (isOnBoard(columnIndex, rowIndex)) {
             return board.get(columnIndex).get(rowIndex);
         }
         return '-';
+    }
+
+    private boolean isOnBoard(int columnIndex, int rowIndex) {
+        return isOnBounds(columnIndex) && rowIndex >= 0 && rowIndex < board.get(columnIndex).size();
     }
 
     public boolean columnHasSpace(int columnIndex) {

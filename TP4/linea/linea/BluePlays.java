@@ -5,11 +5,14 @@ public class BluePlays extends GameState {
 
 
     public BluePlays() {
-        super('0', "Blue");
+        super('0', "Azules");
     }
 
     @Override
-    public GameState getNextTurn() {
+    public GameState getNextTurn(Linea game) {
+        if (game.finished()){
+            return new EndGame();
+        }
         return new RedPlays();
     }
 
@@ -21,12 +24,7 @@ public class BluePlays extends GameState {
 
     @Override
     public void playAsBlue(Linea game, int columnIndex) {
-        if (game.isOnBounds(columnIndex) && game.columnHasSpace(columnIndex)) {
-            game.getBoard().get(columnIndex).add(getChip());
-            updateGame(game);
-        } else {
-            throw new RuntimeException("No se puede jugar en esta columna");
-        }
+        playChip(game, columnIndex);
 
     }
 

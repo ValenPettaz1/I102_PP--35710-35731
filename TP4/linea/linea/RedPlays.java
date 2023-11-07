@@ -3,21 +3,19 @@ package linea;
 public class RedPlays extends GameState {
 
 
-    public RedPlays() {super('X', "Red");}
+    public RedPlays() {super('X', "Rojas");}
 
     @Override
-    public GameState getNextTurn() {
+    public GameState getNextTurn(Linea game) {
+        if (game.finished()){
+            return new EndGame();
+        }
         return new BluePlays();
     }
 
     @Override
     public void playAsRed(Linea game, int columnIndex) {
-        if (game.isOnBounds(columnIndex) && game.columnHasSpace(columnIndex)) {
-            game.getBoard().get(columnIndex).add(getChip());
-            updateGame(game);
-        } else {
-            throw new RuntimeException("No se puede jugar en esta columna");
-        }
+        playChip(game, columnIndex);
     }
 
     @Override

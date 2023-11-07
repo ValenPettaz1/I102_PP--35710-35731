@@ -8,7 +8,7 @@ public class ModeC extends Mode {
     }
 
     @Override
-    public boolean checkFinish(Linea game) {
+    public boolean checkWinner(Linea game) {
         return verticalCheck(game) || horizontalCheck(game) || rightDiagonalCheck(game) || leftDiagonalCheck(game);
     }
 

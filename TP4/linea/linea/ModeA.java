@@ -1,8 +1,6 @@
 package linea;
 
 
-import java.awt.*;
-
 public class ModeA extends Mode {
     private char mode;
     public ModeA(){
@@ -15,7 +13,7 @@ public class ModeA extends Mode {
     }
 
     @Override
-    public boolean checkFinish(Linea game){
+    public boolean checkWinner(Linea game){
         return verticalCheck(game) || horizontalCheck(game);
     }
 }

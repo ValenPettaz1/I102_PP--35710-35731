@@ -22,7 +22,7 @@ public abstract class Mode {
                                 .allMatch(k -> game.askForPoint(i + k * increment.x, j + k * increment.y) == game.getLastChipPlayed())));
     }
 
-    public abstract boolean checkFinish(Linea game);
+    public abstract boolean checkWinner(Linea game);
 
     public abstract boolean applies(char mode);
 

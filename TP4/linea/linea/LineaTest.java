@@ -2,6 +2,8 @@ package linea;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
@@ -97,13 +99,13 @@ public class LineaTest {
     @Test
     public void testRedWinInModeA(){
         Linea game = new Linea (4,4, 'A');
-        game.playRedAt(1);
+        /*game.playRedAt(1);
         game.playBlueAt(2);
         game.playRedAt(1);
         game.playBlueAt(2);
         game.playRedAt(1);
         game.playBlueAt(2);
-        game.playRedAt(1);
+        game.playRedAt(1);*/
         assertTrue(game.finished());
         assertEquals("Rojas", game.getMatchResult());
     }
@@ -123,6 +125,53 @@ public class LineaTest {
         assertEquals("Azules", game.getMatchResult());
     }
 
+    @Test
+    public void testRedWinByRightDiagonalInModeB(){
+        Linea game = new Linea (4,4, 'B');
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(2);
+        game.playBlueAt(3);
+        game.playRedAt(3);
+        game.playBlueAt(4);
+        game.playRedAt(3);
+        game.playBlueAt(4);
+        game.playRedAt(4);
+        assertTrue(game.finished());
+        assertEquals("Rojas", game.getMatchResult());
+    }
 
-    
+    @Test
+    public void testRedWinByLeftDiagonalInModeB(){
+    }
+
+    @Test
+    public void testBlueWinByRightDiagonalInModeB(){}
+
+    @Test
+    public void testBlueWinByLeftDiagonalInModeB(){}
+
+    @Test
+    public void testNotWinWithStraightLineInModeB(){}
+
+    @Test
+    public void testRedWinInModeC(){}
+
+    @Test
+    public void testBlueWinInModeC(){}
+    @Test
+    public void testDrawInModeA(){}
+    @Test
+    public void testDrawInModeB(){}
+    @Test
+    public void testDrawInModeC(){}
+    @Test
+    public void testCannotPlayAfterFinishGame(){}
+
+    /*private void playAlternate(List<List<Integer>> columnIndexes, Linea game) {
+        columnIndexes.forEach(par -> {
+            game.playRedAt(par.get(0));
+            game.playBlueAt(par.get(1));
+        });
+    }*/
 }
