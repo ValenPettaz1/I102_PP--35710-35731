@@ -1,23 +1,15 @@
 package linea;
+
 import java.util.function.Consumer;
 
-public class RedPlays extends GameState{
+public class RedPlays extends GameState {
 
-    private Consumer<Linea> changeTurn = game -> game.setTurn(new BluePlays());
+//    private Consumer<Linea> changeTurnToBlue = game -> game.setTurn(new BluePlays());
 
-    public RedPlays(char chip, String color) {
-        super(chip, color);
-    }
-
-
-    @Override
-    public void changeTurn(Linea game) {
-        changeTurn.accept(game);
-    }
+    public RedPlays() {super('X', "Red");}
 
     @Override
     public void playAt(Linea game, int columnIndex) {
-        setTurn.accept(game);
         if (game.isOnBounds(columnIndex) && game.columnHasSpace(columnIndex)) {
             game.getBoard().get(columnIndex).add(getChip());
             updateGame(game);
@@ -26,4 +18,30 @@ public class RedPlays extends GameState{
         }
     }
 
+    @Override
+    public void changeTurn(Linea game) {
+        nextChange(game);
+    }
+
+    @Override
+    protected void changeToRed(Linea game) {
+        throw new RuntimeException("Rojo no puede jugar dos veces");
+
+    }
+
+    @Override
+    protected void changeToBlue(Linea game) {
+        game.setTurn(new BluePlays());
+
+    }
+
+    @Override
+    protected void nextChange(Linea game) {
+        if (game.getTurn() instanceof RedPlays){
+            changeToBlue(game);
+        }
+        else{
+            changeToRed(game);
+        }
+    }
 }

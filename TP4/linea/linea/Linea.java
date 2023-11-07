@@ -1,7 +1,6 @@
 package linea;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -23,15 +22,24 @@ public class Linea {
                 .limit(base)
                 .collect(Collectors.toCollection(ArrayList::new));
         this.mode = Mode.charForMode(charMode);
-        this.turn = new RedPlays('X', "Red");
+        this.turn = new RedPlays();
     }
 
     public void playRedAt(int columnIndex) {
-        getTurn().playAt(this, columnIndex - 1);
+        GameState redTurn = new RedPlays();
+
+        redTurn.playAt(this, columnIndex - 1);
+        redTurn.changeTurn(this);
+
     }
 
     public void playBlueAt(int columnIndex) {
-        getTurn().playAt(this, columnIndex - 1);
+
+        GameState blueTurn = new BluePlays();
+
+        blueTurn.playAt(this, columnIndex - 1);
+        blueTurn.changeTurn(this);
+
 
     }
 
@@ -47,16 +55,15 @@ public class Linea {
         String boardString = IntStream.rangeClosed(1, getHeight())
                 .mapToObj(i -> getHeight() - i)
                 .map(rowIndex -> "| " +
-                    IntStream.range(0, getBase())
-                            .mapToObj(columnIndex -> askForPoint(columnIndex, rowIndex) + " ")
-                            .collect(Collectors.joining()) + "|\n")
+                        IntStream.range(0, getBase())
+                                .mapToObj(columnIndex -> askForPoint(columnIndex, rowIndex) + " ")
+                                .collect(Collectors.joining()) + "|\n")
                 .collect(Collectors.joining());
 
         String columnNumbers = "| " +
                 IntStream.rangeClosed(1, getBase())
                         .mapToObj(String::valueOf)
                         .collect(Collectors.joining(" ")) + " |\n";
-
 
 
         return boardString + columnNumbers;
@@ -72,6 +79,7 @@ public class Linea {
     public boolean columnHasSpace(int columnIndex) {
         return columnIndex >= 0 && board.get(columnIndex).size() < getHeight();
     }
+
     public boolean isOnBounds(int columnIndex) {
         return columnIndex >= 0 && columnIndex < getBase();
     }
@@ -79,25 +87,54 @@ public class Linea {
     public void setTurn(GameState turn) {
         this.turn = turn;
     }
-    public void setCountPlayed(int countPlayed) {this.countPlayed = countPlayed;}
-    public void setLastChipPlayed(char lastChipPlayed) {this.lastChipPlayed = lastChipPlayed;}
-    public void setLastColorPlayed(String lastColorPlayed) {this.lastColorPlayed = lastColorPlayed;}
 
-    public boolean isRedTurn() {return Objects.equals(getTurn(), "red");}
-
-    public boolean isBlueTurn() {
-        return Objects.equals(getTurn(), "blue");
+    public void setCountPlayed(int countPlayed) {
+        this.countPlayed = countPlayed;
     }
 
-    public int getBase() {return base;}
-    public int getHeight() {return height;}
+    public void setLastChipPlayed(char lastChipPlayed) {
+        this.lastChipPlayed = lastChipPlayed;
+    }
+
+    public void setLastColorPlayed(String lastColorPlayed) {
+        this.lastColorPlayed = lastColorPlayed;
+    }
+
+    public boolean isRedTurn() {
+        return getTurn() instanceof RedPlays;
+    }
+
+    public boolean isBlueTurn() {
+        return getTurn() instanceof BluePlays;
+    }
+
+    public int getBase() {
+        return base;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     public GameState getTurn() {
         return turn;
     }
-    public int getCountPlayed() {return countPlayed;}
-    public char getLastChipPlayed(){return lastChipPlayed;}
-    public String getLastColorPlayed() {return lastColorPlayed;}
-    public ArrayList<ArrayList<Character>> getBoard() {return board;}
+
+    public int getCountPlayed() {
+        return countPlayed;
+    }
+
+    public char getLastChipPlayed() {
+        return lastChipPlayed;
+    }
+
+    public String getLastColorPlayed() {
+        return lastColorPlayed;
+    }
+
+    public ArrayList<ArrayList<Character>> getBoard() {
+        return board;
+    }
 
     public String getMatchResult() {
         return getLastColorPlayed();

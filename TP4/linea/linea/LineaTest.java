@@ -59,7 +59,7 @@ public class LineaTest {
     public void testRedCannotPlayTwice(){
         Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
-        assertThrows(RuntimeException.class, () -> game.playRedAt(0));
+        assertThrows(RuntimeException.class, () -> game.playRedAt(1));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class LineaTest {
         Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
         game.playBlueAt(1);
-        assertThrows(RuntimeException.class, () -> game.playBlueAt(0));
+        assertThrows(RuntimeException.class, () -> game.playBlueAt(1));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class LineaTest {
 
     @Test
     public void testBlueWinInModeA(){
-        Linea game = new Linea (4,3, 'A');
+        Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
         game.playBlueAt(2);
         game.playRedAt(1);
