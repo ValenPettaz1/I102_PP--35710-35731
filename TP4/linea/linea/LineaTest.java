@@ -1,6 +1,7 @@
 package linea;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import java.util.List;
 
@@ -112,15 +113,7 @@ public class LineaTest {
 
     @Test
     public void testBlueWinInModeA(){
-        Linea game = new Linea (4,4, 'A');
-        game.playRedAt(1);
-        game.playBlueAt(2);
-        game.playRedAt(1);
-        game.playBlueAt(2);
-        game.playRedAt(1);
-        game.playBlueAt(2);
-        game.playRedAt(4);
-        game.playBlueAt(2);
+        Linea game = boardForBlueWinInModeA();
         assertTrue(game.finished());
         assertEquals("Azules", game.getMatchResult());
     }
@@ -159,6 +152,7 @@ public class LineaTest {
 
     @Test
     public void testBlueWinInModeC(){}
+
     @Test
     public void testDrawInModeA(){}
     @Test
@@ -166,7 +160,28 @@ public class LineaTest {
     @Test
     public void testDrawInModeC(){}
     @Test
-    public void testCannotPlayAfterFinishGame(){}
+    public void testCannotPlayAfterFinishGame(){
+        Linea game = boardForBlueWinInModeA();
+        assertTrue(game.finished());
+        assertThrows(RuntimeException.class, () -> game.playRedAt(1));
+    }
+
+    private Linea boardForBlueWinInModeA() {
+        Linea game = new Linea (4,4, 'A');
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(4);
+        game.playBlueAt(2);
+        return game;
+    }
+
+    private void assertThrowsLike(Executable executable, String message ) {
+        assertEquals( message, assertThrows( Exception.class, executable ).getMessage() );
+    }
 
     /*private void playAlternate(List<List<Integer>> columnIndexes, Linea game) {
         columnIndexes.forEach(par -> {

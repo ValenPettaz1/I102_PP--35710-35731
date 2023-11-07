@@ -17,7 +17,13 @@ public abstract class GameState {
     }
 
     public void updateGame(Linea game) {
-        game.setTurn(getNextTurn(game));
+        if (game.finished()){
+            game.setTurn(new EndGame());
+        }
+        else{
+            game.setTurn(getNextTurn(game));
+        }
+
         game.setCountPlayed(game.getCountPlayed() + 1);
         game.setLastChipPlayed(getChip());
         game.setLastColorPlayed(getColor());
