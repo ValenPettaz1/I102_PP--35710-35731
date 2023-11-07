@@ -14,16 +14,13 @@ public abstract class GameState {
         game.setCountPlayed(game.getCountPlayed() + 1);
         game.setLastChipPlayed(getChip());
         game.setLastColorPlayed(getColor());
+        game.setTurn(getNextTurn());
     }
 
-    public abstract void playAt(Linea game, int columnIndex);
+    public abstract void playAsRed(Linea game, int columnIndex);
+    public abstract void playAsBlue(Linea game, int columnIndex);
+    public abstract GameState getNextTurn();
 
-    public abstract void changeTurn(Linea game);
-
-    protected abstract void changeToRed(Linea game);
-    protected abstract void changeToBlue(Linea game);
-
-    protected abstract void nextChange(Linea game);
 
     public char getChip() {
         return chip;

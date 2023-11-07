@@ -105,7 +105,7 @@ public class LineaTest {
         game.playBlueAt(2);
         game.playRedAt(1);
         assertTrue(game.finished());
-        assertEquals("< Rojas >", game.getMatchResult());
+        assertEquals("Rojas", game.getMatchResult());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class LineaTest {
         game.playRedAt(4);
         game.playBlueAt(2);
         assertTrue(game.finished());
-        assertEquals("< Azules >", game.getMatchResult());
+        assertEquals("Azules", game.getMatchResult());
     }
 
 

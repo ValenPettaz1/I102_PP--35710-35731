@@ -26,19 +26,13 @@ public class Linea {
     }
 
     public void playRedAt(int columnIndex) {
-        GameState redTurn = new RedPlays();
-
-        redTurn.playAt(this, columnIndex - 1);
-        redTurn.changeTurn(this);
-
+        getTurn().playAsRed(this, columnIndex - 1);
     }
 
     public void playBlueAt(int columnIndex) {
 
-        GameState blueTurn = new BluePlays();
+        getTurn().playAsBlue(this, columnIndex - 1);
 
-        blueTurn.playAt(this, columnIndex - 1);
-        blueTurn.changeTurn(this);
 
 
     }
@@ -84,8 +78,8 @@ public class Linea {
         return columnIndex >= 0 && columnIndex < getBase();
     }
 
-    public void setTurn(GameState turn) {
-        this.turn = turn;
+    public void setTurn(GameState newTurn) {
+        this.turn = newTurn;
     }
 
     public void setCountPlayed(int countPlayed) {
