@@ -1,3 +1,4 @@
+/*
 package linea;
 
 public class Red extends Chip {
@@ -13,4 +14,4 @@ public class Red extends Chip {
             throw new RuntimeException("No se puede jugar en esta columna");
         }
     }
-}
+}*/

@@ -23,7 +23,7 @@ Debe respetarse el protocolo definido para Linea, el constructor y los mensajes 
 
 public class LineaTest {
 
-    @Test
+    @Test //OJO, test que expone atributos internos de la solución.
     public void testNewBoardHasCorrectDimensions() {
         Linea game = new Linea( 7, 6, 'A');
         assertEquals( 7, game.getBase() );
@@ -32,8 +32,9 @@ public class LineaTest {
 
     @Test
     public void testNewBoardIsEmpty() { //VER! Estamos chequeando contra el tablero
-        Linea game = new Linea(4, 3, 'A');
+        Linea game = new Linea(4, 4, 'A');
         assertEquals("| - - - - |\n" +
+                            "| - - - - |\n" +
                              "| - - - - |\n" +
                              "| - - - - |\n" +
                              "| 1 2 3 4 |\n", game.show());
@@ -41,14 +42,14 @@ public class LineaTest {
 
     @Test
     public void testRedAlwaysPlayFirst(){
-        Linea game = new Linea (4, 3, 'A');
+        Linea game = new Linea (4, 4, 'A');
         assertTrue(game.isRedTurn());
         assertFalse(game.isBlueTurn());
     }
 
     @Test
     public void testAfterRedIsBlueTurn(){
-        Linea game = new Linea (4, 3, 'A');
+        Linea game = new Linea (4, 4, 'A');
         game.playRedAt(1);
         assertTrue(game.isBlueTurn());
         assertFalse(game.isRedTurn());
@@ -56,14 +57,14 @@ public class LineaTest {
 
     @Test
     public void testRedCannotPlayTwice(){
-        Linea game = new Linea (4,3, 'A');
+        Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
         assertThrows(RuntimeException.class, () -> game.playRedAt(0));
     }
 
     @Test
     public void testBlueCannotPlayTwice(){
-        Linea game = new Linea (4,3, 'A');
+        Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
         game.playBlueAt(1);
         assertThrows(RuntimeException.class, () -> game.playBlueAt(0));
@@ -71,16 +72,16 @@ public class LineaTest {
 
     @Test
     public void testChipFallsToBottom(){
-        Linea game = new Linea (4,3, 'A');
+        Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
         assertEquals('X', game.askForPoint(0,0));
     }
 
     @Test
     public void testCannotPlayInFullColumn(){
-        Linea game = new Linea (4,3, 'A');
+        Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
-        game.playBlueAt(1);
+        game.playBlueAt(2);
         game.playRedAt(1);
         game.playBlueAt(1);
         game.playRedAt(1);
@@ -89,13 +90,13 @@ public class LineaTest {
 
     @Test
     public void testCannotPlayInColumnOutOfBounds(){
-        Linea game = new Linea (4,3, 'A');
+        Linea game = new Linea (4,4, 'A');
         assertThrows(RuntimeException.class, () -> game.playBlueAt(5));
     }
 
     @Test
     public void testRedWinInModeA(){
-        Linea game = new Linea (4,3, 'A');
+        Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
         game.playBlueAt(2);
         game.playRedAt(1);
@@ -116,7 +117,8 @@ public class LineaTest {
         game.playBlueAt(2);
         game.playRedAt(1);
         game.playBlueAt(2);
-        game.playBlueAt(3);
+        game.playRedAt(4);
+        game.playBlueAt(2);
         assertTrue(game.finished());
         assertEquals("< Azules >", game.getMatchResult());
     }
