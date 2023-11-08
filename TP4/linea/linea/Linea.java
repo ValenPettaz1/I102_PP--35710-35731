@@ -1,151 +1,139 @@
 package linea;
 
 import java.util.ArrayList;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-
 public class Linea {
     private int base;
     private int height;
-    private char mode;
+    private Mode mode;
+    private GameState turn;
+    private int countPlayed = 0;
     private char lastChipPlayed;
-    private static String lastColorPlayed;
-
+    private String lastColorPlayed;
     private ArrayList<ArrayList<Character>> board;
 
-    public Linea(int base, int height, char mode) {
+    public Linea(int base, int height, char charMode) {
         this.base = base;
         this.height = height;
-        this.mode = mode;
-        Supplier<ArrayList<Character>> listSupplier = ArrayList::new;
-        this.board = Stream.generate(listSupplier)
+        this.board = Stream.generate(ArrayList<Character>::new)
                 .limit(base)
                 .collect(Collectors.toCollection(ArrayList::new));
+        this.mode = Mode.charForMode(charMode);
+        this.turn = new RedPlays();
     }
 
     public void playRedAt(int columnIndex) {
-        if (isOnBounds(columnIndex) && columnHasSpace(columnIndex)) {
-            board.get(columnIndex).add('X');
-            lastChipPlayed = 'X';
-            lastColorPlayed = "Rojas";
-        } else {
-            throw new RuntimeException("No se puede jugar en esta columna");
-        }
+        turn.playAsRed(this, columnIndex - 1);
     }
 
     public void playBlueAt(int columnIndex) {
-        if (isOnBounds(columnIndex) && columnHasSpace(columnIndex)) {
-            board.get(columnIndex).add('O');
-            lastChipPlayed = 'O';
-            lastColorPlayed = "Azules";
-        } else {
-            throw new RuntimeException("No se puede jugar en esta columna");
-        }
+        turn.playAsBlue(this, columnIndex - 1);
     }
 
     public boolean finished() {
-        char chip = getLastChipPlayed();
-        if (mode == 'A' || mode == 'C'){
-            for (int i = 0; i < getHeight(); i++) {
-                for (int j = 0; j < getBase(); j++) {
-                    if (askForPoint(i,j) == chip){
-                        if (askForPoint(i,j+1)== chip){
-                            if (askForPoint(i,j+2) == chip){
-                                if (askForPoint(i,j+3) == chip){
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        if (getCountPlayed() == getBase() * getHeight()) {
+            setLastColorPlayed("Empate");
+            return true;
         }
-        if (mode == 'B' || mode == 'C'){
-            for (int i = 0; i < getBase(); i++) {
-                for (int j = 0; j < getHeight(); j++) {
-                    if (askForPoint(i,j) == chip){
-                        if (askForPoint(i+1,j)== chip){
-                            if (askForPoint(i+2,j) == chip){
-                                if (askForPoint(i + 3,j) == chip){
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (mode == 'C'){
-            for (int i = -getHeight()+1; i <= getBase()-3; i++){
-                for (int j = 0; j <= getHeight()-3; j++) {
-                    if (askForPoint(i, j) == chip) {
-                        if (askForPoint(i + 1, j + 1) == chip) {
-                            if (askForPoint(i + 2, j + 2) == chip) {
-                                if (askForPoint(i + 3, j + 3) == chip) {
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            for (int i = getBase() + getHeight() -1; i >= 3 ; i--){
-                for (int j = 0; j <= getHeight()-3; j++) {
-                    if (askForPoint(i, j) == chip) {
-                        if (askForPoint(i -1, j + 1) == chip) {
-                            if (askForPoint(i - 2, j + 2) == chip) {
-                                if (askForPoint(i - 3, j + 3) == chip) {
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return false;
+        return mode.checkWinner(this);
+        /*return turn.isEndGame();*/
     }
 
     public String show() {
-        return IntStream.rangeClosed(1, getHeight())
+        String boardString = IntStream.rangeClosed(1, getHeight())
                 .mapToObj(i -> getHeight() - i)
                 .map(rowIndex -> "| " +
                         IntStream.range(0, getBase())
                                 .mapToObj(columnIndex -> askForPoint(columnIndex, rowIndex) + " ")
-                                .collect(Collectors.joining()) +
-                        "|\n")
-                .collect(Collectors.joining()) +
-                "| " +
-                IntStream.rangeClosed(0, getBase() - 1)
+                                .collect(Collectors.joining()) + "|\n")
+                .collect(Collectors.joining());
+
+        String columnNumbers = "| " +
+                IntStream.rangeClosed(1, getBase())
                         .mapToObj(String::valueOf)
-                        .collect(Collectors.joining(" ")) +
-                " |\n";
+                        .collect(Collectors.joining(" ")) + " |\n";
+
+
+        String winner = finished() ? "Ganador: " + getMatchResult() : "";
+        return boardString + columnNumbers;
     }
 
-    private Character askForPoint(int columnIndex, int rowIndex) {
-        if (isOnBounds(columnIndex) && rowIndex >= 0 && rowIndex < board.get(columnIndex).size()) {
+    public Character askForPoint(int columnIndex, int rowIndex) {
+        if (isOnBoard(columnIndex, rowIndex)) {
             return board.get(columnIndex).get(rowIndex);
         }
         return '-';
     }
 
-    private boolean columnHasSpace(int columnIndex) {
-        return (columnIndex >= 0 && board.get(columnIndex).size() < getHeight());
+    private boolean isOnBoard(int columnIndex, int rowIndex) {
+        return isOnBounds(columnIndex) && rowIndex >= 0 && rowIndex < board.get(columnIndex).size();
     }
 
-    private boolean isOnBounds(int columnIndex) {
-        return (columnIndex < getBase() && columnIndex >= 0);
+    public boolean columnHasSpace(int columnIndex) {
+        return columnIndex >= 0 && board.get(columnIndex).size() < getHeight();
+    }
+
+    public boolean isOnBounds(int columnIndex) {
+        return columnIndex >= 0 && columnIndex < getBase();
+    }
+
+    public void setTurn(GameState newTurn) {
+        this.turn = newTurn;
+    }
+
+    public void setCountPlayed(int countPlayed) {
+        this.countPlayed = countPlayed;
+    }
+
+    public void setLastChipPlayed(char lastChipPlayed) {
+        this.lastChipPlayed = lastChipPlayed;
+    }
+
+    public void setLastColorPlayed(String lastColorPlayed) {
+        this.lastColorPlayed = lastColorPlayed;
+    }
+
+    public boolean isRedTurn() {
+        return getTurn() instanceof RedPlays;
+    }
+
+    public boolean isBlueTurn() {
+        return getTurn() instanceof BluePlays;
     }
 
     public int getBase() {
         return base;
     }
+
     public int getHeight() {
         return height;
     }
-    public char getLastChipPlayed(){return lastChipPlayed;}
-    public static String getLastColorPlayed() {return lastColorPlayed;}
+
+    public GameState getTurn() {
+        return turn;
+    }
+    public Mode getMode() {return mode;}
+
+    public int getCountPlayed() {
+        return countPlayed;
+    }
+
+    public char getLastChipPlayed() {
+        return lastChipPlayed;
+    }
+
+    public String getLastColorPlayed() {
+        return lastColorPlayed;
+    }
+
+    public ArrayList<ArrayList<Character>> getBoard() {
+        return board;
+    }
+
+    public String getMatchResult() {
+        return getLastColorPlayed();
+    }
 }
