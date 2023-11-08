@@ -18,6 +18,7 @@ public class RedPlays extends GameState {
     @Override
     public void playAsRed(Linea game, int columnIndex) {
         new Chip('X', "Rojas").playMe(game, columnIndex);
+        game.setTurn(nextState(game));
     }
 
     @Override
