@@ -26,19 +26,20 @@ public class Linea {
     }
 
     public void playRedAt(int columnIndex) {
-        getTurn().playAsRed(this, columnIndex - 1);
+        turn.playAsRed(this, columnIndex - 1);
     }
 
     public void playBlueAt(int columnIndex) {
-        getTurn().playAsBlue(this, columnIndex - 1);
+        turn.playAsBlue(this, columnIndex - 1);
     }
 
     public boolean finished() {
-        if (getCountPlayed() == getBase() * getHeight()) {
+        /*if (getCountPlayed() == getBase() * getHeight()) {
             setLastColorPlayed("Empate");
             return true;
         }
-        return mode.checkWinner(this);
+        return mode.checkWinner(this);*/;
+        return turn.isEndGame();
     }
 
     public String show() {
@@ -114,6 +115,7 @@ public class Linea {
     public GameState getTurn() {
         return turn;
     }
+    public Mode getMode() {return mode;}
 
     public int getCountPlayed() {
         return countPlayed;

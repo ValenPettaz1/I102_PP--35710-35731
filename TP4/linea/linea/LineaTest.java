@@ -62,7 +62,7 @@ public class LineaTest {
     public void testRedCannotPlayTwice(){
         Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
-        assertThrows(RuntimeException.class, () -> game.playRedAt(1));
+        assertThrowsLike(() -> game.playRedAt(1), "No es el turno de rojo");
     }
 
     @Test
@@ -70,7 +70,7 @@ public class LineaTest {
         Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
         game.playBlueAt(1);
-        assertThrows(RuntimeException.class, () -> game.playBlueAt(1));
+        assertThrowsLike(() -> game.playBlueAt(1), RedPlays.NoEsElTurnoDeAzul);
     }
 
     @Test
@@ -88,25 +88,25 @@ public class LineaTest {
         game.playRedAt(1);
         game.playBlueAt(1);
         game.playRedAt(1);
-        assertThrows(RuntimeException.class, () -> game.playBlueAt(1));
+        assertThrowsLike(() -> game.playBlueAt(1), Chip.NoSePuedeJugarEnEstaColumna);
     }
 
     @Test
     public void testCannotPlayInColumnOutOfBounds(){
         Linea game = new Linea (4,4, 'A');
-        assertThrows(RuntimeException.class, () -> game.playBlueAt(5));
+        assertThrowsLike(() -> game.playRedAt(5), Chip.NoSePuedeJugarEnEstaColumna);
     }
 
     @Test
     public void testRedWinInModeA(){
         Linea game = new Linea (4,4, 'A');
-        /*game.playRedAt(1);
-        game.playBlueAt(2);
         game.playRedAt(1);
         game.playBlueAt(2);
         game.playRedAt(1);
         game.playBlueAt(2);
-        game.playRedAt(1);*/
+        game.playRedAt(1);
+        game.playBlueAt(2);
+        game.playRedAt(1);
         assertTrue(game.finished());
         assertEquals("Rojas", game.getMatchResult());
     }
@@ -163,7 +163,7 @@ public class LineaTest {
     public void testCannotPlayAfterFinishGame(){
         Linea game = boardForBlueWinInModeA();
         assertTrue(game.finished());
-        assertThrows(RuntimeException.class, () -> game.playRedAt(1));
+        assertThrowsLike(() -> game.playRedAt(1), "El juego ya terminó");
     }
 
     private Linea boardForBlueWinInModeA() {

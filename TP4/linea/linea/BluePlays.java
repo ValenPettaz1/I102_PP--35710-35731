@@ -2,15 +2,13 @@ package linea;
 
 public class BluePlays extends GameState {
 
+    public static String NoEsElTurnoDeRojo = "No es el turno de rojo";
 
-
-    public BluePlays() {
-        super('0', "Azules");
-    }
+    public BluePlays() {}
 
     @Override
-    public GameState getNextTurn(Linea game) {
-        if (game.finished()){
+    public GameState nextState(Linea game) {
+        if (game.getMode().checkWinner(game)){
             return new EndGame();
         }
         return new RedPlays();
@@ -18,14 +16,13 @@ public class BluePlays extends GameState {
 
     @Override
     public void playAsRed(Linea game, int columnIndex) {
-        throw new RuntimeException("No es el turno de rojo");
+        throw new RuntimeException(NoEsElTurnoDeRojo);
 
     }
 
     @Override
     public void playAsBlue(Linea game, int columnIndex) {
-        playChip(game, columnIndex);
-
+        new Chip('O', "Azules").playMe(game, columnIndex);
     }
 
 }
