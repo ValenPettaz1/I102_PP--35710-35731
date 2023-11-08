@@ -13,6 +13,9 @@ public class Chip {
     public void playMe(Linea game, int columnIndex){
         if (game.isOnBounds(columnIndex) && game.columnHasSpace(columnIndex)) {
             game.getBoard().get(columnIndex).add(chip);
+            game.setLastChipPlayed(chip);
+            game.setLastColorPlayed(color);
+            game.setCountPlayed(game.getCountPlayed() + 1);
             GameState newTurn = game.getTurn().nextState(game);
             game.setTurn(newTurn);
         } else {

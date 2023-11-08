@@ -16,10 +16,11 @@ public abstract class Mode {
     }
 
     public static boolean linealCheck(Linea game, int StreamStart, int StreamEnd, int subStreamStart, int subStreamEnd, Point increment) {
+        char chip = game.getLastChipPlayed();
         return IntStream.rangeClosed(StreamStart, StreamEnd)
                 .anyMatch(i -> IntStream.rangeClosed(subStreamStart, subStreamEnd)
                         .anyMatch(j -> IntStream.rangeClosed(0, 3)
-                                .allMatch(k -> game.askForPoint(i + k * increment.x, j + k * increment.y) == game.getLastChipPlayed())));
+                                .allMatch(k -> game.askForPoint(i + k * increment.x, j + k * increment.y) == chip)));
     }
 
     public abstract boolean checkWinner(Linea game);

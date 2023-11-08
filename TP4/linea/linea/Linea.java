@@ -34,12 +34,12 @@ public class Linea {
     }
 
     public boolean finished() {
-        /*if (getCountPlayed() == getBase() * getHeight()) {
+        if (getCountPlayed() == getBase() * getHeight()) {
             setLastColorPlayed("Empate");
             return true;
         }
-        return mode.checkWinner(this);*/;
-        return turn.isEndGame();
+        return mode.checkWinner(this);
+        /*return turn.isEndGame();*/
     }
 
     public String show() {

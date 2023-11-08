@@ -163,7 +163,7 @@ public class LineaTest {
     public void testCannotPlayAfterFinishGame(){
         Linea game = boardForBlueWinInModeA();
         assertTrue(game.finished());
-        assertThrowsLike(() -> game.playRedAt(1), "El juego ya terminó");
+        assertThrowsLike(() -> game.playRedAt(1), "Ya terminó el juego");
     }
 
     private Linea boardForBlueWinInModeA() {
