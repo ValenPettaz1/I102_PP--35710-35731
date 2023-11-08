@@ -130,6 +130,8 @@ public class LineaTest {
         game.playRedAt(3);
         game.playBlueAt(4);
         game.playRedAt(4);
+        game.playBlueAt(1);
+        game.playRedAt(4);
         assertTrue(game.finished());
         assertEquals("Rojas", game.getMatchResult());
     }
