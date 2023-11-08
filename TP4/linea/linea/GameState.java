@@ -19,10 +19,10 @@ public abstract class GameState {
         return false;
     }
 
-    public GameState checkWin(Linea game){
+    /*public GameState checkWin(Linea game){
         if (game.getMode().checkWinner(game)){
             return new EndGame();
         }
         return nextState(game);
-    }
+    }*/
 }

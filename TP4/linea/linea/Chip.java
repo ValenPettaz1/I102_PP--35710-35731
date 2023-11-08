@@ -22,17 +22,4 @@ public class Chip {
             throw new RuntimeException(NoSePuedeJugarEnEstaColumna);
         }
     }
-
-    public void updateChip(Linea game){
-        game.setLastChipPlayed(chip);
-        game.setLastColorPlayed(color);
-        game.setCountPlayed(game.getCountPlayed() + 1);
-    }
-    public char getChip() {
-        return chip;
-    }
-
-    public String getColor() {
-        return color;
-    }
 }
