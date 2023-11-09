@@ -28,13 +28,13 @@ public class Linea {
     public void playRedAt(int columnIndex) {
         turn.checkRedTurn(this);
         new Chip('X', "Rojas").playMe(this, columnIndex - 1);
-        setTurn(turn.nextState(this));
+        setTurn(GameState.nextState(mode.checkWinner(this), "Azules"));
     }
 
     public void playBlueAt(int columnIndex) {
         turn.checkBlueTurn(this);
         new Chip('O', "Azules").playMe(this, columnIndex - 1);
-        setTurn(turn.nextState(this));
+        setTurn(GameState.nextState(mode.checkWinner(this), "Rojas"));
     }
 
     public boolean finished() {

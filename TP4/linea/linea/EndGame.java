@@ -9,7 +9,9 @@ public class EndGame extends GameState{
     public void checkBlueTurn(Linea game) {throw new RuntimeException("Ya terminó el juego");}
 
     @Override
-    public GameState nextState(Linea Game) {throw new RuntimeException("Ya terminó el juego");}
+    public boolean applies(boolean endGame, String color) {
+        return endGame;
+    }
 
     @Override
     public boolean isEndGame() {
