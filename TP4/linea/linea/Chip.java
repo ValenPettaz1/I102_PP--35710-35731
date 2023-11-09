@@ -16,8 +16,6 @@ public class Chip {
             game.setLastChipPlayed(chip);
             game.setLastColorPlayed(color);
             game.setCountPlayed(game.getCountPlayed() + 1);
-            /*GameState newTurn = game.getTurn().nextState(game);
-            game.setTurn(newTurn);*/
         } else {
             throw new RuntimeException(NoSePuedeJugarEnEstaColumna);
         }

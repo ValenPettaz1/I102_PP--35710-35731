@@ -26,20 +26,19 @@ public class Linea {
     }
 
     public void playRedAt(int columnIndex) {
-        turn.playAsRed(this, columnIndex - 1);
+        turn.checkRedTurn(this);
+        new Chip('X', "Rojas").playMe(this, columnIndex - 1);
+        setTurn(turn.nextState(this));
     }
 
     public void playBlueAt(int columnIndex) {
-        turn.playAsBlue(this, columnIndex - 1);
+        turn.checkBlueTurn(this);
+        new Chip('O', "Azules").playMe(this, columnIndex - 1);
+        setTurn(turn.nextState(this));
     }
 
     public boolean finished() {
-        if (getCountPlayed() == getBase() * getHeight()) {
-            setLastColorPlayed("Empate");
-            return true;
-        }
         return mode.checkWinner(this);
-        /*return turn.isEndGame();*/
     }
 
     public String show() {
