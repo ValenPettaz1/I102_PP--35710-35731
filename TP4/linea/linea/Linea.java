@@ -38,7 +38,7 @@ public class Linea {
     }
 
     public boolean finished() {
-        return mode.checkWinner(this);
+        return turn.isEndGame();
     }
 
     public String show() {
