@@ -26,10 +26,13 @@ Debe respetarse el protocolo definido para Linea, el constructor y los mensajes 
  */
 
 public class LineaTest {
+    private static String GanaronLasRojas = "Ganaron las Rojas";
 
     @BeforeEach
     public void setUp() {
         game = new Linea(4, 4, 'A');
+        gameB = new Linea(4, 4, 'B');
+        gameC = new Linea(4, 4, 'C');
     }
 
     @Test
@@ -109,7 +112,7 @@ public class LineaTest {
     public void testRedVerticalWinInModeA(){
         playAlternate(List.of(1,2,1,2,1,2,1), game);
         assertTrue(game.finished());
-        assertEquals(game.getEndGameMessage(), "Ganaron las Rojas");
+        assertEquals(game.getEndGameMessage(), GanaronLasRojas);
     }
 
     @Test
@@ -128,47 +131,70 @@ public class LineaTest {
 
     @Test
     public void testRedWinByRightDiagonalInModeB(){
-        Linea game = new Linea (4,4, 'B');
-        game.playRedAt(1);
-        game.playBlueAt(2);
-        game.playRedAt(2);
-        game.playBlueAt(3);
-        game.playRedAt(3);
-        game.playBlueAt(4);
-        game.playRedAt(3);
-        game.playBlueAt(4);
-        game.playRedAt(4);
-        game.playBlueAt(1);
-        game.playRedAt(4);
-        assertTrue(game.finished());
-        assertEquals("Rojas", game.getLastColorPlayed());
+        playAlternate(List.of(1,2,2,3,3,4,3,4,4,1,4), gameB);
+        assertTrue(gameB.finished());
+        assertEquals("Rojas", gameB.getLastColorPlayed());
     }
 
     @Test
     public void testRedWinByLeftDiagonalInModeB(){
+        playAlternate(List.of(4,3,3,1,2,2,2,4,1,1,1), gameB); //OJO CHEQUADO EN CONSOLA QUE NO ANDA DIAGONAL IZQUIERDA.
+        assertTrue(gameB.finished());
+        assertEquals("Rojas", gameB.getLastColorPlayed());
     }
 
     @Test
-    public void testBlueWinByRightDiagonalInModeB(){}
+    public void testBlueWinByRightDiagonalInModeB(){
+        playAlternate(List.of(2,1,4,2,1,3,3,3,1,4,4,4), gameB);
+        assertTrue(gameB.finished());
+        assertEquals("Azules", gameB.getLastColorPlayed());
+    }
 
     @Test
-    public void testBlueWinByLeftDiagonalInModeB(){}
+    public void testBlueWinByLeftDiagonalInModeB(){
+        playAlternate(List.of(1,2,2,3,3,4,3,4,4,1,4), gameB); //ARRASTRA ERROR DE ARRIBA.
+        assertTrue(gameB.finished());
+        assertEquals("Azules", gameB.getLastColorPlayed());
+    }
 
     @Test
-    public void testNotWinWithStraightLineInModeB(){}
+    public void testNotWinWithStraightLineInModeB(){
+        playAlternate(List.of(1,2,1,2,1,2,1,2), gameB);
+        assertFalse(gameB.finished());
+    }
 
     @Test
-    public void testRedWinInModeC(){}
+    public void testRedWinInModeC(){
+        playAlternate(List.of(1,2,2,3,3,4,3,4,4,1,4), gameC);
+        assertTrue(gameC.finished());
+        assertEquals("Rojas", gameC.getLastColorPlayed());
+    }
 
     @Test
-    public void testBlueWinInModeC(){}
+    public void testBlueWinInModeC(){
+        playAlternate(List.of(2,1,4,2,1,3,3,3,1,4,4,4), gameC);
+        assertTrue(gameC.finished());
+        assertEquals("Azules", gameC.getLastColorPlayed());
+    }
 
     @Test
-    public void testDrawInModeA(){}
+    public void testDrawInModeA(){
+        playAlternate(List.of(1,1,1,1,3,2,2,2,2,3,3,3,4,4,4,4), game);
+        assertTrue(game.finished());
+        assertEquals("Empate", game.getEndGameMessage());
+    }
     @Test
-    public void testDrawInModeB(){}
+    public void testDrawInModeB(){
+        playAlternate(List.of(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4), gameB);
+        assertTrue(gameB.finished());
+        assertEquals("Empate", gameB.getEndGameMessage());
+    }
     @Test
-    public void testDrawInModeC(){}
+    public void testDrawInModeC(){
+        playAlternate(List.of(1,3,4,2,1,4,2,2,3,1,1,3,4,4,3,2), gameC);
+        assertTrue(gameC.finished());
+        assertEquals("Empate", gameC.getEndGameMessage());
+    }
     @Test
     public void testCannotPlayAfterFinishGame(){
         Linea game = boardForBlueWinInModeA();
@@ -204,4 +230,6 @@ public class LineaTest {
     }
 
     private Linea game;
+    private Linea gameB;
+    private Linea gameC;
 }
