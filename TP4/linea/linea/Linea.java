@@ -138,6 +138,9 @@ public class Linea {
     public String getLastColorPlayed() {
         return lastColorPlayed;
     }
+    public String getEndGameMessage() {
+        return gameState.getEndGameMessage(this);
+    }
 
     public ArrayList<ArrayList<Character>> getBoard() {
         return board;

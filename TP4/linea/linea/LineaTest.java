@@ -106,21 +106,22 @@ public class LineaTest {
     }
 
     @Test
-    public void testRedWinInModeA(){
-        game.playRedAt(1);
-        game.playBlueAt(2);
-        game.playRedAt(1);
-        game.playBlueAt(2);
-        game.playRedAt(1);
-        game.playBlueAt(2);
-        game.playRedAt(1);
+    public void testRedVerticalWinInModeA(){
+        playAlternate(List.of(1,2,1,2,1,2,1), game);
+        assertTrue(game.finished());
+        assertEquals(game.getEndGameMessage(), "Ganaron las Rojas");
+    }
+
+    @Test
+    public void testRedHorizontalWinInModeA(){
+        playAlternate(List.of(1,1,2,2,3,3,4), game);
         assertTrue(game.finished());
         assertEquals("Rojas", game.getLastColorPlayed());
     }
 
     @Test
     public void testBlueWinInModeA(){
-        Linea game = boardForBlueWinInModeA();
+        playAlternate(List.of(4,2,1,2,1,2,1,2), game);
         assertTrue(game.finished());
         assertEquals("Azules", game.getLastColorPlayed());
     }
