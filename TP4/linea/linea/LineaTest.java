@@ -1,7 +1,10 @@
 package linea;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,11 +27,15 @@ Debe respetarse el protocolo definido para Linea, el constructor y los mensajes 
 
 public class LineaTest {
 
+    @BeforeEach
+    public void setUp() {
+        game = new Linea(4, 4, 'A');
+    }
+
     @Test
     public void testNewBoardIsEmptyAndHasCorrectDimensions() {
-        Linea game = new Linea(4, 4, 'A');
         assertEquals("| - - - - |\n" +
-                            "| - - - - |\n" +
+                             "| - - - - |\n" +
                              "| - - - - |\n" +
                              "| - - - - |\n" +
                              "  1 2 3 4  \n", game.show());
@@ -36,14 +43,12 @@ public class LineaTest {
 
     @Test
     public void testRedAlwaysPlayFirst(){
-        Linea game = new Linea (4, 4, 'A');
         assertTrue(game.isRedTurn());
         assertFalse(game.isBlueTurn());
     }
 
     @Test
     public void testAfterRedIsBlueTurn(){
-        Linea game = new Linea (4, 4, 'A');
         game.playRedAt(1);
         assertTrue(game.isBlueTurn());
         assertFalse(game.isRedTurn());
@@ -51,50 +56,57 @@ public class LineaTest {
 
     @Test
     public void testRedCannotPlayTwice(){
-        Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
-        assertThrowsLike(() -> game.playRedAt(1), "No es el turno de rojo");
+        assertThrowsLike(() -> game.playRedAt(1), Linea.NoEsElTurnoDeRojo);
     }
 
     @Test
     public void testBlueCannotPlayTwice(){
-        Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
         game.playBlueAt(1);
-        assertThrowsLike(() -> game.playBlueAt(1), RedPlays.NoEsElTurnoDeAzul);
+        assertThrowsLike(() -> game.playBlueAt(1), Linea.NoEsElTurnoDeAzul);
     }
 
     @Test
     public void testChipFallsToBottom(){
-        Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
-        assertEquals('X', game.askForPoint(0,0));
+        assertEquals(game.getLastChipPlayed(), game.askForPoint(0,0));
+    }
+
+    @Test
+    public void testChipCanBePlayedInTheFirstColumn(){
+        game.playRedAt(1);
+        assertEquals(game.getLastChipPlayed(), game.askForPoint(0,0));
+    }
+
+    @Test
+    public void testChipCanBePlayedInTheLastColumn(){
+        game.playRedAt(4);
+        assertEquals(game.getLastChipPlayed(), game.askForPoint(3,0));
     }
 
     @Test
     public void testCannotPlayInFullColumn(){
-        Linea game = new Linea (4,4, 'A');
-        game.playRedAt(1);
-        game.playBlueAt(2);
-        game.playRedAt(1);
-        game.playBlueAt(1);
-        game.playRedAt(1);
-        assertThrowsLike(() -> game.playBlueAt(1), Chip.NoSePuedeJugarEnEstaColumna);
+        playAlternate(List.of(1,2,1,1,1), game);
+        assertThrowsLike(() -> game.playBlueAt(1), Linea.NoSePuedeJugarEnEstaColumna);
     }
 
     @Test
-    public void testCannotPlayInColumnOutOfBounds(){
-        Linea game = new Linea (4,4, 'A');
-        assertThrowsLike(() -> game.playRedAt(5), Chip.NoSePuedeJugarEnEstaColumna);
+    public void testCannotPlayInColumnAfterBounds(){
+        assertThrowsLike(() -> game.playRedAt(5), Linea.NoSePuedeJugarEnEstaColumna);
+    }
+
+    @Test
+    public void testCannotPlayInColumnBeforeBounds(){
+        assertThrowsLike(() -> game.playRedAt(0), Linea.NoSePuedeJugarEnEstaColumna);
     }
 
     @Test void testInvalidModeThrowError(){
-        assertThrowsLike(() -> new Linea(4,4,'D'), "Modo inválido");
+        assertThrowsLike(() -> new Linea(4,4,'D'), Linea.ModoNoValido);
     }
 
     @Test
     public void testRedWinInModeA(){
-        Linea game = new Linea (4,4, 'A');
         game.playRedAt(1);
         game.playBlueAt(2);
         game.playRedAt(1);
@@ -160,7 +172,7 @@ public class LineaTest {
     public void testCannotPlayAfterFinishGame(){
         Linea game = boardForBlueWinInModeA();
         assertTrue(game.finished());
-        assertThrowsLike(() -> game.playRedAt(1), "Ya terminó el juego");
+        assertThrowsLike(() -> game.playRedAt(1), Linea.ElJuegoYaHaTerminado);
     }
 
     private Linea boardForBlueWinInModeA() {
@@ -180,10 +192,15 @@ public class LineaTest {
         assertEquals( message, assertThrows( Exception.class, executable ).getMessage() );
     }
 
-    /*private void playAlternate(List<List<Integer>> columnIndexes, Linea game) {
-        columnIndexes.forEach(par -> {
-            game.playRedAt(par.get(0));
-            game.playBlueAt(par.get(1));
+    private void playAlternate(List<Integer> columnIndexes, Linea game) {
+        columnIndexes.forEach( index -> {
+            if (game.isRedTurn()) {
+                game.playRedAt(index);
+            } else {
+                game.playBlueAt(index);
+            }
         });
-    }*/
+    }
+
+    private Linea game;
 }
