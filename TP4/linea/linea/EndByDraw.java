@@ -1,8 +1,7 @@
 package linea;
 
 public class EndByDraw extends EndGame {
-    public EndByDraw() {
-    }
+    public EndByDraw() {}
 
     @Override
     public boolean applies(boolean anyWinner, boolean isDraw, String color) {

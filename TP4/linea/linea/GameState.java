@@ -13,14 +13,15 @@ public abstract class GameState {
                 .findFirst().get();
     }
 
-    public abstract void checkRedTurn(Linea game);
-    public abstract void checkBlueTurn(Linea game);
-
-    public abstract boolean applies(boolean anyWinner, boolean isDraw, String color);
-
     public boolean isEndGame() {
         return false;
     }
+
+    public abstract void checkRedTurn(Linea game);
+
+    public abstract void checkBlueTurn(Linea game);
+
+    public abstract boolean applies(boolean anyWinner, boolean isDraw, String color);
 
     public abstract String getEndGameMessage(Linea game);
 }

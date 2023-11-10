@@ -16,8 +16,6 @@ public class ModeB extends Mode {
 
     @Override
     public boolean checkWinner(Linea game){
-
-
         return rightDiagonalCheck(game) || leftDiagonalCheck(game);
     }
 }

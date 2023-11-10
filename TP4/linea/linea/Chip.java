@@ -1,7 +1,6 @@
 package linea;
 
 public class Chip {
-    public static String NoSePuedeJugarEnEstaColumna = "No se puede jugar en esta columna";
     private char chip;
     private String color;
 
@@ -16,8 +15,9 @@ public class Chip {
             game.setLastChipPlayed(chip);
             game.setLastColorPlayed(color);
             game.setCountPlayed(game.getCountPlayed() + 1);
+
         } else {
-            throw new RuntimeException(NoSePuedeJugarEnEstaColumna);
+            throw new RuntimeException(Linea.NoSePuedeJugarEnEstaColumna);
         }
     }
 }

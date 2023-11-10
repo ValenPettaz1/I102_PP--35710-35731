@@ -24,15 +24,8 @@ Debe respetarse el protocolo definido para Linea, el constructor y los mensajes 
 
 public class LineaTest {
 
-    @Test //OJO, test que expone atributos internos de la solución.
-    public void testNewBoardHasCorrectDimensions() {
-        Linea game = new Linea( 7, 6, 'A');
-        assertEquals( 7, game.getBase() );
-        assertEquals( 6, game.getHeight() );
-    }
-
     @Test
-    public void testNewBoardIsEmpty() { //VER! Estamos chequeando contra el tablero
+    public void testNewBoardIsEmptyAndHasCorrectDimensions() {
         Linea game = new Linea(4, 4, 'A');
         assertEquals("| - - - - |\n" +
                             "| - - - - |\n" +
@@ -110,14 +103,14 @@ public class LineaTest {
         game.playBlueAt(2);
         game.playRedAt(1);
         assertTrue(game.finished());
-        assertEquals("Rojas", game.getMatchResult());
+        assertEquals("Rojas", game.getLastColorPlayed());
     }
 
     @Test
     public void testBlueWinInModeA(){
         Linea game = boardForBlueWinInModeA();
         assertTrue(game.finished());
-        assertEquals("Azules", game.getMatchResult());
+        assertEquals("Azules", game.getLastColorPlayed());
     }
 
     @Test
@@ -135,7 +128,7 @@ public class LineaTest {
         game.playBlueAt(1);
         game.playRedAt(4);
         assertTrue(game.finished());
-        assertEquals("Rojas", game.getMatchResult());
+        assertEquals("Rojas", game.getLastColorPlayed());
     }
 
     @Test

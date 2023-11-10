@@ -2,12 +2,10 @@ package linea;
 
 public class BluePlays extends GameState {
 
-    public static String NoEsElTurnoDeRojo = "No es el turno de rojo";
-
     public BluePlays() {}
 
     @Override
-    public void checkRedTurn(Linea game) {throw new RuntimeException(NoEsElTurnoDeRojo);}
+    public void checkRedTurn(Linea game) {throw new RuntimeException(Linea.NoEsElTurnoDeRojo);}
     @Override
     public void checkBlueTurn(Linea game) {}
 

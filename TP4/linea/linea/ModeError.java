@@ -1,6 +1,7 @@
 package linea;
 
 public class ModeError extends Mode {
+
     @Override
     public boolean checkWinner(Linea game) {
         return false;
@@ -8,6 +9,6 @@ public class ModeError extends Mode {
 
     @Override
     public boolean applies(char mode) {
-        throw new RuntimeException("Modo inválido");
+        throw new RuntimeException(Linea.ModoNoValido);
     }
 }
