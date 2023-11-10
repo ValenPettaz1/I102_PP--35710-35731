@@ -3,8 +3,6 @@ package linea;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
@@ -40,7 +38,7 @@ public class LineaTest {
                             "| - - - - |\n" +
                              "| - - - - |\n" +
                              "| - - - - |\n" +
-                             "| 1 2 3 4 |\n", game.show());
+                             "  1 2 3 4  \n", game.show());
     }
 
     @Test
@@ -95,6 +93,10 @@ public class LineaTest {
     public void testCannotPlayInColumnOutOfBounds(){
         Linea game = new Linea (4,4, 'A');
         assertThrowsLike(() -> game.playRedAt(5), Chip.NoSePuedeJugarEnEstaColumna);
+    }
+
+    @Test void testInvalidModeThrowError(){
+        assertThrowsLike(() -> new Linea(4,4,'D'), "Modo inválido");
     }
 
     @Test

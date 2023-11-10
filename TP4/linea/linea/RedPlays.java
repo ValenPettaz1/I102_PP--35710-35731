@@ -12,7 +12,10 @@ public class RedPlays extends GameState {
     public void checkBlueTurn(Linea game) {throw new RuntimeException(NoEsElTurnoDeAzul);}
 
     @Override
-    public boolean applies(boolean endGame, String color) {
-        return !endGame && color.equals("Rojas");
+    public boolean applies(boolean anyWinner, boolean isDraw, String color) {
+        return !anyWinner && !isDraw && color.equals("Rojas");
     }
+
+    @Override
+    public String getEndGameMessage(Linea game) {return "";}
 }

@@ -26,15 +26,17 @@ public class Linea {
     }
 
     public void playRedAt(int columnIndex) {
-        turn.checkRedTurn(this);
-        new Chip('X', "Rojas").playMe(this, columnIndex - 1);
-        setTurn(GameState.nextState(mode.checkWinner(this), "Azules"));
+        playAt(columnIndex, () -> turn.checkRedTurn(this), new Chip('X', "Rojas"), "Azules");
     }
 
     public void playBlueAt(int columnIndex) {
-        turn.checkBlueTurn(this);
-        new Chip('O', "Azules").playMe(this, columnIndex - 1);
-        setTurn(GameState.nextState(mode.checkWinner(this), "Rojas"));
+        playAt(columnIndex, () -> turn.checkBlueTurn(this), new Chip('O', "Azules"), "Rojas");
+    }
+
+    public void playAt(int columnIndex, Runnable checkTurn, Chip chip, String color) {
+        checkTurn.run();
+        chip.playMe(this, columnIndex - 1);
+        setTurn(GameState.nextState(mode.checkWinner(this), mode.checkDraw(this), color));
     }
 
     public boolean finished() {
@@ -50,14 +52,14 @@ public class Linea {
                                 .collect(Collectors.joining()) + "|\n")
                 .collect(Collectors.joining());
 
-        String columnNumbers = "| " +
+        String columnNumbers = "  " +
                 IntStream.rangeClosed(1, getBase())
                         .mapToObj(String::valueOf)
-                        .collect(Collectors.joining(" ")) + " |\n";
+                        .collect(Collectors.joining(" ")) + "  \n";
 
 
-        String winner = finished() ? "Ganador: " + getMatchResult() : "";
-        return boardString + columnNumbers;
+        String endGame = turn.getEndGameMessage(this);
+        return boardString + columnNumbers + endGame;
     }
 
     public Character askForPoint(int columnIndex, int rowIndex) {

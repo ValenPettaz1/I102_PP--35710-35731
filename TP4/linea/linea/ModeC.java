@@ -14,7 +14,7 @@ public class ModeC extends Mode {
 
     @Override
     public boolean applies(char mode) {
-        return true;
+        return this.mode == mode;
     }
 
 }
