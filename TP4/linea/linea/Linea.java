@@ -89,60 +89,33 @@ public class Linea {
         return columnIndex >= 0 && columnIndex < getBase();
     }
 
-    public boolean isRedTurn() {
-        return getGameState() instanceof RedPlays;
-    }
+    public boolean isRedTurn() {return gameState instanceof RedPlays;}
 
     public boolean isBlueTurn() {
-        return getGameState() instanceof BluePlays;
+        return gameState instanceof BluePlays;
     }
 
 
-    public void setGameState(GameState newState) {
-        this.gameState = newState;
-    }
-
+    public void setGameState(GameState newState) {this.gameState = newState;}
     public void setCountPlayed(int countPlayed) {
         this.countPlayed = countPlayed;
     }
-
     public void setLastChipPlayed(char lastChipPlayed) {
         this.lastChipPlayed = lastChipPlayed;
     }
-
     public void setLastColorPlayed(String lastColorPlayed) {
         this.lastColorPlayed = lastColorPlayed;
     }
 
 
-    public int getBase() {
-        return base;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public GameState getGameState() {
-        return gameState;
-    }
-
+    public int getBase() {return base;}
+    public int getHeight() {return height;}
     public int getCountPlayed() {
         return countPlayed;
     }
-
-    public char getLastChipPlayed() {
-        return lastChipPlayed;
-    }
-
+    public char getLastChipPlayed() {return lastChipPlayed;}
     public String getLastColorPlayed() {
         return lastColorPlayed;
     }
-    public String getEndGameMessage() {
-        return gameState.getEndGameMessage(this);
-    }
-
-    public ArrayList<ArrayList<Character>> getBoard() {
-        return board;
-    }
+    public ArrayList<ArrayList<Character>> getBoard() {return board;}
 }

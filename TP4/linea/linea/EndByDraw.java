@@ -5,7 +5,7 @@ public class EndByDraw extends EndGame {
 
     @Override
     public boolean applies(boolean anyWinner, boolean isDraw, String color) {
-        return isDraw && !anyWinner;
+        return isDraw;
     }
 
     @Override

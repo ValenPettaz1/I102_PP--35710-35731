@@ -13,9 +13,7 @@ public abstract class GameState {
                 .findFirst().get();
     }
 
-    public boolean isEndGame() {
-        return false;
-    }
+    public boolean isEndGame() {return false;}
 
     public abstract void checkRedTurn(Linea game);
 

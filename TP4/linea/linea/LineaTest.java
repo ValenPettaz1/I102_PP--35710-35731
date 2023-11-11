@@ -251,7 +251,6 @@ public class LineaTest {
     public void testDrawInModeB(){
         playAlternate(List.of(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4), gameB);
         assertTrue(gameB.finished());
-        assertEquals("Empate", gameB.getEndGameMessage());
         assertEquals(   "| O O O O |\n" +
                                 "| X X X X |\n" +
                                 "| O O O O |\n" +
@@ -270,8 +269,8 @@ public class LineaTest {
                              "  1 2 3 4  \n" +
                              "Empate", gameC.show());
     }
-    @Test
 
+    @Test
     public void testCannotPlayAfterFinishGame(){
         playAlternate(List.of(4,2,1,2,1,2,1,2), game);
         assertTrue(game.finished());
@@ -282,6 +281,18 @@ public class LineaTest {
                 "| X O - X |\n" +
                 "  1 2 3 4  \n" +
                 "Ganaron las Azules",game.show());
+    }
+
+    @Test
+    public void testWinInAFullBoardDoesNotThrowDraw(){
+        playAlternate(List.of(4,3,2,1,1,2,3,4,1,3,2,4,2,1,3,4), gameB);
+        assertTrue(gameB.finished());
+        assertEquals(   "| O X X O |\n" +
+                                "| X X O O |\n" +
+                                "| X O X O |\n" +
+                                "| O X O X |\n" +
+                                "  1 2 3 4  \n" +
+                                "Ganaron las Azules",gameB.show());
     }
 
 
