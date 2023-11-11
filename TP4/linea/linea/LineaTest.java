@@ -1,32 +1,15 @@
 package linea;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-/*
-Enunciado
-Se nos pide desarrollar la lógica de juego del '4 en línea'. (https://www.epasatiempos.es/juego-4-en-raya.php)
-El espacio de juego se define al iniciar, junto con la variante de triunfo.
-La variante de triunfo puede ser,
-- 'A' solo 4 en línea verticales u horizontales.
-- 'B' solo 4 en línea diagonales
-- 'C' 4 en línea en cualquier orientación.
-Inician el juego las Rojas y alternan los turnos a partir de ahí
-El juego puede terminar por triunfo o por empate. Una vez terminado no se puede seguir colocando fichas
-
-Es requisito cumplir con todos los criterios vistos a lo largo de la cursada.
-
-Se ofrece una pequeña interfaz de línea de comandos para correr por consola:
-Debe respetarse el protocolo definido para Linea, el constructor y los mensajes playBlueAt, playRedAt, finished y show.
- */
-
 public class LineaTest {
-    private static String GanaronLasRojas = "Ganaron las Rojas";
 
     @BeforeEach
     public void setUp() {
@@ -42,6 +25,12 @@ public class LineaTest {
                              "| - - - - |\n" +
                              "| - - - - |\n" +
                              "  1 2 3 4  \n", game.show());
+    }
+
+    @Test
+    public void testChipFallsToBottom(){
+        game.playRedAt(1);
+        assertEquals(game.getLastChipPlayed(), game.askForPoint(0,0));
     }
 
     @Test
@@ -61,6 +50,11 @@ public class LineaTest {
     public void testRedCannotPlayTwice(){
         game.playRedAt(1);
         assertThrowsLike(() -> game.playRedAt(1), Linea.NoEsElTurnoDeRojo);
+        assertEquals("| - - - - |\n" +
+                             "| - - - - |\n" +
+                             "| - - - - |\n" +
+                             "| X - - - |\n" +
+                             "  1 2 3 4  \n", game.show());
     }
 
     @Test
@@ -68,30 +62,44 @@ public class LineaTest {
         game.playRedAt(1);
         game.playBlueAt(1);
         assertThrowsLike(() -> game.playBlueAt(1), Linea.NoEsElTurnoDeAzul);
-    }
-
-    @Test
-    public void testChipFallsToBottom(){
-        game.playRedAt(1);
-        assertEquals(game.getLastChipPlayed(), game.askForPoint(0,0));
+        assertEquals("| - - - - |\n" +
+                             "| - - - - |\n" +
+                             "| O - - - |\n" +
+                             "| X - - - |\n" +
+                             "  1 2 3 4  \n", game.show());
     }
 
     @Test
     public void testChipCanBePlayedInTheFirstColumn(){
         game.playRedAt(1);
         assertEquals(game.getLastChipPlayed(), game.askForPoint(0,0));
+        assertEquals("| - - - - |\n" +
+                             "| - - - - |\n" +
+                             "| - - - - |\n" +
+                             "| X - - - |\n" +
+                             "  1 2 3 4  \n", game.show());
     }
 
     @Test
     public void testChipCanBePlayedInTheLastColumn(){
         game.playRedAt(4);
         assertEquals(game.getLastChipPlayed(), game.askForPoint(3,0));
+        assertEquals("| - - - - |\n" +
+                             "| - - - - |\n" +
+                             "| - - - - |\n" +
+                             "| - - - X |\n" +
+                             "  1 2 3 4  \n", game.show());
     }
 
     @Test
     public void testCannotPlayInFullColumn(){
         playAlternate(List.of(1,2,1,1,1), game);
         assertThrowsLike(() -> game.playBlueAt(1), Linea.NoSePuedeJugarEnEstaColumna);
+        assertEquals("| X - - - |\n" +
+                             "| O - - - |\n" +
+                             "| X - - - |\n" +
+                             "| X O - - |\n" +
+                             "  1 2 3 4  \n", game.show());
     }
 
     @Test
@@ -112,108 +120,170 @@ public class LineaTest {
     public void testRedVerticalWinInModeA(){
         playAlternate(List.of(1,2,1,2,1,2,1), game);
         assertTrue(game.finished());
-        assertEquals(game.getEndGameMessage(), GanaronLasRojas);
+        assertEquals("| X - - - |\n" +
+                             "| X O - - |\n" +
+                             "| X O - - |\n" +
+                             "| X O - - |\n" +
+                             "  1 2 3 4  \n" +
+                             "Ganaron las Rojas", game.show());
     }
 
     @Test
     public void testRedHorizontalWinInModeA(){
         playAlternate(List.of(1,1,2,2,3,3,4), game);
         assertTrue(game.finished());
-        assertEquals("Rojas", game.getLastColorPlayed());
+        assertEquals("| - - - - |\n" +
+                             "| - - - - |\n" +
+                             "| O O O - |\n" +
+                             "| X X X X |\n" +
+                             "  1 2 3 4  \n" +
+                            "Ganaron las Rojas", game.show());
     }
 
     @Test
     public void testBlueWinInModeA(){
         playAlternate(List.of(4,2,1,2,1,2,1,2), game);
         assertTrue(game.finished());
-        assertEquals("Azules", game.getLastColorPlayed());
+        assertEquals("| - O - - |\n" +
+                            "| X O - - |\n" +
+                            "| X O - - |\n" +
+                            "| X O - X |\n" +
+                            "  1 2 3 4  \n" +
+                            "Ganaron las Azules",game.show());
     }
 
     @Test
     public void testRedWinByRightDiagonalInModeB(){
         playAlternate(List.of(1,2,2,3,3,4,3,4,4,1,4), gameB);
         assertTrue(gameB.finished());
-        assertEquals("Rojas", gameB.getLastColorPlayed());
+        assertEquals("| - - - X |\n" +
+                             "| - - X X |\n" +
+                             "| O X X O |\n" +
+                             "| X O O O |\n" +
+                             "  1 2 3 4  \n" +
+                             "Ganaron las Rojas", gameB.show());
     }
 
     @Test
     public void testRedWinByLeftDiagonalInModeB(){
-        playAlternate(List.of(4,3,3,1,2,2,2,4,1,1,1), gameB); //OJO CHEQUADO EN CONSOLA QUE NO ANDA DIAGONAL IZQUIERDA.
+        playAlternate(List.of(4,3,3,1,2,2,2,4,1,1,1), gameB);
         assertTrue(gameB.finished());
-        assertEquals("Rojas", gameB.getLastColorPlayed());
+        assertEquals(   "| X - - - |\n" +
+                                "| O X - - |\n" +
+                                "| X O X O |\n" +
+                                "| O X O X |\n" +
+                                "  1 2 3 4  \n" +
+                                "Ganaron las Rojas",gameB.show());
+
     }
 
     @Test
     public void testBlueWinByRightDiagonalInModeB(){
         playAlternate(List.of(2,1,4,2,1,3,3,3,1,4,4,4), gameB);
         assertTrue(gameB.finished());
-        assertEquals("Azules", gameB.getLastColorPlayed());
+        assertEquals("| - - - O |\n" +
+                             "| X - O X |\n" +
+                             "| X O X O |\n" +
+                             "| O X O X |\n" +
+                             "  1 2 3 4  \n" +
+                             "Ganaron las Azules", gameB.show());
     }
 
     @Test
     public void testBlueWinByLeftDiagonalInModeB(){
-        playAlternate(List.of(1,2,2,3,3,4,3,4,4,1,4), gameB); //ARRASTRA ERROR DE ARRIBA.
+        playAlternate(List.of(3,4,2,3,2,2,1,1,1,1), gameB);
         assertTrue(gameB.finished());
-        assertEquals("Azules", gameB.getLastColorPlayed());
+        assertEquals("| O - - - |\n" +
+                             "| X O - - |\n" +
+                             "| O X O - |\n" +
+                             "| X X X O |\n" +
+                             "  1 2 3 4  \n" +
+                             "Ganaron las Azules", gameB.show());
     }
 
     @Test
     public void testNotWinWithStraightLineInModeB(){
         playAlternate(List.of(1,2,1,2,1,2,1,2), gameB);
         assertFalse(gameB.finished());
+        assertEquals("| X O - - |\n" +
+                             "| X O - - |\n" +
+                             "| X O - - |\n" +
+                             "| X O - - |\n" +
+                             "  1 2 3 4  \n" ,gameB.show());
     }
 
     @Test
     public void testRedWinInModeC(){
         playAlternate(List.of(1,2,2,3,3,4,3,4,4,1,4), gameC);
         assertTrue(gameC.finished());
-        assertEquals("Rojas", gameC.getLastColorPlayed());
+        assertEquals("| - - - X |\n" +
+                             "| - - X X |\n" +
+                             "| O X X O |\n" +
+                             "| X O O O |\n" +
+                             "  1 2 3 4  \n" +
+                             "Ganaron las Rojas", gameC.show());
     }
 
     @Test
     public void testBlueWinInModeC(){
         playAlternate(List.of(2,1,4,2,1,3,3,3,1,4,4,4), gameC);
         assertTrue(gameC.finished());
-        assertEquals("Azules", gameC.getLastColorPlayed());
+        assertEquals("| - - - O |\n" +
+                             "| X - O X |\n" +
+                             "| X O X O |\n" +
+                             "| O X O X |\n" +
+                             "  1 2 3 4  \n" +
+                             "Ganaron las Azules", gameC.show());
     }
 
     @Test
     public void testDrawInModeA(){
         playAlternate(List.of(1,1,1,1,3,2,2,2,2,3,3,3,4,4,4,4), game);
         assertTrue(game.finished());
-        assertEquals("Empate", game.getEndGameMessage());
+        assertEquals("| O X O O |\n"+
+                             "| X O X X |\n"+
+                             "| O X O O |\n"+
+                             "| X O X X |\n"+
+                             "  1 2 3 4  \n" +
+                             "Empate", game.show());
     }
     @Test
     public void testDrawInModeB(){
         playAlternate(List.of(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4), gameB);
         assertTrue(gameB.finished());
         assertEquals("Empate", gameB.getEndGameMessage());
+        assertEquals(   "| O O O O |\n" +
+                                "| X X X X |\n" +
+                                "| O O O O |\n" +
+                                "| X X X X |\n" +
+                                "  1 2 3 4  \n" +
+                                "Empate", gameB.show());
     }
     @Test
     public void testDrawInModeC(){
         playAlternate(List.of(1,3,4,2,1,4,2,2,3,1,1,3,4,4,3,2), gameC);
         assertTrue(gameC.finished());
-        assertEquals("Empate", gameC.getEndGameMessage());
+        assertEquals("| X O X O |\n" +
+                             "| O O O X |\n" +
+                             "| X X X O |\n" +
+                             "| X O O X |\n" +
+                             "  1 2 3 4  \n" +
+                             "Empate", gameC.show());
     }
     @Test
+
     public void testCannotPlayAfterFinishGame(){
-        Linea game = boardForBlueWinInModeA();
+        playAlternate(List.of(4,2,1,2,1,2,1,2), game);
         assertTrue(game.finished());
-        assertThrowsLike(() -> game.playRedAt(1), Linea.ElJuegoYaHaTerminado);
+        assertThrowsLike(() -> game.playBlueAt(1), Linea.ElJuegoYaHaTerminado);
+        assertEquals("| - O - - |\n" +
+                "| X O - - |\n" +
+                "| X O - - |\n" +
+                "| X O - X |\n" +
+                "  1 2 3 4  \n" +
+                "Ganaron las Azules",game.show());
     }
 
-    private Linea boardForBlueWinInModeA() {
-        Linea game = new Linea (4,4, 'A');
-        game.playRedAt(1);
-        game.playBlueAt(2);
-        game.playRedAt(1);
-        game.playBlueAt(2);
-        game.playRedAt(1);
-        game.playBlueAt(2);
-        game.playRedAt(4);
-        game.playBlueAt(2);
-        return game;
-    }
 
     private void assertThrowsLike(Executable executable, String message ) {
         assertEquals( message, assertThrows( Exception.class, executable ).getMessage() );

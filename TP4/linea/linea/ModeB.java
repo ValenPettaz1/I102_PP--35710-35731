@@ -1,6 +1,5 @@
 package linea;
 
-import java.awt.*;
 
 
 public class ModeB extends Mode {

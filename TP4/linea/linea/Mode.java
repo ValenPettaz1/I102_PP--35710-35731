@@ -41,7 +41,7 @@ public abstract class Mode {
     }
 
     public boolean leftDiagonalCheck(Linea game) {
-        return linealCheck(game, game.getBase() + game.getHeight(), 0,
+        return linealCheck(game, 0, game.getBase() + game.getHeight(),
                 0, game.getHeight(), new Point(-1, 1));
     }
 
