@@ -1,28 +1,25 @@
 package linea;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class GameState {
+    public static List<GameState> validStates = new ArrayList<>(Arrays.asList(new RedPlays(), new BluePlays(), new EndByWin(), new EndByDraw()));
 
-    /*public void updateGame(Linea game) {
-        if (game.finished()){
-            game.setTurn(new EndGame());
-        }
-        else{
-            game.setTurn(getNextTurn(game));
-        }
-    }*/
-
-    public abstract void playAsRed(Linea game, int columnIndex);
-    public abstract void playAsBlue(Linea game, int columnIndex);
-    public abstract GameState nextState(Linea game);
-
-    public boolean isEndGame() {
-        return false;
+    public static GameState nextState(boolean anyWinner, boolean isDraw, String color) {
+        return validStates.stream()
+                .filter(s -> s.applies(anyWinner, isDraw, color))
+                .findFirst().get();
     }
 
-    public GameState checkWin(Linea game){
-        if (game.getMode().checkWinner(game)){
-            return new EndGame();
-        }
-        return nextState(game);
-    }
+    public boolean isEndGame() {return false;}
+
+    public abstract void checkRedTurn(Linea game);
+
+    public abstract void checkBlueTurn(Linea game);
+
+    public abstract boolean applies(boolean anyWinner, boolean isDraw, String color);
+
+    public abstract String getEndGameMessage(Linea game);
 }

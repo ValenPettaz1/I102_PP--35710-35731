@@ -1,7 +1,6 @@
 package linea;
 
 public class Chip {
-    public static String NoSePuedeJugarEnEstaColumna = "No se puede jugar en esta columna";
     private char chip;
     private String color;
 
@@ -16,23 +15,9 @@ public class Chip {
             game.setLastChipPlayed(chip);
             game.setLastColorPlayed(color);
             game.setCountPlayed(game.getCountPlayed() + 1);
-            GameState newTurn = game.getTurn().nextState(game);
-            game.setTurn(newTurn);
+
         } else {
-            throw new RuntimeException(NoSePuedeJugarEnEstaColumna);
+            throw new RuntimeException(Linea.NoSePuedeJugarEnEstaColumna);
         }
-    }
-
-    public void updateChip(Linea game){
-        game.setLastChipPlayed(chip);
-        game.setLastColorPlayed(color);
-        game.setCountPlayed(game.getCountPlayed() + 1);
-    }
-    public char getChip() {
-        return chip;
-    }
-
-    public String getColor() {
-        return color;
     }
 }

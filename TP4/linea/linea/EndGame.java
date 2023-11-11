@@ -1,20 +1,11 @@
 package linea;
 
-public class EndGame extends GameState{
-    public EndGame() {}
+public abstract class EndGame extends GameState{
 
     @Override
-    public GameState nextState(Linea Game) {return new EndGame();}
-
+    public void checkRedTurn(Linea game) {throw new RuntimeException(Linea.ElJuegoYaHaTerminado);}
     @Override
-    public void playAsRed(Linea game, int columnIndex) {
-        throw new RuntimeException("Ya terminó el juego");
-    }
-
-    @Override
-    public void playAsBlue(Linea game, int columnIndex) {
-        throw new RuntimeException("Ya terminó el juego");
-    }
+    public void checkBlueTurn(Linea game) {throw new RuntimeException(Linea.ElJuegoYaHaTerminado);}
 
     @Override
     public boolean isEndGame() {

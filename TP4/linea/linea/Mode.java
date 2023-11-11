@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public abstract class Mode {
-    public static List<Mode> validModes = new ArrayList<>(Arrays.asList(new ModeA(), new ModeB(), new ModeC()));
+    public static List<Mode> validModes = new ArrayList<>(Arrays.asList(new ModeA(), new ModeB(), new ModeC(), new ModeError()));
 
     public static Mode charForMode(char mode) {
         return validModes.stream()
@@ -41,7 +41,11 @@ public abstract class Mode {
     }
 
     public boolean leftDiagonalCheck(Linea game) {
-        return linealCheck(game, game.getBase() + game.getHeight(), 0,
+        return linealCheck(game, 0, game.getBase() + game.getHeight(),
                 0, game.getHeight(), new Point(-1, 1));
+    }
+
+    public boolean checkDraw(Linea linea) {
+        return linea.getCountPlayed() == linea.getBase() * linea.getHeight();
     }
 }

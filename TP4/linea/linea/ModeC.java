@@ -8,13 +8,10 @@ public class ModeC extends Mode {
     }
 
     @Override
+    public boolean applies(char mode) {return this.mode == mode;}
+
+    @Override
     public boolean checkWinner(Linea game) {
         return verticalCheck(game) || horizontalCheck(game) || rightDiagonalCheck(game) || leftDiagonalCheck(game);
     }
-
-    @Override
-    public boolean applies(char mode) {
-        return true;
-    }
-
 }
